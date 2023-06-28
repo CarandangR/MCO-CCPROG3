@@ -1,3 +1,5 @@
+package mco1.source;
+
 public class Money
 {
     private int coin1;
@@ -57,7 +59,7 @@ public class Money
 
     public int getBill20()
     {
-        return bill50;
+        return bill20;
     }
 
     public void setBill20(int bill20)
@@ -115,7 +117,7 @@ public class Money
         this.bill1000 = bill1000;
     }
 
-    public void getTotalMoney()
+    public int getTotalMoney()
     {
         return totalMoney;
     }
