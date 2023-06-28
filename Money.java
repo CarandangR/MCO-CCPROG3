@@ -1,15 +1,15 @@
 public class Money
 {
-    int coin1;
-    int coin5;
-    int coin10;
-    int coin20;
-    int bill50;
-    int bill100;
-    int bill200;
-    int bill500;
-    int bill1000;
-    int totalMoney;
+    private int coin1;
+    private int coin5;
+    private int coin10;
+    private int coin20;
+    private int bill50;
+    private int bill100;
+    private int bill200;
+    private int bill500;
+    private int bill1000;
+    private int totalMoney;
 
     public int getCoin1()
     {
@@ -110,7 +110,7 @@ public class Money
     {
         this.totalMoney = totalMoney;
     }
-
+    
     public Money()
     {}
 }
