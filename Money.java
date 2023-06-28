@@ -4,12 +4,16 @@ public class Money
     private int coin5;
     private int coin10;
     private int coin20;
+    private int bill20;
     private int bill50;
     private int bill100;
     private int bill200;
     private int bill500;
     private int bill1000;
     private int totalMoney;
+
+    public Money()
+    {}
 
     public int getCoin1()
     {
@@ -49,6 +53,16 @@ public class Money
     public void setCoin20(int coin20)
     {
         this.coin20 = coin20;
+    }
+
+    public int getBill20()
+    {
+        return bill50;
+    }
+
+    public void setBill20(int bill20)
+    {
+        this.bill20 = bill20;
     }
 
     public int getBill50()
@@ -108,9 +122,16 @@ public class Money
 
     public void setTotalMoney(int totalMoney)
     {
+        totalMoney += (getCoin1()*1);
+        totalMoney += (getCoin5()*5);
+        totalMoney += (getCoin10()*10);
+        totalMoney += (getCoin20()*20);
+        totalMoney += (getBill20()*20);
+        totalMoney += (getBill50()*50);
+        totalMoney += (getBill100()*100);
+        totalMoney += (getBill200()*200);
+        totalMoney += (getBill500()*500);
+        totalMoney += (getBill1000()*1000);
         this.totalMoney = totalMoney;
     }
-    
-    public Money()
-    {}
 }
