@@ -1,8 +1,12 @@
-package mco1.source;
+package objects;
 
-public class Item {
+public class Items {
     private String itemName;
-    private float price, calories;
+    private float calories;
+    private int price;
+
+    public Items()
+    {}
 
     public String getItemName()
     {
@@ -14,12 +18,12 @@ public class Item {
         this.itemName = itemName;
     }
 
-    public float getPrice()
+    public int getPrice()
     {
         return price;
     }
 
-    public void setPrice(float price)
+    public void setPrice(int price)
     {
         this.price = price;
     }

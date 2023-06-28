@@ -1,4 +1,4 @@
-package mco1.source;
+package objects;
 
 public class Money
 {
@@ -124,16 +124,8 @@ public class Money
 
     public void setTotalMoney(int totalMoney)
     {
-        totalMoney += (getCoin1()*1);
-        totalMoney += (getCoin5()*5);
-        totalMoney += (getCoin10()*10);
-        totalMoney += (getCoin20()*20);
-        totalMoney += (getBill20()*20);
-        totalMoney += (getBill50()*50);
-        totalMoney += (getBill100()*100);
-        totalMoney += (getBill200()*200);
-        totalMoney += (getBill500()*500);
-        totalMoney += (getBill1000()*1000);
+        totalMoney = (getCoin1()*1) + (getCoin5()*5) + (getCoin10()*10) + (getCoin20()*20) + (getBill20()*20) + (getBill50()*50) 
+                     + (getBill100()*100) + (getBill200()*200) + (getBill500()*500) + (getBill1000()*1000);
         this.totalMoney = totalMoney;
     }
 }

@@ -1,10 +1,7 @@
-package mco1;
-import mco1.source.Item;
-import mco1.source.Slots;
-import mco1.source.Money;
-import mco1.source.RegularVM;
-import java.util.Arrays;
-
+import objects.Items;
+import objects.Money;
+import objects.Slots;
+import objects.RegularVM;
 public class Main {
     public static void main(String[] args) {
         // Press Alt+Enter with your caret at the highlighted text to see how
