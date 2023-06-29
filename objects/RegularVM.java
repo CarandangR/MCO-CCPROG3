@@ -1,12 +1,13 @@
 package objects;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.ResourceBundle.Control;
 
 public class RegularVM
 {
     private Slots[] itemSlots;
     private Money vendBalance;
-    private Money userChange;
+    private Money userBalance;
     private String vendName;
     private int slotCapacity;
     private int itemCapacity;
@@ -55,7 +56,7 @@ public class RegularVM
 
     public void insertMoney(Scanner sc)
     {
-
+        addMoney(inputMoney(sc),vendBalance,sc);
     }
 
     public void vendTransaction(Scanner sc)
@@ -65,158 +66,7 @@ public class RegularVM
 
     private void restockMoney(Scanner sc)
     {
-        int choice, quantity;
-
-        choice = inputMoney(sc);
-        switch(choice)
-        {
-            case(1):
-            do
-            {
-                System.out.print("Please Input the quantity you want to add");
-                quantity = sc.nextInt();
-                if(quantity < 0)
-                {
-                    System.out.println("Invalid Input, please Try again.");
-                }
-            }while(quantity < 0);
-
-            vendBalance.setCoin1(vendBalance.getCoin1()+quantity);
-            break;
-
-            case(2):
-            do
-            {
-                System.out.print("Please Input the quantity you want to add");
-                quantity = sc.nextInt();
-                if(quantity < 0)
-                {
-                    System.out.println("Invalid Input, please Try again.");
-                }
-            }while(quantity < 0);
-
-            vendBalance.setCoin5(vendBalance.getCoin5()+quantity);
-            break;
-
-            case(3):
-            do
-            {
-                System.out.print("Please Input the quantity you want to add");
-                quantity = sc.nextInt();
-                if(quantity < 0)
-                {
-                    System.out.println("Invalid Input, please Try again.");
-                }
-            }while(quantity < 0);
-
-            vendBalance.setCoin10(vendBalance.getCoin10()+quantity);
-            break;
-
-            case(4):
-            do
-            {
-                System.out.print("Please Input the quantity you want to add");
-                quantity = sc.nextInt();
-                if(quantity < 0)
-                {
-                    System.out.println("Invalid Input, please Try again.");
-                }
-            }while(quantity < 0);
-
-            vendBalance.setCoin20(vendBalance.getCoin20()+quantity);
-            break;
-
-            case(5):
-            do
-            {
-                System.out.print("Please Input the quantity you want to add");
-                quantity = sc.nextInt();
-                if(quantity < 0)
-                {
-                    System.out.println("Invalid Input, please Try again.");
-                }
-            }while(quantity < 0);
-
-            vendBalance.setBill20(vendBalance.getBill20()+quantity);
-            break;
-
-            case(6):
-            do
-            {
-                System.out.print("Please Input the quantity you want to add");
-                quantity = sc.nextInt();
-                if(quantity < 0)
-                {
-                    System.out.println("Invalid Input, please Try again.");
-                }
-            }while(quantity < 0);
-
-            vendBalance.setBill50(vendBalance.getBill50()+quantity);
-            break;
-
-            case(7):
-            do
-            {
-                System.out.print("Please Input the quantity you want to add");
-                quantity = sc.nextInt();
-                if(quantity < 0)
-                {
-                    System.out.println("Invalid Input, please Try again.");
-                }
-            }while(quantity < 0);
-
-            vendBalance.setBill100(vendBalance.getBill100()+quantity);
-            break;
-
-            case(8):
-            do
-            {
-                System.out.print("Please Input the quantity you want to add");
-                quantity = sc.nextInt();
-                if(quantity < 0)
-                {
-                    System.out.println("Invalid Input, please Try again.");
-                }
-            }while(quantity < 0);
-
-            vendBalance.setBill200(vendBalance.getBill200()+quantity);
-            break;
-
-            case(9):
-            do
-            {
-                System.out.print("Please Input the quantity you want to add");
-                quantity = sc.nextInt();
-                if(quantity < 0)
-                {
-                    System.out.println("Invalid Input, please Try again.");
-                }
-            }while(quantity < 0);
-
-            vendBalance.setBill500(vendBalance.getBill500()+quantity);
-            break;
-
-            case(10):
-            do
-            {
-                System.out.print("Please Input the quantity you want to add");
-                quantity = sc.nextInt();
-                if(quantity < 0)
-                {
-                    System.out.println("Invalid Input, please Try again.");
-                }
-            }while(quantity < 0);
-
-            vendBalance.setBill1000(vendBalance.getBill1000()+quantity);
-            break;
-
-            case(0):
-            break;
-
-            default:
-                System.out.println("Invalid Input!");
-        }
-
+        addMoney(inputMoney(sc),vendBalance,sc);
     }
 
     private void collectMoney(Scanner sc)
@@ -269,6 +119,164 @@ public class RegularVM
         System.out.println("[0] Exit");
 
         return sc.nextInt();
+    }
+
+    private void addMoney(int choice, Money balance, Scanner sc)
+    {
+        int quantity, control = 1;
+
+        while(control == 1)
+        {
+            switch(choice)
+            {
+                case(1):
+                    do
+                    {
+                        System.out.print("Please Input the quantity you want to add");
+                        quantity = sc.nextInt();
+                        if(quantity < 0)
+                        {
+                            System.out.println("Invalid Input, please Try again.");
+                        }
+                    }while(quantity < 0);
+
+                    balance.setCoin1(balance.getCoin1()+quantity);
+                    break;
+
+                case(2):
+                    do
+                    {
+                        System.out.print("Please Input the quantity you want to add");
+                        quantity = sc.nextInt();
+                        if(quantity < 0)
+                        {
+                            System.out.println("Invalid Input, please Try again.");
+                        }
+                    }while(quantity < 0);
+
+                    balance.setCoin5(balance.getCoin5()+quantity);
+                    break;
+
+                case(3):
+                    do
+                    {
+                        System.out.print("Please Input the quantity you want to add");
+                        quantity = sc.nextInt();
+                        if(quantity < 0)
+                        {
+                            System.out.println("Invalid Input, please Try again.");
+                        }
+                    }while(quantity < 0);
+
+                    balance.setCoin10(balance.getCoin10()+quantity);
+                    break;
+
+                case(4):
+                    do
+                    {
+                        System.out.print("Please Input the quantity you want to add");
+                        quantity = sc.nextInt();
+                        if(quantity < 0)
+                        {
+                            System.out.println("Invalid Input, please Try again.");
+                        }
+                    }while(quantity < 0);
+
+                    balance.setCoin20(balance.getCoin20()+quantity);
+                    break;
+
+                case(5):
+                    do
+                    {
+                        System.out.print("Please Input the quantity you want to add");
+                        quantity = sc.nextInt();
+                        if(quantity < 0)
+                        {
+                            System.out.println("Invalid Input, please Try again.");
+                        }
+                    }while(quantity < 0);
+
+                    balance.setBill20(balance.getBill20()+quantity);
+                    break;
+
+                case(6):
+                    do
+                    {
+                        System.out.print("Please Input the quantity you want to add");
+                        quantity = sc.nextInt();
+                        if(quantity < 0)
+                        {
+                            System.out.println("Invalid Input, please Try again.");
+                        }
+                    }while(quantity < 0);
+
+                    balance.setBill50(balance.getBill50()+quantity);
+                    break;
+
+                case(7):
+                    do
+                    {
+                        System.out.print("Please Input the quantity you want to add");
+                        quantity = sc.nextInt();
+                        if(quantity < 0)
+                        {
+                            System.out.println("Invalid Input, please Try again.");
+                        }
+                    }while(quantity < 0);
+
+                    balance.setBill100(balance.getBill100()+quantity);
+                    break;
+
+                case(8):
+                    do
+                    {
+                        System.out.print("Please Input the quantity you want to add");
+                        quantity = sc.nextInt();
+                        if(quantity < 0)
+                        {
+                            System.out.println("Invalid Input, please Try again.");
+                        }
+                    }while(quantity < 0);
+
+                    balance.setBill200(balance.getBill200()+quantity);
+                    break;
+
+                case(9):
+                    do
+                    {
+                        System.out.print("Please Input the quantity you want to add");
+                        quantity = sc.nextInt();
+                        if(quantity < 0)
+                        {
+                            System.out.println("Invalid Input, please Try again.");
+                        }
+                    }while(quantity < 0);
+
+                    balance.setBill500(balance.getBill500()+quantity);
+                    break;
+
+                case(10):
+                    do
+                    {
+                        System.out.print("Please Input the quantity you want to add");
+                        quantity = sc.nextInt();
+                        if(quantity < 0)
+                        {
+                            System.out.println("Invalid Input, please Try again.");
+                        }
+                    }while(quantity < 0);
+
+                    balance.setBill1000(balance.getBill1000()+quantity);
+                    break;
+
+                case(0):
+                    control = 0;
+                    break;
+
+                default:
+                    System.out.println("Invalid Input!");
+            }
+        }
     }
     private void setPrice(int slotNum, Scanner sc)
     {
