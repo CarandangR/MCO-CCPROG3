@@ -58,7 +58,7 @@ public class RegularVM
 
     }
 
-    public void payVending(Scanner sc)
+    public void vendTransaction(Scanner sc)
     {
 
     }
@@ -221,6 +221,35 @@ public class RegularVM
 
     private void collectMoney(Scanner sc)
     {
+        int choice,i,j;
+        do
+        {
+        System.out.println("Would you like to collect the money?");
+        System.out.println("[1] Yes");
+        System.out.println("[0] No");
+        choice = sc.nextInt();
+        if(choice != 1 || choice != 0)
+        {
+            System.out.println("invalid Input");
+        }
+        }while(choice != 1 || choice != 0);
+
+        if(choice == 1)
+        {
+            System.out.println("Here is the list of transactions Made: ");
+            for(i=0;i<transacHistory.size();i++)
+            {
+                System.out.println(transacHistory.get(i).getItem()+"  "+transacHistory.get(i).getQty());
+                System.out.println("Total Amount: "+transacHistory.get(i).getVendTotal()+"  User Paid: "+transacHistory.get(i).getUserPay()+"  ");
+                System.out.println("Change: "+transacHistory.get(i).getChange());
+            }
+            System.out.println("Vending Machine Emptied, Total Amount collected is: "+vendBalance.getTotalMoney());
+            vendBalance.setToZero();
+        }
+        else
+        {
+            System.out.println("Returning to main menu");
+        }
 
     }
 

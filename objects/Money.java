@@ -128,4 +128,18 @@ public class Money
                      + (getBill100()*100) + (getBill200()*200) + (getBill500()*500) + (getBill1000()*1000);
         this.totalMoney = totalMoney;
     }
+
+    public void setToZero()
+    {
+        this.coin1 = 0;
+        this.coin5 = 0;
+        this.coin10 = 0;
+        this.coin20 = 0;
+        this.bill20 = 0;
+        this.bill50 = 0;
+        this.bill100 = 0;
+        this.bill200 = 0;
+        this.bill500 = 0;
+        this.bill1000 = 0;
+    }
 }

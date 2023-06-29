@@ -27,8 +27,30 @@ public class Transaction {
         System.out.println("Item: "+ item.getItemName() +"  Qty: " + Qty + "  Change: " + change + "" +
                 "  Vend Total left: " + vendTotal);
     }
+
+    public Items getItem()
+    {
+        return item;
+    }
+
+    public int getQty()
+    {
+        return Qty;
+    }
+
+    public int getUserPay()
+    {
+        return userPay;
+    }
+
+    public int getVendTotal()
+    {
+        return vendTotal;
+    }
+
     public int getChange()
     {
-        return change; // can use to produce change  
+        return change;
     }
+    
 }
