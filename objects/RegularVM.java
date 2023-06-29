@@ -6,7 +6,7 @@ public class RegularVM
 {
     private Slots[] itemSlots;
     private Money vendBalance;
-    private Money userBalance;
+    private Money userChange;
     private String vendName;
     private int slotCapacity;
     private int itemCapacity;
@@ -65,21 +65,10 @@ public class RegularVM
 
     private void restockMoney(Scanner sc)
     {
-        int quantity;
-        System.out.println("Please Enter the Denomination you want to restock: ");
-        System.out.println("[1] 1 Php Coin");
-        System.out.println("[2] 5 Php Coin");
-        System.out.println("[3] 10 Php Coin");
-        System.out.println("[4] 20 Php Coin");
-        System.out.println("[5] 20 Php Bill");
-        System.out.println("[6] 50 Php Bill");
-        System.out.println("[7] 100 Php Bill");
-        System.out.println("[8] 200 Php Bill");
-        System.out.println("[9] 500 Php Bill");
-        System.out.println("[10] 1000 Php Bill");
-        System.out.println("[10] Exit");
-        
-        switch(sc.nextInt())
+        int choice, quantity;
+
+        choice = inputMoney(sc);
+        switch(choice)
         {
             case(1):
             do
@@ -92,6 +81,140 @@ public class RegularVM
                 }
             }while(quantity < 0);
 
+            vendBalance.setCoin1(vendBalance.getCoin1()+quantity);
+            break;
+
+            case(2):
+            do
+            {
+                System.out.print("Please Input the quantity you want to add");
+                quantity = sc.nextInt();
+                if(quantity < 0)
+                {
+                    System.out.println("Invalid Input, please Try again.");
+                }
+            }while(quantity < 0);
+
+            vendBalance.setCoin5(vendBalance.getCoin5()+quantity);
+            break;
+
+            case(3):
+            do
+            {
+                System.out.print("Please Input the quantity you want to add");
+                quantity = sc.nextInt();
+                if(quantity < 0)
+                {
+                    System.out.println("Invalid Input, please Try again.");
+                }
+            }while(quantity < 0);
+
+            vendBalance.setCoin10(vendBalance.getCoin10()+quantity);
+            break;
+
+            case(4):
+            do
+            {
+                System.out.print("Please Input the quantity you want to add");
+                quantity = sc.nextInt();
+                if(quantity < 0)
+                {
+                    System.out.println("Invalid Input, please Try again.");
+                }
+            }while(quantity < 0);
+
+            vendBalance.setCoin20(vendBalance.getCoin20()+quantity);
+            break;
+
+            case(5):
+            do
+            {
+                System.out.print("Please Input the quantity you want to add");
+                quantity = sc.nextInt();
+                if(quantity < 0)
+                {
+                    System.out.println("Invalid Input, please Try again.");
+                }
+            }while(quantity < 0);
+
+            vendBalance.setBill20(vendBalance.getBill20()+quantity);
+            break;
+
+            case(6):
+            do
+            {
+                System.out.print("Please Input the quantity you want to add");
+                quantity = sc.nextInt();
+                if(quantity < 0)
+                {
+                    System.out.println("Invalid Input, please Try again.");
+                }
+            }while(quantity < 0);
+
+            vendBalance.setBill50(vendBalance.getBill50()+quantity);
+            break;
+
+            case(7):
+            do
+            {
+                System.out.print("Please Input the quantity you want to add");
+                quantity = sc.nextInt();
+                if(quantity < 0)
+                {
+                    System.out.println("Invalid Input, please Try again.");
+                }
+            }while(quantity < 0);
+
+            vendBalance.setBill100(vendBalance.getBill100()+quantity);
+            break;
+
+            case(8):
+            do
+            {
+                System.out.print("Please Input the quantity you want to add");
+                quantity = sc.nextInt();
+                if(quantity < 0)
+                {
+                    System.out.println("Invalid Input, please Try again.");
+                }
+            }while(quantity < 0);
+
+            vendBalance.setBill200(vendBalance.getBill200()+quantity);
+            break;
+
+            case(9):
+            do
+            {
+                System.out.print("Please Input the quantity you want to add");
+                quantity = sc.nextInt();
+                if(quantity < 0)
+                {
+                    System.out.println("Invalid Input, please Try again.");
+                }
+            }while(quantity < 0);
+
+            vendBalance.setBill500(vendBalance.getBill500()+quantity);
+            break;
+
+            case(10):
+            do
+            {
+                System.out.print("Please Input the quantity you want to add");
+                quantity = sc.nextInt();
+                if(quantity < 0)
+                {
+                    System.out.println("Invalid Input, please Try again.");
+                }
+            }while(quantity < 0);
+
+            vendBalance.setBill1000(vendBalance.getBill1000()+quantity);
+            break;
+
+            case(0):
+            break;
+
+            default:
+                System.out.println("Invalid Input!");
         }
 
     }
@@ -101,6 +224,23 @@ public class RegularVM
 
     }
 
+    private int inputMoney(Scanner sc)
+    {
+        System.out.println("Please Enter the Denomination you want to restock: ");
+        System.out.println("[1] 1 Php Coin");
+        System.out.println("[2] 5 Php Coin");
+        System.out.println("[3] 10 Php Coin");
+        System.out.println("[4] 20 Php Coin");
+        System.out.println("[5] 20 Php Bill");
+        System.out.println("[6] 50 Php Bill");
+        System.out.println("[7] 100 Php Bill");
+        System.out.println("[8] 200 Php Bill");
+        System.out.println("[9] 500 Php Bill");
+        System.out.println("[10] 1000 Php Bill");
+        System.out.println("[0] Exit");
+
+        return sc.nextInt();
+    }
     private void setPrice(int slotNum, Scanner sc)
     {
         int repriceValue;
