@@ -6,8 +6,8 @@ public class RegularVM
 {
     private Slots[] itemSlots;
     private Slots shoppingCart;
-    private Money vendBalance;
-    private Money userBalance;
+    public Money vendBalance = new Money();
+    private Money userBalance = new Money();
     private String vendName;
     private int slotCapacity;
     private int itemCapacity;
@@ -18,13 +18,13 @@ public class RegularVM
         int i;
         this.vendName = vendName;
         itemSlots = new Slots[slotCapacity];
-        
+        /*
         Scanner sc = new Scanner(System.in);
         for(i=0;i<slotCapacity;i++)
         {
             this.itemSlots[i] = getSlotInput(sc);
         }
-        sc.close();
+        sc.close(); */
     }
 
     private Slots getSlotInput(Scanner sc)
@@ -39,11 +39,19 @@ public class RegularVM
         int price;
         System.out.print("Please Input the Name of the Item: ");
         name = sc.nextLine();
-        System.out.print("Please Input the Calories of the Item: ");
-        calories = sc.nextFloat();
-        System.out.print("Please Input the Price of the Item: ");
-        price = sc.nextInt();
+        do
+        {
+            System.out.print("Please Input the Calories of the Item: ");
+            calories = sc.nextFloat();
+        }while(calories < 1);
 
+        do
+        {
+            System.out.print("Please Input the Price of the Item: ");
+            price = sc.nextInt();
+        }while(price < 1);
+
+        sc.nextLine();
         return new Items(name,calories,price);
     }
 
@@ -113,8 +121,8 @@ public class RegularVM
 
     public void insertMoney(Scanner sc)
     {
-        addMoney(inputMoney(sc),userBalance,sc);
-        addMoney(inputMoney(sc),vendBalance,sc);
+        int i = inputMoney(sc);
+        addMoney(i,userBalance,sc);
     }
 
     public void vendTransaction(Scanner sc)
@@ -179,12 +187,13 @@ public class RegularVM
         }
     }
 
-    private void restockMoney(Scanner sc)
+    public void restockMoney(Scanner sc)
     {
-        addMoney(inputMoney(sc),vendBalance,sc);
+        int i = inputMoney(sc);
+        addMoney(i,vendBalance,sc);
     }
 
-    private void collectMoney(Scanner sc)
+    public void collectMoney(Scanner sc)
     {
         int choice,i,j;
         do
@@ -193,11 +202,11 @@ public class RegularVM
         System.out.println("[1] Yes");
         System.out.println("[0] No");
         choice = sc.nextInt();
-        if(choice != 1 || choice != 0)
+        if(choice > 1 || choice < 0)
         {
             System.out.println("invalid Input");
         }
-        }while(choice != 1 || choice != 0);
+        }while(choice > 1 || choice < 0);
 
         if(choice == 1)
         {
@@ -220,7 +229,7 @@ public class RegularVM
 
     private int inputMoney(Scanner sc)
     {
-        System.out.println("Please Enter the Denomination you want to restock: ");
+        System.out.println("Please Enter the Denomination");
         System.out.println("[1] 1 Php Coin");
         System.out.println("[2] 5 Php Coin");
         System.out.println("[3] 10 Php Coin");
@@ -246,7 +255,7 @@ public class RegularVM
                 case(1):
                     do
                     {
-                        System.out.print("Please Input the quantity you want to add");
+                        System.out.print("Please Input the quantity you want to add: ");
                         quantity = sc.nextInt();
                         if(quantity < 0)
                         {
@@ -255,6 +264,7 @@ public class RegularVM
                     }while(quantity < 0);
 
                     balance.setCoin1(balance.getCoin1()+quantity);
+                    control = 0;
                     break;
 
                 case(2):
@@ -269,6 +279,7 @@ public class RegularVM
                     }while(quantity < 0);
 
                     balance.setCoin5(balance.getCoin5()+quantity);
+                    control = 0;
                     break;
 
                 case(3):
@@ -283,6 +294,7 @@ public class RegularVM
                     }while(quantity < 0);
 
                     balance.setCoin10(balance.getCoin10()+quantity);
+                    control = 0;
                     break;
 
                 case(4):
@@ -297,6 +309,7 @@ public class RegularVM
                     }while(quantity < 0);
 
                     balance.setBill20(balance.getBill20()+quantity);
+                    control = 0;
                     break;
 
                 case(5):
@@ -311,6 +324,7 @@ public class RegularVM
                     }while(quantity < 0);
 
                     balance.setBill50(balance.getBill50()+quantity);
+                    control = 0;
                     break;
 
                 case(6):
@@ -325,6 +339,7 @@ public class RegularVM
                     }while(quantity < 0);
 
                     balance.setBill100(balance.getBill100()+quantity);
+                    control = 0;
                     break;
 
                 case(7):
@@ -339,6 +354,7 @@ public class RegularVM
                     }while(quantity < 0);
 
                     balance.setBill200(balance.getBill200()+quantity);
+                    control = 0;
                     break;
 
                 case(8):
@@ -353,6 +369,7 @@ public class RegularVM
                     }while(quantity < 0);
 
                     balance.setBill500(balance.getBill500()+quantity);
+                    control = 0;
                     break;
 
                 case(9):
@@ -367,6 +384,7 @@ public class RegularVM
                     }while(quantity < 0);
 
                     balance.setBill1000(balance.getBill1000()+quantity);
+                    control = 0;
                     break;
 
                 case(0):
@@ -419,7 +437,7 @@ public class RegularVM
         }
     }
 
-    private void displayItem(int slotNum)
+    public void displayItem(int slotNum)
     {
         System.out.println("["+(slotNum+1)+"] "+itemSlots[slotNum].getItem().getItemName()+" Calories: "+itemSlots[slotNum].getItem().getCalories());
     }
@@ -483,4 +501,12 @@ public class RegularVM
             }
         }
     }   
+
+    private void add2Balanaces(Money userBalance, Money vendBalance)
+    {
+        vendBalance.setCoin1(vendBalance.getCoin1()+userBalance.getCoin1());
+        vendBalance.setCoin5(vendBalance.getCoin5()+userBalance.getCoin5());
+        vendBalance.setCoin10(vendBalance.getCoin10()+userBalance.getCoin10());
+        
+    }
 }

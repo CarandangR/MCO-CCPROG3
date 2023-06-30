@@ -118,14 +118,10 @@ public class Money
 
     public int getTotalMoney()
     {
-        return totalMoney;
-    }
-
-    public void setTotalMoney(int totalMoney)
-    {
         totalMoney = (getCoin1()*1) + (getCoin5()*5) + (getCoin10()*10) + (getBill20()*20) + (getBill50()*50) 
                      + (getBill100()*100) + (getBill200()*200) + (getBill500()*500) + (getBill1000()*1000);
         this.totalMoney = totalMoney;
+        return totalMoney;
     }
 
     public void setToZero()
