@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class RegularVM
 {
     private Slots[] itemSlots;
+    private Slots shoppingCart;
     private Money vendBalance;
     private Money userBalance;
     private String vendName;
@@ -117,7 +118,46 @@ public class RegularVM
 
     public void vendTransaction(Scanner sc)
     {
+        int i, choice, itemQty,control=1;
+        insertMoney(sc);
+        System.out.println("What Item Would You Like to Buy:");
+        for(i=0; i < slotCapacity;i++)
+        {
+            displayItem(i);
+        }
+        while(control == 1)
+        {
+            choice = sc.nextInt()-1;
 
+            if(choice >= 0 || choice <= slotCapacity)
+            {
+                do
+                {
+                    System.out.print("Please Input the quantity, [0] to cancel item: ");
+                    itemQty = sc.nextInt();
+
+                    if(itemQty < 0 || choice > itemCapacity)
+                    {
+                        System.out.println("Invalid Input");
+                    }
+                    
+                    if(itemQty == 0)
+                    {
+                        control = 0;
+                    }
+                }while(itemQty < 0 || choice > itemCapacity);
+            }    
+
+            else if(choice == -1)
+            {
+                control = 0;
+            }
+            
+            else
+            {
+                System.out.println("Invalid Input");
+            }
+        }
     }
 
     private void restockMoney(Scanner sc)
