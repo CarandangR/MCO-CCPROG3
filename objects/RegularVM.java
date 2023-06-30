@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class RegularVM
 {
     private Slots[] itemSlots;
+    private Slots[] originalInventory;
     private Slots shoppingCart;
     public Money vendBalance = new Money();
     private Money userBalance = new Money();
@@ -17,14 +18,20 @@ public class RegularVM
     {
         int i;
         this.vendName = vendName;
+        this.itemCapacity = itemCapacity;
+        this.slotCapacity = slotCapacity;
         itemSlots = new Slots[slotCapacity];
-        /*
-        Scanner sc = new Scanner(System.in);
+        originalInventory = new Slots[slotCapacity];
+    }
+
+    public void setSlots(Scanner sc)
+    {
+        int i;
         for(i=0;i<slotCapacity;i++)
         {
             this.itemSlots[i] = getSlotInput(sc);
+            this.originalInventory[i] = this.itemSlots[i];
         }
-        sc.close(); */
     }
 
     private Slots getSlotInput(Scanner sc)
@@ -116,6 +123,11 @@ public class RegularVM
             {
                 restockMoney(sc);
             }
+
+            if(choice == 5)
+            {
+                control = 0;
+            }
         }
     }
 
@@ -123,6 +135,7 @@ public class RegularVM
     {
         int i = inputMoney(sc);
         addMoney(i,userBalance,sc);
+        add2Balances(userBalance,vendBalance);
     }
 
     public void vendTransaction(Scanner sc)
@@ -164,15 +177,26 @@ public class RegularVM
                 }while(itemQty < 0 || choice > itemCapacity);
 
                 shoppingCart.setStock(itemQty);
-
-                transacHistory.add(new Transaction(shoppingCart.getItem(), shoppingCart.stock, userBalance.getTotalMoney(), vendBalance.getTotalMoney()));
-
-                System.out.println("Change is: "+transacHistory.get(transacHistory.size()-1).getChange());
-                System.out.println("Dispensing item");
-                itemSlots[choice].setStock(itemSlots[choice].getStock()-shoppingCart.getStock());
-                System.out.println("Dispensing Money");
-                getDenom(transacHistory.get(transacHistory.size()-1).getChange(), vendBalance);
-                userBalance.setToZero();
+                Transaction tempTransaction = new Transaction(shoppingCart.getItem(), shoppingCart.stock, userBalance.getTotalMoney(), vendBalance.getTotalMoney());
+                if(tempTransaction.computeChange() > vendBalance.getTotalMoney())
+                {
+                    System.out.println("Transaction cancelled, not enough change from the machine.");
+                }
+                else {
+                    transacHistory.add(tempTransaction);
+                    System.out.println("Change is: " + transacHistory.get(transacHistory.size() - 1).getChange());
+                    System.out.println("Dispensing item");
+                    itemSlots[choice].setStock(itemSlots[choice].getStock() - shoppingCart.getStock());
+                    System.out.println("Dispensing Money");
+                    getDenom(transacHistory.get(transacHistory.size() - 1).getChange(), vendBalance);
+                    userBalance.setToZero();
+                    //Transac History printing flag
+                    int ab;
+                    for(ab = 0; ab < transacHistory.size(); ab++)
+                    {
+                        transacHistory.get(ab).printTransaction();
+                    }
+                }
             }    
 
             else if(choice == -1)
@@ -187,13 +211,13 @@ public class RegularVM
         }
     }
 
-    public void restockMoney(Scanner sc)
+    private void restockMoney(Scanner sc)
     {
         int i = inputMoney(sc);
         addMoney(i,vendBalance,sc);
     }
 
-    public void collectMoney(Scanner sc)
+    private void collectMoney(Scanner sc)
     {
         int choice,i,j;
         do
@@ -229,19 +253,25 @@ public class RegularVM
 
     private int inputMoney(Scanner sc)
     {
-        System.out.println("Please Enter the Denomination");
-        System.out.println("[1] 1 Php Coin");
-        System.out.println("[2] 5 Php Coin");
-        System.out.println("[3] 10 Php Coin");
-        System.out.println("[4] 20 Php Bill");
-        System.out.println("[5] 50 Php Bill");
-        System.out.println("[6] 100 Php Bill");
-        System.out.println("[7] 200 Php Bill");
-        System.out.println("[8] 500 Php Bill");
-        System.out.println("[9] 1000 Php Bill");
-        System.out.println("[0] Exit");
-
-        return sc.nextInt();
+        int denomInput;
+        do {
+            System.out.println("Please Enter the Denomination");
+            System.out.println("[1] 1 Php Coin");
+            System.out.println("[2] 5 Php Coin");
+            System.out.println("[3] 10 Php Coin");
+            System.out.println("[4] 20 Php Bill");
+            System.out.println("[5] 50 Php Bill");
+            System.out.println("[6] 100 Php Bill");
+            System.out.println("[7] 200 Php Bill");
+            System.out.println("[8] 500 Php Bill");
+            System.out.println("[9] 1000 Php Bill");
+            System.out.println("[0] Exit");
+            denomInput = sc.nextInt();
+            if(denomInput < 0 || denomInput > 9){
+                System.out.println("Invalid Choice.");
+            }
+        } while(denomInput < 0 || denomInput > 9);
+        return denomInput;
     }
 
     private void addMoney(int choice, Money balance, Scanner sc)
@@ -396,6 +426,7 @@ public class RegularVM
             }
         }
     }
+
     private void setPrice(int slotNum, Scanner sc)
     {
         int repriceValue;
@@ -426,7 +457,7 @@ public class RegularVM
             do
             {
                 restockAmount = sc.nextInt();
-                if((itemSlots[slotNum].getStock()+restockAmount) < 0 || (itemSlots[slotNum].getStock()+restockAmount) >= itemCapacity)
+                if((itemSlots[slotNum].getStock()+restockAmount) < 0 || (itemSlots[slotNum].getStock()+restockAmount) > itemCapacity)
                 {
                     System.out.println("The Value Exceeds the limit or is invalid, please try again.");
                 }
@@ -437,7 +468,7 @@ public class RegularVM
         }
     }
 
-    public void displayItem(int slotNum)
+    private void displayItem(int slotNum)
     {
         System.out.println("["+(slotNum+1)+"] "+itemSlots[slotNum].getItem().getItemName()+" Calories: "+itemSlots[slotNum].getItem().getCalories());
     }
@@ -502,11 +533,25 @@ public class RegularVM
         }
     }   
 
-    private void add2Balanaces(Money userBalance, Money vendBalance)
+    private void add2Balances(Money userBalance, Money vendBalance)
     {
         vendBalance.setCoin1(vendBalance.getCoin1()+userBalance.getCoin1());
         vendBalance.setCoin5(vendBalance.getCoin5()+userBalance.getCoin5());
         vendBalance.setCoin10(vendBalance.getCoin10()+userBalance.getCoin10());
-        
+        vendBalance.setBill20(vendBalance.getBill20()+userBalance.getBill20());
+        vendBalance.setBill50(vendBalance.getBill50()+userBalance.getBill50());
+        vendBalance.setBill100(vendBalance.getBill100()+userBalance.getBill100());
+        vendBalance.setBill200(vendBalance.getBill200()+userBalance.getBill200());
+        vendBalance.setBill500(vendBalance.getBill500()+userBalance.getBill500());
+        vendBalance.setBill1000(vendBalance.getBill1000()+userBalance.getBill1000());
+    }
+
+    public void displayStocks()
+    {
+        int i;
+        for(i=0;i < this.slotCapacity;i++)
+        {
+            System.out.println(this.itemSlots[i].getItem().getItemName()+": "+this.itemSlots[i].getStock()+" ---> "+this.originalInventory[i].getStock());
+        }
     }
 }

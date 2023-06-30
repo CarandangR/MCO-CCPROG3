@@ -15,11 +15,10 @@ public class Transaction {
         this.vendTotal = vendTotal;
     }
 
-    public void computeChange()
+    public int computeChange()
     {
-        this.change = userPay - item.getPrice();
-        this.vendTotal -= this.change;
-
+        this.change = userPay - item.getPrice()*Qty;
+        return change;
     }
 
     public void printTransaction()
