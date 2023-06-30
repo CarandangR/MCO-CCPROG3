@@ -12,6 +12,7 @@ public class RegularVM
     private String vendName;
     private int slotCapacity;
     private int itemCapacity;
+    boolean didMaintenance = false;
     private ArrayList<Transaction> transacHistory = new ArrayList<Transaction>();
 
     public RegularVM(String vendName, int slotCapacity, int itemCapacity)
@@ -151,53 +152,56 @@ public class RegularVM
         {
             choice = sc.nextInt()-1;
 
-            if(choice >= 0 || choice <= slotCapacity)
+            if(itemSlots[choice].getStock()>0)
             {
-                shoppingCart = itemSlots[choice];
-                do
+                if(choice >= 0 || choice <= slotCapacity)
                 {
-                    System.out.print("Please Input the quantity, [0] to cancel item: ");
-                    itemQty = sc.nextInt();
-
-                    if(itemQty < 0 || choice > itemCapacity)
+                    shoppingCart = itemSlots[choice];
+                    do
                     {
-                        System.out.println("Invalid Input");
-                    }
+                        System.out.print("Please Input the quantity, [0] to cancel item: ");
+                        itemQty = sc.nextInt();
 
-                    if(itemQty == 0)
-                    {
-                        control = 0;
-                    }
+                        if(itemQty < 0 || choice > itemCapacity)
+                        {
+                            System.out.println("Invalid Input");
+                        }
 
-                    if(itemQty*shoppingCart.getItem().getPrice() > userBalance.getTotalMoney())
-                    {
-                        System.out.println("Not enough inserted Money");
-                        itemQty = -1;
-                    }
-                }while(itemQty < 0 || choice > itemCapacity);
+                        if(itemQty == 0)
+                        {
+                            control = 0;
+                        }
 
-                shoppingCart.setStock(itemQty);
-                Transaction tempTransaction = new Transaction(shoppingCart.getItem(), shoppingCart.stock, userBalance.getTotalMoney(), vendBalance.getTotalMoney());
-                if(tempTransaction.computeChange() > vendBalance.getTotalMoney())
-                {
-                    System.out.println("Transaction cancelled, not enough change from the machine.");
-                }
-                else {
-                    transacHistory.add(tempTransaction);
-                    System.out.println("Change is: " + transacHistory.get(transacHistory.size() - 1).getChange());
-                    System.out.println("Dispensing item");
-                    itemSlots[choice].setStock(itemSlots[choice].getStock() - shoppingCart.getStock());
-                    System.out.println("Dispensing Money");
-                    getDenom(transacHistory.get(transacHistory.size() - 1).getChange(), vendBalance);
-                    userBalance.setToZero();
-                    //Transac History printing flag
-                    int ab;
-                    for(ab = 0; ab < transacHistory.size(); ab++)
+                        if(itemQty*shoppingCart.getItem().getPrice() > userBalance.getTotalMoney())
+                        {
+                            System.out.println("Not enough inserted Money");
+                            itemQty = -1;
+                        }
+                    }while(itemQty < 0 || choice > itemCapacity);
+
+                    shoppingCart.setStock(itemQty);
+                    Transaction tempTransaction = new Transaction(shoppingCart.getItem(), shoppingCart.stock, userBalance.getTotalMoney(), vendBalance.getTotalMoney());
+                    if(tempTransaction.computeChange() > vendBalance.getTotalMoney())
                     {
-                        transacHistory.get(ab).printTransaction();
+                        System.out.println("Transaction cancelled, not enough change from the machine.");
                     }
-                }
-            }    
+                    else {
+                        transacHistory.add(tempTransaction);
+                        System.out.println("Change is: " + transacHistory.get(transacHistory.size() - 1).getChange());
+                        System.out.println("Dispensing item");
+                        itemSlots[choice].setStock(itemSlots[choice].getStock() - shoppingCart.getStock());
+                        System.out.println("Dispensing Money");
+                        getDenom(transacHistory.get(transacHistory.size() - 1).getChange(), vendBalance);
+                        userBalance.setToZero();
+                        //Transac History printing flag
+                        int ab;
+                        for(ab = 0; ab < transacHistory.size(); ab++)
+                        {
+                            transacHistory.get(ab).printTransaction();
+                        }
+                    }
+                }    
+            }
 
             else if(choice == -1)
             {
@@ -206,7 +210,7 @@ public class RegularVM
             
             else
             {
-                System.out.println("Invalid Input");
+                System.out.println("Invalid Input/Item Out of Stock");
             }
         }
     }
@@ -553,5 +557,15 @@ public class RegularVM
         {
             System.out.println(this.itemSlots[i].getItem().getItemName()+": "+this.itemSlots[i].getStock()+" ---> "+this.originalInventory[i].getStock());
         }
+    }
+
+    public boolean didMaintain()
+    {
+        return this.didMaintenance;
+    }
+
+    public void setMaintain(boolean didMaintain)
+    {
+        this.didMaintenance = didMaintain;
     }
 }
