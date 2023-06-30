@@ -1,7 +1,6 @@
 package objects;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.ResourceBundle.Control;
 
 public class RegularVM
 {
@@ -49,7 +48,7 @@ public class RegularVM
 
     public void maintenance(Scanner sc)
     {
-        int control = 1, choice;
+        int control = 1, choice,i,restockChoice,priceChoice;
 
         while(control == 1)
         {
@@ -63,29 +62,57 @@ public class RegularVM
 
             if(choice == 1)
             {
-                restockItem(, sc);
+                for(i=0;i<slotCapacity;i++)
+                {
+                    displayItem(i);
+                }
+                do
+                {
+                    System.out.print("Please pick the item to restock: ");
+                    restockChoice = sc.nextInt()-1;
+                    if(restockChoice < 0 || restockChoice > slotCapacity)
+                    {
+                        System.out.println("Invalid Input");
+                    }
+                }while(restockChoice < 0 || restockChoice > slotCapacity);
+
+                restockItem(restockChoice, sc);
             }
 
             if(choice == 2)
             {
+                for(i=0;i<slotCapacity;i++)
+                {
+                    displayItem(i);
+                }
+                do
+                {
+                    System.out.print("Please pick the item to set the price: ");
+                    priceChoice = sc.nextInt()-1;
+                    if(priceChoice < 0 || priceChoice > slotCapacity)
+                    {
+                        System.out.println("Invalid Input");
+                    }
+                }while(priceChoice < 0 || priceChoice > slotCapacity);
 
+                setPrice(priceChoice, sc);
             }
 
             if(choice == 3)
             {
-
+                collectMoney(sc);
             }
 
             if(choice == 4)
             {
-
+                restockMoney(sc);
             }
         }
     }
 
     public void insertMoney(Scanner sc)
     {
-        addMoney(inputMoney(sc),vendBalance,sc);
+        addMoney(inputMoney(sc),userBalance,sc);
     }
 
     public void vendTransaction(Scanner sc)
@@ -350,6 +377,6 @@ public class RegularVM
 
     private void displayItem(int slotNum)
     {
-        System.out.println("");
+        System.out.println("["+(slotNum+1)+"] "+itemSlots[slotNum].getItem().getItemName());
     }
 }
