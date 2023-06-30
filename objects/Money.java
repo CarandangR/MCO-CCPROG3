@@ -5,7 +5,6 @@ public class Money
     private int coin1;
     private int coin5;
     private int coin10;
-    private int coin20;
     private int bill20;
     private int bill50;
     private int bill100;
@@ -19,7 +18,6 @@ public class Money
         this.coin1 = 0;
         this.coin5 = 0;
         this.coin10 = 0;
-        this.coin20 = 0;
         this.bill20 = 0;
         this.bill50 = 0;
         this.bill100 = 0;
@@ -56,16 +54,6 @@ public class Money
     public void setCoin10(int coin10)
     {
         this.coin10 = coin10;
-    }
-
-    public int getCoin20()
-    {
-        return coin20;
-    }
-
-    public void setCoin20(int coin20)
-    {
-        this.coin20 = coin20;
     }
 
     public int getBill20()
@@ -135,7 +123,7 @@ public class Money
 
     public void setTotalMoney(int totalMoney)
     {
-        totalMoney = (getCoin1()*1) + (getCoin5()*5) + (getCoin10()*10) + (getCoin20()*20) + (getBill20()*20) + (getBill50()*50) 
+        totalMoney = (getCoin1()*1) + (getCoin5()*5) + (getCoin10()*10) + (getBill20()*20) + (getBill50()*50) 
                      + (getBill100()*100) + (getBill200()*200) + (getBill500()*500) + (getBill1000()*1000);
         this.totalMoney = totalMoney;
     }
@@ -145,7 +133,6 @@ public class Money
         this.coin1 = 0;
         this.coin5 = 0;
         this.coin10 = 0;
-        this.coin20 = 0;
         this.bill20 = 0;
         this.bill50 = 0;
         this.bill100 = 0;

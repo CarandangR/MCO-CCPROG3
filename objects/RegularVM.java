@@ -114,6 +114,7 @@ public class RegularVM
     public void insertMoney(Scanner sc)
     {
         addMoney(inputMoney(sc),userBalance,sc);
+        addMoney(inputMoney(sc),vendBalance,sc);
     }
 
     public void vendTransaction(Scanner sc)
@@ -131,6 +132,7 @@ public class RegularVM
 
             if(choice >= 0 || choice <= slotCapacity)
             {
+                shoppingCart = itemSlots[choice];
                 do
                 {
                     System.out.print("Please Input the quantity, [0] to cancel item: ");
@@ -140,12 +142,29 @@ public class RegularVM
                     {
                         System.out.println("Invalid Input");
                     }
-                    
+
                     if(itemQty == 0)
                     {
                         control = 0;
                     }
+
+                    if(itemQty*shoppingCart.getItem().getPrice() > userBalance.getTotalMoney())
+                    {
+                        System.out.println("Not enough inserted Money");
+                        itemQty = -1;
+                    }
                 }while(itemQty < 0 || choice > itemCapacity);
+
+                shoppingCart.setStock(itemQty);
+
+                transacHistory.add(new Transaction(shoppingCart.getItem(), shoppingCart.stock, userBalance.getTotalMoney(), vendBalance.getTotalMoney()));
+
+                System.out.println("Change is: "+transacHistory.get(transacHistory.size()-1).getChange());
+                System.out.println("Dispensing item");
+                itemSlots[choice].setStock(itemSlots[choice].getStock()-shoppingCart.getStock());
+                System.out.println("Dispensing Money");
+                getDenom(transacHistory.get(transacHistory.size()-1).getChange(), vendBalance);
+                userBalance.setToZero();
             }    
 
             else if(choice == -1)
@@ -205,13 +224,12 @@ public class RegularVM
         System.out.println("[1] 1 Php Coin");
         System.out.println("[2] 5 Php Coin");
         System.out.println("[3] 10 Php Coin");
-        System.out.println("[4] 20 Php Coin");
-        System.out.println("[5] 20 Php Bill");
-        System.out.println("[6] 50 Php Bill");
-        System.out.println("[7] 100 Php Bill");
-        System.out.println("[8] 200 Php Bill");
-        System.out.println("[9] 500 Php Bill");
-        System.out.println("[10] 1000 Php Bill");
+        System.out.println("[4] 20 Php Bill");
+        System.out.println("[5] 50 Php Bill");
+        System.out.println("[6] 100 Php Bill");
+        System.out.println("[7] 200 Php Bill");
+        System.out.println("[8] 500 Php Bill");
+        System.out.println("[9] 1000 Php Bill");
         System.out.println("[0] Exit");
 
         return sc.nextInt();
@@ -278,7 +296,7 @@ public class RegularVM
                         }
                     }while(quantity < 0);
 
-                    balance.setCoin20(balance.getCoin20()+quantity);
+                    balance.setBill20(balance.getBill20()+quantity);
                     break;
 
                 case(5):
@@ -292,7 +310,7 @@ public class RegularVM
                         }
                     }while(quantity < 0);
 
-                    balance.setBill20(balance.getBill20()+quantity);
+                    balance.setBill50(balance.getBill50()+quantity);
                     break;
 
                 case(6):
@@ -306,7 +324,7 @@ public class RegularVM
                         }
                     }while(quantity < 0);
 
-                    balance.setBill50(balance.getBill50()+quantity);
+                    balance.setBill100(balance.getBill100()+quantity);
                     break;
 
                 case(7):
@@ -320,7 +338,7 @@ public class RegularVM
                         }
                     }while(quantity < 0);
 
-                    balance.setBill100(balance.getBill100()+quantity);
+                    balance.setBill200(balance.getBill200()+quantity);
                     break;
 
                 case(8):
@@ -334,24 +352,10 @@ public class RegularVM
                         }
                     }while(quantity < 0);
 
-                    balance.setBill200(balance.getBill200()+quantity);
-                    break;
-
-                case(9):
-                    do
-                    {
-                        System.out.print("Please Input the quantity you want to add");
-                        quantity = sc.nextInt();
-                        if(quantity < 0)
-                        {
-                            System.out.println("Invalid Input, please Try again.");
-                        }
-                    }while(quantity < 0);
-
                     balance.setBill500(balance.getBill500()+quantity);
                     break;
 
-                case(10):
+                case(9):
                     do
                     {
                         System.out.print("Please Input the quantity you want to add");
@@ -417,6 +421,66 @@ public class RegularVM
 
     private void displayItem(int slotNum)
     {
-        System.out.println("["+(slotNum+1)+"] "+itemSlots[slotNum].getItem().getItemName());
+        System.out.println("["+(slotNum+1)+"] "+itemSlots[slotNum].getItem().getItemName()+" Calories: "+itemSlots[slotNum].getItem().getCalories());
     }
+
+    private void getDenom(int change, Money vendBalance)
+    {
+        int[] notes = new int[]{1000,500,200,100,50,20,10,5,1};
+        int[] notesCounter = new int[9];
+        int i,j;
+
+        for(i=0; i<9;i++)
+        {
+            if(change >= notes[i])
+            {
+                notesCounter[i] = change / notes[i];
+                change = change % notes[i];
+            }
+        }
+
+        for(i=0; i<9;i++)
+        {
+            if(notesCounter[i] != 0)
+            {
+                if(notes[i]==1000)
+                {
+                    vendBalance.setBill1000(vendBalance.getBill1000()+notesCounter[i]);
+                }
+                else if(notes[i]==500)
+                {
+                    vendBalance.setBill500(vendBalance.getBill500()+notesCounter[i]);
+                }
+                else if(notes[i]==200)
+                {
+                    vendBalance.setBill200(vendBalance.getBill200()+notesCounter[i]);
+                }
+                else if(notes[i]==100)
+                {
+                    vendBalance.setBill100(vendBalance.getBill100()+notesCounter[i]);
+                }
+                else if(notes[i]==50)
+                {
+                    vendBalance.setBill50(vendBalance.getBill50()+notesCounter[i]);
+                }
+                else if(notes[i]==20)
+                {
+                    vendBalance.setBill20(vendBalance.getBill20()+notesCounter[i]);
+                }
+                else if(notes[i]==10)
+                {
+                    vendBalance.setCoin10(vendBalance.getCoin10()+notesCounter[i]);
+                }
+                else if(notes[i]==5)
+                {   
+                    vendBalance.setCoin5(vendBalance.getCoin5()+notesCounter[i]);
+                }
+                else if(notes[i]==1)
+                {
+                    vendBalance.setCoin1(vendBalance.getCoin1()+notesCounter[i]);
+                }
+                System.out.println(notes[i]+" php : "+notesCounter[i]);
+            }
+        }
+    }   
 }
