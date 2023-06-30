@@ -35,6 +35,7 @@ public class Main
                 String vendName;
                 do
                 {
+                    sc.nextLine();
                     System.out.print("Vend name: ");
                     vendName = sc.nextLine();
                     System.out.print("Number of Slots (Min: 8): ");
@@ -44,12 +45,13 @@ public class Main
 
                     if(slotCap < 8 || itemCap < 10)
                     {
-                        System.out.print("Invalid Input");
+                        System.out.println("Invalid Input");
                     }
 
                 }while(slotCap < 8 || itemCap < 10);
 
                 regularVending = new RegularVM(vendName, slotCap, itemCap);
+                sc.nextLine();
                 regularVending.setSlots(sc);
                 hasVend = true;
                 
@@ -85,6 +87,7 @@ public class Main
                 if(hasVend)
                 {
                     regularVending.maintenance(sc);
+                    regularVending.setMaintain(true);
                 }
 
                 else

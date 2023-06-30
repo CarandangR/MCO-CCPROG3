@@ -304,7 +304,7 @@ public class RegularVM
                 case(2):
                     do
                     {
-                        System.out.print("Please Input the quantity you want to add");
+                        System.out.print("Please Input the quantity you want to add: ");
                         quantity = sc.nextInt();
                         if(quantity < 0)
                         {
@@ -319,7 +319,7 @@ public class RegularVM
                 case(3):
                     do
                     {
-                        System.out.print("Please Input the quantity you want to add");
+                        System.out.print("Please Input the quantity you want to add: ");
                         quantity = sc.nextInt();
                         if(quantity < 0)
                         {
@@ -334,7 +334,7 @@ public class RegularVM
                 case(4):
                     do
                     {
-                        System.out.print("Please Input the quantity you want to add");
+                        System.out.print("Please Input the quantity you want to add: ");
                         quantity = sc.nextInt();
                         if(quantity < 0)
                         {
@@ -349,7 +349,7 @@ public class RegularVM
                 case(5):
                     do
                     {
-                        System.out.print("Please Input the quantity you want to add");
+                        System.out.print("Please Input the quantity you want to add: ");
                         quantity = sc.nextInt();
                         if(quantity < 0)
                         {
@@ -364,7 +364,7 @@ public class RegularVM
                 case(6):
                     do
                     {
-                        System.out.print("Please Input the quantity you want to add");
+                        System.out.print("Please Input the quantity you want to add: ");
                         quantity = sc.nextInt();
                         if(quantity < 0)
                         {
@@ -379,7 +379,7 @@ public class RegularVM
                 case(7):
                     do
                     {
-                        System.out.print("Please Input the quantity you want to add");
+                        System.out.print("Please Input the quantity you want to add: ");
                         quantity = sc.nextInt();
                         if(quantity < 0)
                         {
@@ -394,7 +394,7 @@ public class RegularVM
                 case(8):
                     do
                     {
-                        System.out.print("Please Input the quantity you want to add");
+                        System.out.print("Please Input the quantity you want to add: ");
                         quantity = sc.nextInt();
                         if(quantity < 0)
                         {
@@ -409,7 +409,7 @@ public class RegularVM
                 case(9):
                     do
                     {
-                        System.out.print("Please Input the quantity you want to add");
+                        System.out.print("Please Input the quantity you want to add: ");
                         quantity = sc.nextInt();
                         if(quantity < 0)
                         {
