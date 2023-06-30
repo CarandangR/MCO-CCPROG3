@@ -4,8 +4,11 @@ public class Slots {
     Items item;
     int stock;
 
-    public Slots()
-    {}
+    public Slots(Items item, int stock)
+    {
+        this.item = item;
+        this.stock = stock;
+    }
 
     public Items getItem()
     {

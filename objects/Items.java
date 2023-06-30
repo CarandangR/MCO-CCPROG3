@@ -5,8 +5,12 @@ public class Items {
     private float calories;
     private int price;
 
-    public Items()
-    {}
+    public Items(String itemName, float calories, int price)
+    {
+        this.itemName = itemName;
+        this.calories = calories;
+        this.price = price;
+    }
 
     public String getItemName()
     {

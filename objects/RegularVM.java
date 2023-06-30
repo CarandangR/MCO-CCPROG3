@@ -29,29 +29,58 @@ public class RegularVM
 
     private Slots getSlotInput(Scanner sc)
     {
-        Slots tempSlots = new Slots();
-        tempSlots.setItem(getItemInput(sc));
-        tempSlots.setStock(0);
-
-        return tempSlots;
+        return new Slots(getItemInput(sc),0);
     }   
 
     private Items getItemInput(Scanner sc)
     {
-        Items tempItems = new Items();
+        String name;
+        float calories;
+        int price;
         System.out.print("Please Input the Name of the Item: ");
-        tempItems.setItemName(sc.nextLine());
+        name = sc.nextLine();
         System.out.print("Please Input the Calories of the Item: ");
-        tempItems.setCalories(sc.nextFloat());
+        calories = sc.nextFloat();
         System.out.print("Please Input the Price of the Item: ");
-        tempItems.setPrice(sc.nextInt());
+        price = sc.nextInt();
 
-        return tempItems;
+        return new Items(name,calories,price);
     }
 
-    public void maintenance()
+    public void maintenance(Scanner sc)
     {
+        int control = 1, choice;
 
+        while(control == 1)
+        {
+            System.out.println("[Maintenance Mode]");
+            System.out.println("[1] Restock Item");
+            System.out.println("[2] Set Price");
+            System.out.println("[3] Collect Money and Transaction");
+            System.out.println("[4] Restock");
+            System.out.println("[5] Exit");
+            choice = sc.nextInt();
+
+            if(choice == 1)
+            {
+                restockItem(, sc);
+            }
+
+            if(choice == 2)
+            {
+
+            }
+
+            if(choice == 3)
+            {
+
+            }
+
+            if(choice == 4)
+            {
+
+            }
+        }
     }
 
     public void insertMoney(Scanner sc)
@@ -317,5 +346,10 @@ public class RegularVM
 
             itemSlots[slotNum].setStock(restockAmount+itemSlots[slotNum].getStock());
         }
+    }
+
+    private void displayItem(int slotNum)
+    {
+        System.out.println("");
     }
 }

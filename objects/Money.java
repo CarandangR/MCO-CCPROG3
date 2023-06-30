@@ -15,7 +15,18 @@ public class Money
     private int totalMoney;
 
     public Money()
-    {}
+    {
+        this.coin1 = 0;
+        this.coin5 = 0;
+        this.coin10 = 0;
+        this.coin20 = 0;
+        this.bill20 = 0;
+        this.bill50 = 0;
+        this.bill100 = 0;
+        this.bill200 = 0;
+        this.bill500 = 0;
+        this.bill1000 = 0;
+    }
 
     public int getCoin1()
     {
