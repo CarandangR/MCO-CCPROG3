@@ -137,6 +137,7 @@ public class RegularVM
 
     public void vendTransaction(Scanner sc)
     {
+        System.out.println("Testing: "+vendName);
         int i, choice, itemQty,control=1;
         insertMoney(sc);
         System.out.println("What Item Would You Like to Buy:");
