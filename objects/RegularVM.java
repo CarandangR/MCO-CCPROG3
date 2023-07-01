@@ -112,7 +112,7 @@ public class RegularVM
 
         while(control == 1)
         {
-            System.out.println("[Maintenance Mode]");
+            System.out.println("[Maintenance Mode:"+vendName+"]");
             System.out.println("[1] Restock Item");
             System.out.println("[2] Set Price");
             System.out.println("[3] Collect Money and Transaction");
@@ -192,6 +192,7 @@ public class RegularVM
      */
     public void vendTransaction(Scanner sc)
     {
+        System.out.println("Testing Vending Machine: "+vendName);
         int i, choice, itemQty,control=1;
         while(control == 1)
         {
@@ -661,7 +662,7 @@ public class RegularVM
     {
         int i;
 
-        System.out.println("These are how the Items Were Update Since Last Restock: ");
+        System.out.println("These are how the Items Were Updated Since Last Restock: ");
         for(i=0;i < this.slotCapacity;i++)
         {
             System.out.println("["+(i+1)+"] "+this.itemSlots[i].getItem().getItemName()+": "+this.itemSlots[i].getStock()+" ---> "+this.originalInventory[i].getStock());
