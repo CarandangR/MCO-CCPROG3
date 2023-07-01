@@ -1,3 +1,13 @@
+/**
+ * The Main Java file to run RegularVM.
+ * @author Matthew Ryan C. Carandang
+ * @author Matthew Ryan C. Carandang
+ * @version 1.0
+ * Section: X22A
+ * 
+ * The package objects contains all objects used to run the RegularVM object
+ * and allows it to be used in main.
+ */
 import objects.RegularVM;
 import java.util.Scanner;
 public class Main 

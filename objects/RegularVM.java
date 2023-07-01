@@ -1,3 +1,15 @@
+/**
+ * The Java file for the Object "RegularVM" Which contains important variables.
+ * This simulates the Vending machine itself. Which makes use of all objects such as slots,
+ * items, and money.
+ * @author Matthew Ryan C. Carandang
+ * @author Peter Benjamin A. Tan
+ * @version 1.0
+ * Section: X22A
+ * 
+ * The package objects contains all objects used to run the RegularVM object
+ * and allows it to be used in main.
+ */
 package objects;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -15,6 +27,16 @@ public class RegularVM
     private boolean didMaintenance = false;
     private ArrayList<Transaction> transacHistory = new ArrayList<Transaction>();
 
+    /**
+     * Constructor for the RegularVM object. Which sets values for the
+     * variables of the RegularVM
+     * @param vendName
+     * A String that sets the name of the Vending Machine.
+     * @param slotCapacity
+     * Sets the integer of the maximum capacity of individual Slots.
+     * @param itemCapacity
+     * Sets the integer of the mximum capacity of the Stock of each Slot.
+     */
     public RegularVM(String vendName, int slotCapacity, int itemCapacity)
     {
         this.vendName = vendName;
@@ -24,6 +46,11 @@ public class RegularVM
         originalInventory = new Slots[slotCapacity];
     }
 
+    /**
+     * Method that asks for user input for each Item Slots.
+     * @param sc
+     * Scanner that will be used for inputs.
+     */
     public void setSlots(Scanner sc)
     {
         int i;
@@ -34,11 +61,23 @@ public class RegularVM
         }
     }
 
+    /**
+     * A helper method for getting input for each slot and returns Slots object.
+     * @param sc
+     * Scanner that will be used for inputs.
+     * @return Slots
+     */
     private Slots getSlotInput(Scanner sc)
     {
         return new Slots(getItemInput(sc),0);
     }   
 
+    /**
+     * A helper method for getting input for each item for each slot and return Item object.
+     * @param sc
+     * Scanner that will be used for inputs.
+     * @return Items
+     */
     private Items getItemInput(Scanner sc)
     {
         String name;
@@ -62,6 +101,11 @@ public class RegularVM
         return new Items(name,calories,price);
     }
 
+    /**
+     * A method to run maintenance of the vending machine.
+     * @param sc
+     * Scanner that will be used for inputs.
+     */
     public void maintenance(Scanner sc)
     {
         int control = 1, choice,i,restockChoice,priceChoice;
@@ -128,30 +172,40 @@ public class RegularVM
         }
     }
 
+    /**
+     * A helper method that accepts user input for money.
+     * @param sc
+     * Scanner that will be used for inputs.
+     */
     private void insertMoney(Scanner sc)
     {
+        System.out.println("[INPUTTING MONEY]");
         int i = inputMoney(sc);
         addMoney(i,userBalance,sc);
         add2Balances(userBalance,vendBalance);
     }
 
+    /**
+     * A Method the processes the transaction of the vending machine.
+     * @param sc
+     * Scanner that will be used for inputs.
+     */
     public void vendTransaction(Scanner sc)
     {
-        System.out.println("Testing: "+vendName);
         int i, choice, itemQty,control=1;
-        insertMoney(sc);
-        System.out.println("What Item Would You Like to Buy:");
-        for(i=0; i < slotCapacity;i++)
-        {
-            displayItem(i);
-        }
         while(control == 1)
         {
+            insertMoney(sc);
+            System.out.println("What Item Would You Like to Buy:");
+            for(i=0; i < slotCapacity;i++)
+            {
+                displayItem(i);
+            }
             choice = sc.nextInt()-1;
 
             if(itemSlots[choice].getStock()>0)
             {
-                if(choice >= 0 || choice <= slotCapacity)
+                if(choice > 0 || choice <= slotCapacity)
                 {
                     shoppingCart = itemSlots[choice];
                     do
@@ -178,27 +232,27 @@ public class RegularVM
 
                     shoppingCart.setStock(itemQty);
                     Transaction tempTransaction = new Transaction(shoppingCart.getItem(), shoppingCart.getStock(), userBalance.getTotalMoney(), vendBalance.getTotalMoney());
-                    if(tempTransaction.computeChange() > vendBalance.getTotalMoney())
+                    tempTransaction.computeChange();
+                    transacHistory.add(tempTransaction);
+                    if(compareDenom(vendBalance, getDenom(tempTransaction.computeChange())))
                     {
                         System.out.println("Transaction cancelled, not enough change from the machine.");
+                        transacHistory.remove(transacHistory.size()-1);
                     }
                     else {
-                        transacHistory.add(tempTransaction);
-                        System.out.println("Change is: " + transacHistory.get(transacHistory.size() - 1).getChange());
                         System.out.println("Dispensing item");
                         itemSlots[choice].setStock(itemSlots[choice].getStock() - shoppingCart.getStock());
                         System.out.println("Dispensing Money");
-                        getDenom(transacHistory.get(transacHistory.size() - 1).getChange(), vendBalance);
+                        compareDenom(vendBalance, getDenom(transacHistory.get(transacHistory.size() - 1).getChange()));
                         tempTransaction.setVendTotal(vendBalance.getTotalMoney());
                         userBalance.setToZero();
-                        //Transac History printing f lag
                         int ab;
                         for(ab = 0; ab < transacHistory.size(); ab++)
                         {
                             transacHistory.get(ab).printTransaction();
                         }
                     }
-                }    
+                }
             }
 
             else if(choice == -1)
@@ -213,12 +267,22 @@ public class RegularVM
         }
     }
 
+    /**
+     * A helper method that restocks the vending machine's balance.
+     * @param sc
+     * Scanner that will be used for inputs.
+     */
     private void restockMoney(Scanner sc)
     {
         int i = inputMoney(sc);
         addMoney(i,vendBalance,sc);
     }
 
+    /**
+     * A helper method that collects the vending machine's balance.
+     * @param sc
+     * Scanner that will be used for inputs.
+     */
     private void collectMoney(Scanner sc)
     {
         int choice,i;
@@ -253,6 +317,12 @@ public class RegularVM
 
     }
 
+    /**
+     * A helper method that gets input from the user.
+     * @param sc
+     * Scanner that will be used for inputs.
+     * @return denomInput
+     */
     private int inputMoney(Scanner sc)
     {
         int denomInput;
@@ -267,7 +337,7 @@ public class RegularVM
             System.out.println("[7] 200 Php Bill");
             System.out.println("[8] 500 Php Bill");
             System.out.println("[9] 1000 Php Bill");
-            System.out.println("[0] Exit");
+            System.out.println("[0] Continue");
             denomInput = sc.nextInt();
             if(denomInput < 0 || denomInput > 9){
                 System.out.println("Invalid Choice.");
@@ -276,12 +346,22 @@ public class RegularVM
         return denomInput;
     }
 
+    /**
+     * A helper method that Adds money to the specified money object.
+     * @param choice
+     * An integer that acts as the decision of the user.
+     * @param balance
+     * The money object to be updated.
+     * @param sc
+     * Scanner that will be used for inputs.
+     */
     private void addMoney(int choice, Money balance, Scanner sc)
     {
         int quantity, control = 1;
 
         while(control == 1)
         {
+            System.out.println("User Input: ");
             switch(choice)
             {
                 case(1):
@@ -296,7 +376,6 @@ public class RegularVM
                     }while(quantity < 0);
 
                     balance.setCoin1(balance.getCoin1()+quantity);
-                    control = 0;
                     break;
 
                 case(2):
@@ -311,7 +390,6 @@ public class RegularVM
                     }while(quantity < 0);
 
                     balance.setCoin5(balance.getCoin5()+quantity);
-                    control = 0;
                     break;
 
                 case(3):
@@ -326,7 +404,6 @@ public class RegularVM
                     }while(quantity < 0);
 
                     balance.setCoin10(balance.getCoin10()+quantity);
-                    control = 0;
                     break;
 
                 case(4):
@@ -341,7 +418,6 @@ public class RegularVM
                     }while(quantity < 0);
 
                     balance.setBill20(balance.getBill20()+quantity);
-                    control = 0;
                     break;
 
                 case(5):
@@ -356,7 +432,6 @@ public class RegularVM
                     }while(quantity < 0);
 
                     balance.setBill50(balance.getBill50()+quantity);
-                    control = 0;
                     break;
 
                 case(6):
@@ -371,7 +446,6 @@ public class RegularVM
                     }while(quantity < 0);
 
                     balance.setBill100(balance.getBill100()+quantity);
-                    control = 0;
                     break;
 
                 case(7):
@@ -386,7 +460,6 @@ public class RegularVM
                     }while(quantity < 0);
 
                     balance.setBill200(balance.getBill200()+quantity);
-                    control = 0;
                     break;
 
                 case(8):
@@ -401,7 +474,6 @@ public class RegularVM
                     }while(quantity < 0);
 
                     balance.setBill500(balance.getBill500()+quantity);
-                    control = 0;
                     break;
 
                 case(9):
@@ -416,7 +488,6 @@ public class RegularVM
                     }while(quantity < 0);
 
                     balance.setBill1000(balance.getBill1000()+quantity);
-                    control = 0;
                     break;
 
                 case(0):
@@ -429,6 +500,13 @@ public class RegularVM
         }
     }
 
+    /**
+     * A helper method that sets the price of each item.
+     * @param slotNum
+     * An integer that represents which slot to edit.
+     * @param sc
+     * Scanner that will be used for inputs.
+     */
     private void setPrice(int slotNum, Scanner sc)
     {
         int repriceValue;
@@ -446,6 +524,13 @@ public class RegularVM
         System.out.println("The new price of "+itemSlots[slotNum].getItem().getItemName()+" is "+itemSlots[slotNum].getItem().getPrice());
     }
 
+    /**
+     * A helper method that restocks a specified item.
+     * @param slotNum
+     * An integer that represents which slot to edit.
+     * @param sc
+     * Scanner that will be used for inputs.
+     */
     private void restockItem(int slotNum, Scanner sc)
     {
         int restockAmount;
@@ -471,13 +556,27 @@ public class RegularVM
         }
     }
 
+    /**
+     * A helper method that displays a specific slot.
+     * @param slotNum
+     * An intger that represents which slot to display.
+     */
     private void displayItem(int slotNum)
     {
-        System.out.println("["+(slotNum+1)+"] "+itemSlots[slotNum].getItem().getItemName()+" Calories: "+itemSlots[slotNum].getItem().getCalories());
+        System.out.println("["+(slotNum+1)+"] "+itemSlots[slotNum].getItem().getItemName()+" | Calories: "+itemSlots[slotNum].getItem().getCalories()+" | Price: "+itemSlots[slotNum].getItem().getPrice());
     }
 
-    private void getDenom(int change, Money vendBalance)
+    /**
+     * A helper method that processes the given change into 
+     * denominations and stores and returns them into a Money object.
+     * @param change
+     * An integer that represents the change of the transaction which will be turned
+     * into denominations.
+     * @return Money
+     */
+    private Money getDenom(int change)
     {
+        Money tempMoney = new Money();
         int[] notes = new int[]{1000,500,200,100,50,20,10,5,1};
         int[] notesCounter = new int[9];
         int i;
@@ -497,45 +596,51 @@ public class RegularVM
             {
                 if(notes[i]==1000)
                 {
-                    vendBalance.setBill1000(vendBalance.getBill1000()-notesCounter[i]);
+                    tempMoney.setBill1000(notesCounter[i]);
                 }
                 else if(notes[i]==500)
                 {
-                    vendBalance.setBill500(vendBalance.getBill500()-notesCounter[i]);
+                    tempMoney.setBill500(notesCounter[i]);
                 }
                 else if(notes[i]==200)
                 {
-                    vendBalance.setBill200(vendBalance.getBill200()-notesCounter[i]);
+                    tempMoney.setBill200(notesCounter[i]);
                 }
                 else if(notes[i]==100)
                 {
-                    vendBalance.setBill100(vendBalance.getBill100()-notesCounter[i]);
+                    tempMoney.setBill100(notesCounter[i]);
                 }
                 else if(notes[i]==50)
                 {
-                    vendBalance.setBill50(vendBalance.getBill50()-notesCounter[i]);
+                    tempMoney.setBill50(notesCounter[i]);
                 }
                 else if(notes[i]==20)
                 {
-                    vendBalance.setBill20(vendBalance.getBill20()-notesCounter[i]);
+                    tempMoney.setBill20(notesCounter[i]);
                 }
                 else if(notes[i]==10)
                 {
-                    vendBalance.setCoin10(vendBalance.getCoin10()-notesCounter[i]);
+                    tempMoney.setCoin10(notesCounter[i]);
                 }
                 else if(notes[i]==5)
-                {   
-                    vendBalance.setCoin5(vendBalance.getCoin5()-notesCounter[i]);
-                }
-                else if(notes[i]==1)
                 {
-                    vendBalance.setCoin1(vendBalance.getCoin1()-notesCounter[i]);
+                    tempMoney.setCoin5(notesCounter[i]);
                 }
-                System.out.println(notes[i]+" php : "+notesCounter[i]);
+                else if(notes[i]==1) {
+                    tempMoney.setCoin1(notesCounter[i]);
+                }
             }
         }
+        return tempMoney;
     }   
 
+    /**
+     * A helper method which adds the contents of the Money objects.
+     * @param userBalance
+     * A money object which represents the user's balance.
+     * @param vendBalance
+     * A money object whcih represents the vending machine's balance.
+     */
     private void add2Balances(Money userBalance, Money vendBalance)
     {
         vendBalance.setCoin1(vendBalance.getCoin1()+userBalance.getCoin1());
@@ -549,6 +654,9 @@ public class RegularVM
         vendBalance.setBill1000(vendBalance.getBill1000()+userBalance.getBill1000());
     }
 
+    /**
+     * A helper method which displays the before and after stock of items.
+     */
     private void displayStocks()
     {
         int i;
@@ -560,13 +668,86 @@ public class RegularVM
         }
     }
 
+    /**
+     * A helper method to determine if the vending machine has underwent maintenance.
+     * @return boolean
+     */
     public boolean didMaintain()
     {
         return this.didMaintenance;
     }
 
+    /**
+     * Sets the status of a vending machine's didMaintenance variable.
+     * @param didMaintain
+     */
     public void setMaintain(boolean didMaintain)
     {
         this.didMaintenance = didMaintain;
+    }
+
+    /**
+     * A helper method which compares to money objects.
+     * Used for checking if the vending machine has enough bills/coins
+     * to provide change.
+     * @param vendMoney
+     * Represents the money object of the vending machine.
+     * @param changeMoney
+     * Represents the money object of the change produced.
+     * @return
+     */
+    private boolean compareDenom(Money vendMoney, Money changeMoney)
+    {
+        boolean flag = false;
+        if(vendMoney.getBill1000() < changeMoney.getBill1000())
+        {
+            flag = true;
+        }
+
+        else if(vendMoney.getBill500() < changeMoney.getBill500())
+        {
+            flag = true;
+        }
+        else if(vendMoney.getBill200() < changeMoney.getBill200())
+        {
+            flag = true;
+        }
+        else if(vendMoney.getBill100() < changeMoney.getBill100())
+        {
+            flag = true;
+        }
+        else if(vendMoney.getBill50() < changeMoney.getBill50())
+        {
+            flag = true;
+        }
+        else if(vendMoney.getBill20() < changeMoney.getBill20())
+        {
+            flag = true;
+        }
+        else if(vendMoney.getCoin10() < changeMoney.getCoin10())
+        {
+            flag = true;
+        }
+        else if(vendMoney.getCoin5() < changeMoney.getCoin5())
+        {
+            flag = true;
+        }
+        else if(vendMoney.getCoin1() < changeMoney.getCoin1())
+        {
+            flag = true;
+        }
+        else if(!flag)
+        {
+            vendMoney.setBill1000(vendMoney.getBill1000()-changeMoney.getBill1000());
+            vendMoney.setBill500(vendMoney.getBill500()-changeMoney.getBill500());
+            vendMoney.setBill200(vendMoney.getBill200()-changeMoney.getBill200());
+            vendMoney.setBill100(vendMoney.getBill100()-changeMoney.getBill100());
+            vendMoney.setBill50(vendMoney.getBill50()-changeMoney.getBill50());
+            vendMoney.setBill20(vendMoney.getBill20()-changeMoney.getBill20());
+            vendMoney.setCoin10(vendMoney.getCoin10()-changeMoney.getCoin10());
+            vendMoney.setCoin5(vendMoney.getCoin5()-changeMoney.getCoin5());
+            vendMoney.setCoin1(vendMoney.getCoin1()-changeMoney.getCoin1());
+        }
+        return flag;
     }
 }
