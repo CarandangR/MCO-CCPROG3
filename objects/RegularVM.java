@@ -7,7 +7,7 @@ public class RegularVM
     private Slots[] itemSlots;
     private Slots[] originalInventory;
     private Slots shoppingCart;
-    public Money vendBalance = new Money();
+    private Money vendBalance = new Money();
     private Money userBalance = new Money();
     private String vendName;
     private int slotCapacity;
@@ -17,7 +17,6 @@ public class RegularVM
 
     public RegularVM(String vendName, int slotCapacity, int itemCapacity)
     {
-        int i;
         this.vendName = vendName;
         this.itemCapacity = itemCapacity;
         this.slotCapacity = slotCapacity;
@@ -177,7 +176,7 @@ public class RegularVM
                     }while(itemQty < 0 || choice > itemCapacity);
 
                     shoppingCart.setStock(itemQty);
-                    Transaction tempTransaction = new Transaction(shoppingCart.getItem(), shoppingCart.stock, userBalance.getTotalMoney(), vendBalance.getTotalMoney());
+                    Transaction tempTransaction = new Transaction(shoppingCart.getItem(), shoppingCart.getStock(), userBalance.getTotalMoney(), vendBalance.getTotalMoney());
                     if(tempTransaction.computeChange() > vendBalance.getTotalMoney())
                     {
                         System.out.println("Transaction cancelled, not enough change from the machine.");
@@ -220,7 +219,7 @@ public class RegularVM
 
     private void collectMoney(Scanner sc)
     {
-        int choice,i,j;
+        int choice,i;
         do
         {
         System.out.println("Would you like to collect the money?");
@@ -479,7 +478,7 @@ public class RegularVM
     {
         int[] notes = new int[]{1000,500,200,100,50,20,10,5,1};
         int[] notesCounter = new int[9];
-        int i,j;
+        int i;
 
         for(i=0; i<9;i++)
         {

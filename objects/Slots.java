@@ -1,8 +1,8 @@
 package objects;
 
 public class Slots {
-    Items item;
-    int stock;
+    private Items item;
+    private int stock;
 
     public Slots(Items item, int stock)
     {
