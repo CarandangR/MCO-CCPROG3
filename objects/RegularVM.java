@@ -179,7 +179,6 @@ public class RegularVM
      */
     private void insertMoney(Scanner sc)
     {
-        System.out.println("[INPUTTING MONEY]");
         int i = inputMoney(sc);
         addMoney(i,userBalance,sc);
         add2Balances(userBalance,vendBalance);
@@ -196,7 +195,15 @@ public class RegularVM
         int i, choice, itemQty,control=1;
         while(control == 1)
         {
-            insertMoney(sc);
+            int decision;
+            do
+            {
+                insertMoney(sc);
+                System.out.println("Would you like add more?");
+                System.out.println("[1] Yes");
+                System.out.println("[2] No");
+                decision = sc.nextInt();
+            }while(decision != 2);
             System.out.println("What Item Would You Like to Buy:");
             for(i=0; i < slotCapacity;i++)
             {
@@ -265,6 +272,8 @@ public class RegularVM
             {
                 System.out.println("Invalid Input/Item Out of Stock");
             }
+
+            control = 0;
         }
     }
 
@@ -304,7 +313,7 @@ public class RegularVM
             System.out.println("Here is the list of transactions Made: ");
             for(i=0;i<transacHistory.size();i++)
             {
-                System.out.println(transacHistory.get(i).getItem()+"  "+transacHistory.get(i).getQty());
+                System.out.println(transacHistory.get(i).getItem().getItemName()+"  "+transacHistory.get(i).getQty());
                 System.out.println("Total Amount: "+transacHistory.get(i).getVendTotal()+"  User Paid: "+transacHistory.get(i).getUserPay()+"  ");
                 System.out.println("Change: "+transacHistory.get(i).getChange());
             }
@@ -362,7 +371,6 @@ public class RegularVM
 
         while(control == 1)
         {
-            System.out.println("User Input: ");
             switch(choice)
             {
                 case(1):
@@ -377,6 +385,7 @@ public class RegularVM
                     }while(quantity < 0);
 
                     balance.setCoin1(balance.getCoin1()+quantity);
+                    control = 0;
                     break;
 
                 case(2):
@@ -391,6 +400,7 @@ public class RegularVM
                     }while(quantity < 0);
 
                     balance.setCoin5(balance.getCoin5()+quantity);
+                    control = 0;
                     break;
 
                 case(3):
@@ -405,6 +415,7 @@ public class RegularVM
                     }while(quantity < 0);
 
                     balance.setCoin10(balance.getCoin10()+quantity);
+                    control = 0;
                     break;
 
                 case(4):
@@ -419,6 +430,7 @@ public class RegularVM
                     }while(quantity < 0);
 
                     balance.setBill20(balance.getBill20()+quantity);
+                    control = 0;
                     break;
 
                 case(5):
@@ -433,6 +445,7 @@ public class RegularVM
                     }while(quantity < 0);
 
                     balance.setBill50(balance.getBill50()+quantity);
+                    control = 0;
                     break;
 
                 case(6):
@@ -447,6 +460,7 @@ public class RegularVM
                     }while(quantity < 0);
 
                     balance.setBill100(balance.getBill100()+quantity);
+                    control = 0;
                     break;
 
                 case(7):
@@ -461,6 +475,7 @@ public class RegularVM
                     }while(quantity < 0);
 
                     balance.setBill200(balance.getBill200()+quantity);
+                    control = 0;
                     break;
 
                 case(8):
@@ -475,6 +490,7 @@ public class RegularVM
                     }while(quantity < 0);
 
                     balance.setBill500(balance.getBill500()+quantity);
+                    control = 0;
                     break;
 
                 case(9):
@@ -489,6 +505,7 @@ public class RegularVM
                     }while(quantity < 0);
 
                     balance.setBill1000(balance.getBill1000()+quantity);
+                    control = 0;
                     break;
 
                 case(0):
