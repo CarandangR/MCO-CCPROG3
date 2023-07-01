@@ -51,5 +51,10 @@ public class Transaction {
     {
         return change;
     }
+
+    public void setVendTotal(int newTotal)
+    {
+        vendTotal = newTotal;
+    }
     
 }

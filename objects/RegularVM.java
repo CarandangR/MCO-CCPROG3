@@ -12,7 +12,7 @@ public class RegularVM
     private String vendName;
     private int slotCapacity;
     private int itemCapacity;
-    boolean didMaintenance = false;
+    private boolean didMaintenance = false;
     private ArrayList<Transaction> transacHistory = new ArrayList<Transaction>();
 
     public RegularVM(String vendName, int slotCapacity, int itemCapacity)
@@ -188,8 +188,9 @@ public class RegularVM
                         itemSlots[choice].setStock(itemSlots[choice].getStock() - shoppingCart.getStock());
                         System.out.println("Dispensing Money");
                         getDenom(transacHistory.get(transacHistory.size() - 1).getChange(), vendBalance);
+                        tempTransaction.setVendTotal(vendBalance.getTotalMoney());
                         userBalance.setToZero();
-                        //Transac History printing flag
+                        //Transac History printing f lag
                         int ab;
                         for(ab = 0; ab < transacHistory.size(); ab++)
                         {
@@ -495,39 +496,39 @@ public class RegularVM
             {
                 if(notes[i]==1000)
                 {
-                    vendBalance.setBill1000(vendBalance.getBill1000()+notesCounter[i]);
+                    vendBalance.setBill1000(vendBalance.getBill1000()-notesCounter[i]);
                 }
                 else if(notes[i]==500)
                 {
-                    vendBalance.setBill500(vendBalance.getBill500()+notesCounter[i]);
+                    vendBalance.setBill500(vendBalance.getBill500()-notesCounter[i]);
                 }
                 else if(notes[i]==200)
                 {
-                    vendBalance.setBill200(vendBalance.getBill200()+notesCounter[i]);
+                    vendBalance.setBill200(vendBalance.getBill200()-notesCounter[i]);
                 }
                 else if(notes[i]==100)
                 {
-                    vendBalance.setBill100(vendBalance.getBill100()+notesCounter[i]);
+                    vendBalance.setBill100(vendBalance.getBill100()-notesCounter[i]);
                 }
                 else if(notes[i]==50)
                 {
-                    vendBalance.setBill50(vendBalance.getBill50()+notesCounter[i]);
+                    vendBalance.setBill50(vendBalance.getBill50()-notesCounter[i]);
                 }
                 else if(notes[i]==20)
                 {
-                    vendBalance.setBill20(vendBalance.getBill20()+notesCounter[i]);
+                    vendBalance.setBill20(vendBalance.getBill20()-notesCounter[i]);
                 }
                 else if(notes[i]==10)
                 {
-                    vendBalance.setCoin10(vendBalance.getCoin10()+notesCounter[i]);
+                    vendBalance.setCoin10(vendBalance.getCoin10()-notesCounter[i]);
                 }
                 else if(notes[i]==5)
                 {   
-                    vendBalance.setCoin5(vendBalance.getCoin5()+notesCounter[i]);
+                    vendBalance.setCoin5(vendBalance.getCoin5()-notesCounter[i]);
                 }
                 else if(notes[i]==1)
                 {
-                    vendBalance.setCoin1(vendBalance.getCoin1()+notesCounter[i]);
+                    vendBalance.setCoin1(vendBalance.getCoin1()-notesCounter[i]);
                 }
                 System.out.println(notes[i]+" php : "+notesCounter[i]);
             }
