@@ -79,10 +79,7 @@ public class RegularVM
 
             if(choice == 1)
             {
-                for(i=0;i<slotCapacity;i++)
-                {
-                    displayItem(i);
-                }
+                displayStocks();
                 do
                 {
                     System.out.print("Please pick the item to restock: ");
@@ -132,7 +129,7 @@ public class RegularVM
         }
     }
 
-    public void insertMoney(Scanner sc)
+    private void insertMoney(Scanner sc)
     {
         int i = inputMoney(sc);
         addMoney(i,userBalance,sc);
@@ -469,6 +466,7 @@ public class RegularVM
             }while((itemSlots[slotNum].getStock()+restockAmount) < 0 || (itemSlots[slotNum].getStock()+restockAmount) > itemCapacity);
 
             itemSlots[slotNum].setStock(restockAmount+itemSlots[slotNum].getStock());
+            originalInventory[slotNum] = itemSlots[slotNum];
         }
     }
 
@@ -550,12 +548,14 @@ public class RegularVM
         vendBalance.setBill1000(vendBalance.getBill1000()+userBalance.getBill1000());
     }
 
-    public void displayStocks()
+    private void displayStocks()
     {
         int i;
+
+        System.out.println("These are how the Items Were Update Since Last Restock: ");
         for(i=0;i < this.slotCapacity;i++)
         {
-            System.out.println(this.itemSlots[i].getItem().getItemName()+": "+this.itemSlots[i].getStock()+" ---> "+this.originalInventory[i].getStock());
+            System.out.println("["+(i+1)+"] "+this.itemSlots[i].getItem().getItemName()+": "+this.itemSlots[i].getStock()+" ---> "+this.originalInventory[i].getStock());
         }
     }
 
