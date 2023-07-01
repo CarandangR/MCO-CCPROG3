@@ -84,11 +84,11 @@ public class RegularVM
                 {
                     System.out.print("Please pick the item to restock: ");
                     restockChoice = sc.nextInt()-1;
-                    if(restockChoice < 0 || restockChoice > slotCapacity)
+                    if(restockChoice < 0 || restockChoice > slotCapacity-1)
                     {
                         System.out.println("Invalid Input");
                     }
-                }while(restockChoice < 0 || restockChoice > slotCapacity);
+                }while(restockChoice < 0 || restockChoice > slotCapacity-1);
 
                 restockItem(restockChoice, sc);
             }
@@ -103,11 +103,11 @@ public class RegularVM
                 {
                     System.out.print("Please pick the item to set the price: ");
                     priceChoice = sc.nextInt()-1;
-                    if(priceChoice < 0 || priceChoice > slotCapacity)
+                    if(priceChoice < 0 || priceChoice > slotCapacity-1)
                     {
                         System.out.println("Invalid Input");
                     }
-                }while(priceChoice < 0 || priceChoice > slotCapacity);
+                }while(priceChoice < 0 || priceChoice > slotCapacity-1);
 
                 setPrice(priceChoice, sc);
             }
