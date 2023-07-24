@@ -14,8 +14,8 @@ package objects;
 
 public class Items {
     private String itemName;
-    private float calories;
-    private int price;
+    protected float calories;
+    protected int price;
 
     /**
      * Constructor for the class "Items". Sets values for variables under "Items".
