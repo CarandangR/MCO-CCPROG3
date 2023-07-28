@@ -4,7 +4,7 @@
  * it displays its name, calories, and its price.
  * @author Matthew Ryan C. Carandang
  * @author Peter Benjamin A. Tan
- * @version 1.0
+ * @version 2.0
  * Section: X22A
  * 
  * The package objects contains all objects used to run the RegularVM object
@@ -13,8 +13,8 @@
 package objects;
 
 public class Items {
-    private String itemName;
-    protected float calories;
+    protected String itemName;
+    protected int calories;
     protected int price;
 
     /**
@@ -26,7 +26,7 @@ public class Items {
      * @param price
      * this is teh integer that sets the price of the item.
      */
-    public Items(String itemName, float calories, int price)
+    public Items(String itemName, int calories, int price)
     {
         this.itemName = itemName;
         this.calories = calories;
@@ -75,7 +75,7 @@ public class Items {
      * Gets and returns the float in which the amount of calories of the item is stored.
      * @return calories
      */
-    public float getCalories()
+    public int getCalories()
     {
         return calories;
     }
@@ -85,7 +85,7 @@ public class Items {
      * @param calories
      * The float value that will be stored into the calories variable.
      */
-    public void setCalories(float calories)
+    public void setCalories(int calories)
     {
         this.calories = calories;
     }

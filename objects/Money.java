@@ -4,7 +4,7 @@
  * and bill box which is organized through its denomination.
  * @author Matthew Ryan C. Carandang
  * @author Peter Benjamin A. Tan
- * @version 1.0
+ * @version 2.0
  * Section: X22A
  * 
  * The package objects contains all objects used to run the RegularVM object
@@ -20,9 +20,6 @@ public class Money
     private int bill20;
     private int bill50;
     private int bill100;
-    private int bill200;
-    private int bill500;
-    private int bill1000;
     private int totalMoney;
 
     /**
@@ -36,9 +33,6 @@ public class Money
         this.bill20 = 0;
         this.bill50 = 0;
         this.bill100 = 0;
-        this.bill200 = 0;
-        this.bill500 = 0;
-        this.bill1000 = 0;
     }
 
     /**
@@ -156,70 +150,13 @@ public class Money
     }
 
     /**
-     * Gets and returns the integer which contains the amount of 200 Php bills.
-     * @return bill200
-     */
-    public int getBill200()
-    {
-        return bill200;
-    }
-
-    /**
-     * Sets the integer which contains the amount of 200 Php bills.
-     * @param bill200
-     * The integer value that will be stored into the bill200 variable.
-     */
-    public void setBill200(int bill200)
-    {
-        this.bill200 = bill200;
-    }
-
-    /**
-     * Gets and returns the integer which contains the amount of 500 Php bills.
-     * @return bill500
-     */
-    public int getBill500()
-    {
-        return bill500;
-    }
-
-    /**
-     * Sets the integer which contains the amount of 500 Php bills.
-     * @param bill500
-     * The integer value that will be stored into the bill500 variable.
-     */
-    public void setBill500(int bill500)
-    {
-        this.bill500 = bill500;
-    }
-
-    /**
-     * Gets and returns the integer which contains the amount of 1000 Php bills.
-     * @return bill1000
-     */
-    public int getBill1000()
-    {
-        return bill1000;
-    }
-
-    /**
-     * Sets the integer which contains the amount of 1000 Php bills.
-     * @param bill1000
-     * The integer value that will be stored into the bill1000 variable.
-     */
-    public void setBill1000(int bill1000)
-    {
-        this.bill1000 = bill1000;
-    }
-
-    /**
      * Gets and returns the integer which contains the computed amount of total money.
      * @return totalMoney
      */
     public int getTotalMoney()
     {
         this.totalMoney = (getCoin1()*1) + (getCoin5()*5) + (getCoin10()*10) + (getBill20()*20) + (getBill50()*50) 
-                     + (getBill100()*100) + (getBill200()*200) + (getBill500()*500) + (getBill1000()*1000);
+                     + (getBill100()*100);
         return totalMoney;
     }
 
@@ -234,8 +171,5 @@ public class Money
         this.bill20 = 0;
         this.bill50 = 0;
         this.bill100 = 0;
-        this.bill200 = 0;
-        this.bill500 = 0;
-        this.bill1000 = 0;
     }
 }

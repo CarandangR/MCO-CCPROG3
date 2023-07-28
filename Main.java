@@ -2,7 +2,7 @@
  * The Main Java file to run RegularVM.
  * @author Matthew Ryan C. Carandang
  * @author Matthew Ryan C. Carandang
- * @version 1.0
+ * @version 2.0
  * Section: X22A
  * 
  * The package objects contains all objects used to run the RegularVM object

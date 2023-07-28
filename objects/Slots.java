@@ -4,7 +4,7 @@
  * and the stock of the item.
  * @author Matthew Ryan C. Carandang
  * @author Peter Benjamin A. Tan
- * @version 1.0
+ * @version 2.0
  * Section: X22A
  * 
  * The package objects contains all objects used to run the RegularVM object

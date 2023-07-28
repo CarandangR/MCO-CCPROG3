@@ -16,16 +16,16 @@ import java.util.Scanner;
 
 public class RegularVM
 {
-    private Slots[] itemSlots;
-    private Slots[] originalInventory;
-    private Slots shoppingCart;
-    private Money vendBalance = new Money();
-    private Money userBalance = new Money();
-    private String vendName;
-    private int slotCapacity;
-    private int itemCapacity;
-    private boolean didMaintenance = false;
-    private ArrayList<Transaction> transacHistory = new ArrayList<Transaction>();
+    protected Slots[] itemSlots;
+    protected Slots[] originalInventory;
+    protected Slots shoppingCart;
+    protected Money vendBalance = new Money();
+    protected Money userBalance = new Money();
+    protected String vendName;
+    protected int slotCapacity;
+    protected int itemCapacity;
+    protected boolean didMaintenance = false;
+    protected ArrayList<Transaction> transacHistory = new ArrayList<Transaction>();
 
     /**
      * Constructor for the RegularVM object. Which sets values for the
@@ -81,14 +81,14 @@ public class RegularVM
     private Items getItemInput(Scanner sc)
     {
         String name;
-        float calories;
+        int calories;
         int price;
         System.out.print("Please Input the Name of the Item: ");
         name = sc.nextLine();
         do
         {
             System.out.print("Please Input the Calories of the Item: ");
-            calories = sc.nextFloat();
+            calories = sc.nextInt();
         }while(calories < 1);
 
         do
@@ -344,15 +344,12 @@ public class RegularVM
             System.out.println("[4] 20 Php Bill");
             System.out.println("[5] 50 Php Bill");
             System.out.println("[6] 100 Php Bill");
-            System.out.println("[7] 200 Php Bill");
-            System.out.println("[8] 500 Php Bill");
-            System.out.println("[9] 1000 Php Bill");
             System.out.println("[0] Continue");
             denomInput = sc.nextInt();
-            if(denomInput < 0 || denomInput > 9){
+            if(denomInput < 0 || denomInput > 6){
                 System.out.println("Invalid Choice.");
             }
-        } while(denomInput < 0 || denomInput > 9);
+        } while(denomInput < 0 || denomInput > 6);
         return denomInput;
     }
 
@@ -463,51 +460,6 @@ public class RegularVM
                     control = 0;
                     break;
 
-                case(7):
-                    do
-                    {
-                        System.out.print("Please Input the quantity you want to add: ");
-                        quantity = sc.nextInt();
-                        if(quantity < 0)
-                        {
-                            System.out.println("Invalid Input, please Try again.");
-                        }
-                    }while(quantity < 0);
-
-                    balance.setBill200(balance.getBill200()+quantity);
-                    control = 0;
-                    break;
-
-                case(8):
-                    do
-                    {
-                        System.out.print("Please Input the quantity you want to add: ");
-                        quantity = sc.nextInt();
-                        if(quantity < 0)
-                        {
-                            System.out.println("Invalid Input, please Try again.");
-                        }
-                    }while(quantity < 0);
-
-                    balance.setBill500(balance.getBill500()+quantity);
-                    control = 0;
-                    break;
-
-                case(9):
-                    do
-                    {
-                        System.out.print("Please Input the quantity you want to add: ");
-                        quantity = sc.nextInt();
-                        if(quantity < 0)
-                        {
-                            System.out.println("Invalid Input, please Try again.");
-                        }
-                    }while(quantity < 0);
-
-                    balance.setBill1000(balance.getBill1000()+quantity);
-                    control = 0;
-                    break;
-
                 case(0):
                     control = 0;
                     break;
@@ -612,19 +564,7 @@ public class RegularVM
         {
             if(notesCounter[i] != 0)
             {
-                if(notes[i]==1000)
-                {
-                    tempMoney.setBill1000(notesCounter[i]);
-                }
-                else if(notes[i]==500)
-                {
-                    tempMoney.setBill500(notesCounter[i]);
-                }
-                else if(notes[i]==200)
-                {
-                    tempMoney.setBill200(notesCounter[i]);
-                }
-                else if(notes[i]==100)
+                if(notes[i]==100)
                 {
                     tempMoney.setBill100(notesCounter[i]);
                 }
@@ -667,9 +607,6 @@ public class RegularVM
         vendBalance.setBill20(vendBalance.getBill20()+userBalance.getBill20());
         vendBalance.setBill50(vendBalance.getBill50()+userBalance.getBill50());
         vendBalance.setBill100(vendBalance.getBill100()+userBalance.getBill100());
-        vendBalance.setBill200(vendBalance.getBill200()+userBalance.getBill200());
-        vendBalance.setBill500(vendBalance.getBill500()+userBalance.getBill500());
-        vendBalance.setBill1000(vendBalance.getBill1000()+userBalance.getBill1000());
     }
 
     /**
@@ -717,20 +654,7 @@ public class RegularVM
     private boolean compareDenom(Money vendMoney, Money changeMoney)
     {
         boolean flag = false;
-        if(vendMoney.getBill1000() < changeMoney.getBill1000())
-        {
-            flag = true;
-        }
-
-        else if(vendMoney.getBill500() < changeMoney.getBill500())
-        {
-            flag = true;
-        }
-        else if(vendMoney.getBill200() < changeMoney.getBill200())
-        {
-            flag = true;
-        }
-        else if(vendMoney.getBill100() < changeMoney.getBill100())
+        if(vendMoney.getBill100() < changeMoney.getBill100())
         {
             flag = true;
         }
@@ -756,9 +680,6 @@ public class RegularVM
         }
         else if(!flag)
         {
-            vendMoney.setBill1000(vendMoney.getBill1000()-changeMoney.getBill1000());
-            vendMoney.setBill500(vendMoney.getBill500()-changeMoney.getBill500());
-            vendMoney.setBill200(vendMoney.getBill200()-changeMoney.getBill200());
             vendMoney.setBill100(vendMoney.getBill100()-changeMoney.getBill100());
             vendMoney.setBill50(vendMoney.getBill50()-changeMoney.getBill50());
             vendMoney.setBill20(vendMoney.getBill20()-changeMoney.getBill20());
