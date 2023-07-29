@@ -4,7 +4,7 @@
  * items, and money.
  * @author Matthew Ryan C. Carandang
  * @author Peter Benjamin A. Tan
- * @version 1.0
+ * @version 2.0
  * Section: X22A
  * 
  * The package objects contains all objects used to run the RegularVM object
@@ -67,7 +67,7 @@ public class RegularVM
      * Scanner that will be used for inputs.
      * @return Slots
      */
-    private Slots getSlotInput(Scanner sc)
+    protected Slots getSlotInput(Scanner sc)
     {
         return new Slots(getItemInput(sc),0);
     }   
@@ -78,7 +78,7 @@ public class RegularVM
      * Scanner that will be used for inputs.
      * @return Items
      */
-    private Items getItemInput(Scanner sc)
+    protected Items getItemInput(Scanner sc)
     {
         String name;
         int calories;
@@ -247,7 +247,8 @@ public class RegularVM
                         System.out.println("Transaction cancelled, not enough change from the machine.");
                         transacHistory.remove(transacHistory.size()-1);
                     }
-                    else {
+                    else 
+                    {
                         System.out.println("Dispensing item");
                         itemSlots[choice].setStock(itemSlots[choice].getStock() - shoppingCart.getStock());
                         System.out.println("Dispensing Money");
@@ -531,7 +532,7 @@ public class RegularVM
      * @param slotNum
      * An intger that represents which slot to display.
      */
-    private void displayItem(int slotNum)
+    protected void displayItem(int slotNum)
     {
         System.out.println("["+(slotNum+1)+"] "+itemSlots[slotNum].getItem().getItemName()+" | Calories: "+itemSlots[slotNum].getItem().getCalories()+" | Price: "+itemSlots[slotNum].getItem().getPrice());
     }

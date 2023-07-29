@@ -14,6 +14,7 @@ public class Main
 {   
     public static void main(String[] args)
     {
+        /*
         RegularVM regularVending = null;
         Scanner sc = new Scanner(System.in);
         int control = 1;
@@ -109,5 +110,9 @@ public class Main
             }
         }
         sc.close();
+
+        */
+
+        
     }
 }

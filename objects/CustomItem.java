@@ -48,4 +48,9 @@ public class CustomItem extends Items
         ingredients.add(slot);
         updateItem();
     }
+
+    public ArrayList<Slots> getIngredients()
+    {
+        return ingredients;
+    }
 }
