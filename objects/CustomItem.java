@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class CustomItem extends Items 
 {
-    ArrayList<Items> ingredients;
+    ArrayList<Slots> ingredients;
 
     public CustomItem(String name)
     {
@@ -38,14 +38,14 @@ public class CustomItem extends Items
         int i;
         for(i=0;i<ingredients.size();i++)
         {
-            super.price += ingredients.get(i).getPrice();
-            super.calories += ingredients.get(i).getCalories();
+            super.price += ingredients.get(i).getItem().getPrice();
+            super.calories += ingredients.get(i).getItem().getCalories();
         }
     }
 
-    public void addIngredient(Items item)
+    public void addIngredient(Slots slot)
     {
-        ingredients.add(item);
+        ingredients.add(slot);
         updateItem();
     }
 }
