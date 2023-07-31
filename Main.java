@@ -8,7 +8,6 @@
  * The package objects contains all objects used to run the RegularVM object
  * and allows it to be used in main.
  */
-import objects.RegularVM;
 import java.util.Scanner;
 public class Main 
 {   

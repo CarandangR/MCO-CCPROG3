@@ -10,8 +10,6 @@
  * The package objects contains all objects used to run the RegularVM object
  * and allows it to be used in main.
  */
-package objects;
-
 public class Money
 {
     private int coin1;

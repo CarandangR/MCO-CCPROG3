@@ -1,5 +1,3 @@
-package objects;
-
 public class AddOn extends Items
 {
     int stock;
