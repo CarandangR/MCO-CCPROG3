@@ -2,53 +2,64 @@ import java.util.ArrayList;
 
 public class CustomItem extends Items 
 {
-    ArrayList<Slots> ingredients;
+    Side side;
+    Rice rice;
+    Meat meat;
+    ArrayList<AddOn> Toppings;
 
     public CustomItem(String name)
     {
         super(name,0,0);
-        ingredients = new ArrayList<>();
+        Toppings = new ArrayList<>();;
     }
 
     @Override public int getCalories()
-    {   
-
-        return super.calories;
-    }
-
-    @Override public void setCalories(int calories)
     {
-        super.calories = calories;
+
+        int toppingCal=0;
+        int i;
+
+        for(i=0;i<Toppings.size();i++)
+        {
+            toppingCal += Toppings.get(i).getPrice();
+        }
+
+        return super.price + side.getCalories() + rice.getCalories() + meat.getCalories() + toppingCal;
     }
 
     @Override public int getPrice()
     {
-        return super.price;
-    }
-
-    @Override public void setPrice(int price)
-    {
-        super.price = price;
-    }
-
-    private void updateItem()
-    {
+        int toppingPrice=0;
         int i;
-        for(i=0;i<ingredients.size();i++)
+
+        for(i=0;i<Toppings.size();i++)
         {
-            super.price += ingredients.get(i).getItem().getPrice();
-            super.calories += ingredients.get(i).getItem().getCalories();
+            toppingPrice += Toppings.get(i).getPrice();
+        }
+
+        return super.price + side.getPrice() + rice.getPrice() + meat.getPrice() + toppingPrice;
+    }
+
+    public void updateIngredient(Items item)
+    {
+        if(item instanceof Rice)
+        {
+            rice = new Rice(item.getItemName(),item.getCalories(),item.getPrice());
+        }
+
+        else if(item instanceof Meat)
+        {
+            meat = new Meat(item.getItemName(),item.getCalories(),item.getPrice());
+        }
+
+        else if(item instanceof Side)
+        {
+            side = new Side(item.getItemName(),item.getCalories(),item.getPrice());
         }
     }
 
-    public void addIngredient(Slots slot)
+    public void addTopping(AddOn item)
     {
-        ingredients.add(slot);
-        updateItem();
-    }
-
-    public ArrayList<Slots> getIngredients()
-    {
-        return ingredients;
-    }
+        Toppings.add(item);
+    }   
 }
