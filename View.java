@@ -3,9 +3,12 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.Action;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+
 import java.awt.Font;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -33,6 +36,8 @@ public class View
     private JLabel itemName, itemCalories, itemPrice;
     private JButton inputNext;
     private JTextArea inputUpdate;
+    private JRadioButton rice, meat, side;
+    ButtonGroup typeGroup;
 
     public View()
     {
@@ -184,6 +189,21 @@ public class View
         inputNext = new JButton("Add Item");
         inputNext.setBounds(438, 441, 201, 75);
 
+        rice = new JRadioButton("Rice");
+        rice.setBounds(160, 441, 75, 75);
+        meat = new JRadioButton("Meat");
+        meat.setBounds(236, 441, 75, 75);
+        side = new JRadioButton("Side");
+        side.setBounds(312, 441, 75, 75);
+
+        typeGroup = new ButtonGroup();
+        typeGroup.add(rice);
+        typeGroup.add(meat);
+        typeGroup.add(side);
+
+        vmInput.add(rice);
+        vmInput.add(meat);
+        vmInput.add(side);
         vmInput.add(itemName);
         vmInput.add(itemCalories);
         vmInput.add(itemPrice);
@@ -227,6 +247,41 @@ public class View
     public void menuMaintainListener(ActionListener e)
     {
         menuMaintain.addActionListener(e);
+    }
+
+    public void riceListener(ActionListener e)
+    {
+        rice.addActionListener(e);
+    }
+
+    public void meatListener(ActionListener e)
+    {
+        meat.addActionListener(e);
+    }
+
+    public void sideListener(ActionListener e)
+    {
+        side.addActionListener(e);
+    }
+
+    public void inputItem(ActionListener e)
+    {
+        inputNext.addActionListener(e);
+    }
+
+    public String getInputName()
+    {
+        return inputName.getText();
+    }
+
+    public String getInputCal()
+    {
+        return inputCalories.getText();
+    }
+
+    public String getInputPrice()
+    {
+        return inputPrice.getText();
     }
 
     public String getvendName()
@@ -319,5 +374,27 @@ public class View
     public void setStatus(JFrame frame, boolean bool)
     {
         frame.setVisible(bool);
+    }
+
+    public void clearInputTF()
+    {
+        inputName.setText("");
+        inputCalories.setText("");
+        inputPrice.setText("");
+    }
+
+    public void clearInputTA()
+    {
+        inputUpdate.setText("");
+    }
+
+    public void inputDisplay(String text)
+    {
+        startOutput.append(text+"\n");
+    }
+
+    public void clearButton()
+    {
+        typeGroup.clearSelection();
     }
 }

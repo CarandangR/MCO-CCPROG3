@@ -2,6 +2,7 @@ public class Model
 {
     private RegularVM RVM;
     private SpecialVM SVM;
+    String foodType;
 
     public Model()
     {
@@ -34,7 +35,7 @@ public class Model
             return false;
         }
 
-        else if(!(tempslotCap>5 && tempslotCap<21))
+        else if(!(tempslotCap>9 && tempslotCap<21))
         {
             return false;
         }
@@ -86,5 +87,15 @@ public class Model
     public boolean isNew()
     {
         return getVM().isNew;
+    }
+
+    public String getFoodType()
+    {
+        return foodType;
+    }
+
+    public void setFoodType(String foodType)
+    {
+        this.foodType = foodType;
     }
 }

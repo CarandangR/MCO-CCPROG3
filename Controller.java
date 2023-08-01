@@ -133,6 +133,62 @@ public class Controller
                 }
             }
         });
+
+        this.view.inputItem(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                if(model.getFoodType()=="rice")
+                {
+
+                }
+
+                else if(model.getFoodType()=="meat")
+                {
+
+                }
+
+                else if(model.getFoodType()=="rice")
+                {
+
+                }
+
+                else
+                {
+                    view.inputDisplay("You did not select the type of item");
+                }
+
+                view.clearButton();
+            }
+        });
+
+        this.view.riceListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                model.setFoodType("rice");
+            }
+        });
+
+        this.view.meatListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                model.setFoodType("meat");
+            }
+        });
+
+        this.view.sideListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                model.setFoodType("side");
+            }
+        });
     }
 
 }

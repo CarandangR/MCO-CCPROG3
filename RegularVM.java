@@ -67,7 +67,7 @@ public class RegularVM
      * Scanner that will be used for inputs.
      * @return Slots
      */
-    protected Slots getSlotInput(Scanner sc)
+    public Slots getSlotInput(Scanner sc)
     {
         return new Slots(getItemInput(sc),0);
     }   
