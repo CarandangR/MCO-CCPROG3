@@ -251,6 +251,13 @@ public class Controller
                     view.restockDisplay(model.displayInventory());
                     view.clearRestockItemTF();
                 }
+
+                else
+                {
+                    view.clearRestockItemTA();
+                    view.clearRestockItemTF();
+                    view.restockDisplay("Invalid Inputs!");
+                }
             }
         });
 
@@ -260,6 +267,50 @@ public class Controller
             public void actionPerformed(ActionEvent e)
             {   
                 view.setStatus(view.getVMRestockItem(), false);
+                view.setStatus(view.getMaintain(), true);
+            }
+        });
+
+        this.view.SetPriceListener(new ActionListener() 
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                view.setStatus(view.getMaintain(), false);
+                view.setStatus(view.getVMsetprice(), true);
+            }
+        });
+
+        this.view.priceAddListener(new ActionListener() 
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                if(model.getVM().setPrice(view.getPriceChoice(), view.getPriceAmount()))
+                {
+                    model.resetItemString();
+                    view.clearPriceTA();
+                    view.setPriceDisplay("Reprice Successful!");
+                    view.setPriceDisplay("Updated Items: ");
+                    view.setPriceDisplay(model.displayInventory());
+                    view.clearPriceTF();
+                }
+
+                else
+                {
+                    view.clearPriceTA();
+                    view.clearPriceTF();
+                    view.setPriceDisplay("Invalid Inputs!");
+                }
+            }
+        });
+
+        this.view.priceExitListener(new ActionListener() 
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {   
+                view.setStatus(view.getVMsetprice(), false);
                 view.setStatus(view.getMaintain(), true);
             }
         });

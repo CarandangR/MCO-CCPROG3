@@ -48,7 +48,7 @@ public class View
 
     private JFrame vmSetPrice;
     private JTextArea priceDisplay;
-    private TextField priceChoice, priceAmount;
+    private JTextField priceChoice, priceAmount;
     private JLabel priceChoicelabel, priceAmountlabel;
     private JButton priceAdd, priceExit;
 
@@ -278,6 +278,37 @@ public class View
         vmRestockItem.add(restockItemExit);
     }
 
+    public void vmSetPrice()
+    {
+        vmSetPrice = new JFrame("Vending Machine Menu");
+        vmSetPrice.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        vmSetPrice.setSize(800, 800);;
+        vmSetPrice.setResizable(false);
+        vmSetPrice.setLocationRelativeTo(null);
+        vmSetPrice.setLayout(null);
+
+        priceDisplay = new JTextArea();
+        priceDisplay.setBounds(152, 10, 495, 309);
+        priceDisplay.setEditable(false);
+
+        priceChoice = new JTextField();
+        priceChoice.setBounds(477, 350, 170, 63);
+        priceAmount = new JTextField();
+        priceAmount.setBounds(477, 450, 170, 63);
+
+        priceChoicelabel = new JLabel("Enter the Index of the Item");
+        priceChoicelabel.setBounds(152, 350, 170, 63);
+        priceAmountlabel = new JLabel("Enter the new Price");
+        priceAmountlabel.setBounds(152, 450, 170, 63);
+
+        priceAdd = new JButton("Reprice Item");
+        priceAdd.setBounds(477, 600, 170, 63);
+        priceExit = new JButton("Exit Reprice Mode");
+        priceExit.setBounds(152, 600, 170, 63);
+    }
+
+    /* Buttons/Radio Buttons */
+
     public void exitVMListener(ActionListener e)
     {
         exit.addActionListener(e);
@@ -348,6 +379,23 @@ public class View
         restockItemExit.addActionListener(e);
     }
 
+    public void priceAddListener(ActionListener e)
+    {
+        priceAdd.addActionListener(e);
+    }
+
+    public void priceExitListener(ActionListener e)
+    {
+        priceExit.addActionListener(e);
+    }
+
+    public void SetPriceListener(ActionListener e)
+    {
+        setPrice.addActionListener(e);
+    }
+
+    /* Text Fields*/
+
     public int getItemRestockChoice()
     {
         return Integer.parseInt(restockItemChoice.getText());
@@ -358,21 +406,6 @@ public class View
         return Integer.parseInt(restockItemAmount.getText());
     }
 
-    public void restockDisplay(String text)
-    {
-        restockItemDisplay.append(text+"\n");
-    }
-
-    public void inputItem(ActionListener e)
-    {
-        inputNext.addActionListener(e);
-    }
-
-    public String getInputName()
-    {
-        return inputName.getText();
-    }
-
     public int getInputCal()
     {
         return Integer.parseInt(inputCalories.getText());
@@ -381,6 +414,11 @@ public class View
     public int getInputPrice()
     {
         return Integer.parseInt(inputPrice.getText());
+    }
+
+    public String getInputName()
+    {
+        return inputName.getText();
     }
 
     public String getvendName()
@@ -397,6 +435,18 @@ public class View
     {
         return slotCap.getText();
     }
+
+    public int getPriceChoice()
+    {
+        return Integer.parseInt(priceChoice.getText());
+    }
+
+    public int getPriceAmount()
+    {
+        return Integer.parseInt(priceAmount.getText());
+    }
+
+    /* JFrame getter */
 
     public JFrame getStart()
     {
@@ -418,16 +468,103 @@ public class View
         return vmInput;
     }
 
-    public void startDisplay(String text)
+    public JFrame getVMsetprice()
     {
-        startOutput.append(text+"\n");
+        return vmSetPrice;
     }
+
+    public JFrame getVMRestockItem()
+    {
+        return vmRestockItem;
+    }
+
+    /* Clear TA */
+
+    public void clearstartTA()
+    {
+        startOutput.setText("");
+    }
+
+    public void clearInputTA()
+    {
+        inputUpdate.setText("");
+    }
+
+    public void clearRestockItemTA()
+    {
+        restockItemDisplay.setText("");
+    }
+
+    public void clearMenuTA()
+    {
+        menuOutput.setText("");
+    }
+
+    public void clearPriceTA()
+    {
+        priceDisplay.setText("");
+    }
+
+    /* Clear TF */
 
     public void clearTF()
     {
         vendName.setText("");
         slotNum.setText("");
         slotCap.setText("");
+    }
+
+    public void clearInputTF()
+    {
+        inputName.setText("");
+        inputCalories.setText("");
+        inputPrice.setText("");
+    }
+
+    public void clearRestockItemTF()
+    {
+        restockItemAmount.setText("");
+        restockItemChoice.setText("");
+    }
+
+    public void clearPriceTF()
+    {
+        priceChoice.setText("");
+        priceAmount.setText("");
+    }
+
+    /* Display Screens */
+
+    public void startDisplay(String text)
+    {
+        startOutput.append(text+"\n");
+    }
+
+    public void restockDisplay(String text)
+    {
+        restockItemDisplay.append(text+"\n");
+    }
+
+    public void menuDisplay(String text)
+    {
+        menuOutput.append(text+"\n");
+    }
+
+    public void inputDisplay(String text)
+    {
+        inputUpdate.append(text+"\n");
+    }
+
+    public void setPriceDisplay(String text)
+    {
+        priceDisplay.append(text+"\n");
+    }
+
+    /* Helper Functions */
+
+    public void inputItem(ActionListener e)
+    {
+        inputNext.addActionListener(e);
     }
 
     public boolean isEmpty()
@@ -450,24 +587,9 @@ public class View
         return false;
     }
 
-    public void clearstartTA()
-    {
-        startOutput.setText("");
-    }
-
     public void setvendTitle(String name)
     {
         vendTitle.setText(name);
-    }
-
-    public void menuDisplay(String text)
-    {
-        menuOutput.append(text+"\n");
-    }
-
-    public void clearMenuTA()
-    {
-        menuOutput.setText("");
     }
 
     public void setStatus(JFrame frame, boolean bool)
@@ -475,41 +597,8 @@ public class View
         frame.setVisible(bool);
     }
 
-    public void clearInputTF()
-    {
-        inputName.setText("");
-        inputCalories.setText("");
-        inputPrice.setText("");
-    }
-
-    public void clearInputTA()
-    {
-        inputUpdate.setText("");
-    }
-
-    public void inputDisplay(String text)
-    {
-        inputUpdate.append(text+"\n");
-    }
-
     public void clearButton()
     {
         typeGroup.clearSelection();
-    }
-
-    public JFrame getVMRestockItem()
-    {
-        return vmRestockItem;
-    }
-
-    public void clearRestockItemTF()
-    {
-        restockItemAmount.setText("");
-        restockItemChoice.setText("");
-    }
-
-    public void clearRestockItemTA()
-    {
-        restockItemDisplay.setText("");
     }
 }

@@ -108,7 +108,7 @@ public class RegularVM
                     }
                 }while(priceChoice < 0 || priceChoice > slotCapacity-1);
 
-                setPrice(priceChoice, sc);
+                setPrice(priceChoice, 0);
             }
 
             if(choice == 3)
@@ -434,21 +434,15 @@ public class RegularVM
      * @param sc
      * Scanner that will be used for inputs.
      */
-    private void setPrice(int slotNum, Scanner sc)
+    public boolean setPrice(int slotNum, int repriceAmount)
     {
-        int repriceValue;
-        System.out.println("The Item has a price of: "+itemSlots[slotNum].getItem().getPrice()+" php");
-        do
+        if(repriceAmount < 0)
         {
-            System.out.print("What will be the new price?: ");
-            repriceValue = sc.nextInt();
-            if(repriceValue < 0)
-            {
-                System.out.println("Invalid Input, Please Try again.");
-            }
-        }while(repriceValue < 0);
-        itemSlots[slotNum].getItem().setPrice(repriceValue);
-        System.out.println("The new price of "+itemSlots[slotNum].getItem().getItemName()+" is "+itemSlots[slotNum].getItem().getPrice());
+            return false;
+        }
+
+        itemSlots[slotNum].getItem().setPrice(repriceAmount);
+        return true;
     }
 
     /**
