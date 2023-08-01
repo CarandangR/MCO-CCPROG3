@@ -1,9 +1,7 @@
-import java.util.InputMismatchException;
-
 public class Model 
 {
-    RegularVM RVM;
-    SpecialVM SVM;
+    private RegularVM RVM;
+    private SpecialVM SVM;
 
     public Model()
     {
@@ -22,6 +20,7 @@ public class Model
         {
             return false;
         }
+        SVM = null;
         RVM = new RegularVM(vendName, tempslotCap, tempslotCap);
         return true;
     }
@@ -39,8 +38,53 @@ public class Model
         {
             return false;
         }
-        RVM = new SpecialVM(vendName, tempslotCap, tempslotCap);
+        RVM = null;
+        SVM = new SpecialVM(vendName, tempslotCap, tempslotCap);
         return true;
     }
 
+    public String vmType()
+    {
+        if(checkVM())
+        {
+            if(RVM != null)
+            {
+                return "regular";
+            }
+
+            if(SVM != null)
+            {
+                return "special"; 
+            }
+        }
+        return null;
+    }
+
+    private boolean checkVM()
+    {
+        if(RVM != null || SVM != null)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public RegularVM getVM()
+    {
+        if(vmType() == "regular")
+        {
+            return RVM;
+        }
+        return SVM;
+    }
+
+    public boolean didMaintain()
+    {
+        return getVM().didMaintenance;
+    }
+
+    public boolean isNew()
+    {
+        return getVM().isNew;
+    }
 }

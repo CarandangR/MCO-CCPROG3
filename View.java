@@ -6,8 +6,6 @@ import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 import javax.swing.JPanel;
-
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -17,17 +15,31 @@ import java.io.OutputStream;
 public class View 
 {
     private JFrame vmStart;
-
     private JButton createRVM, createSVM, testVM, exit;
-
     private JTextField vendName, slotNum, slotCap;
-
     private JTextArea startOutput;
-
     private JLabel enterName, enterNum, enterCap, title;
+
+    private JFrame vmMenu;
+    private JButton menuTest, menuMaintain, menuExit;
+    private JLabel vendTitle;
+    private JTextArea menuOutput;
+
+    private JFrame vmMaintain;
+    private JButton restockItem, setPrice, collectMoney, restockMoney, maintainExit;
+
+    private JFrame vmInput;
+    private JTextField inputName, inputCalories, inputPrice;
+    private JLabel itemName, itemCalories, itemPrice;
+    private JButton inputNext;
+    private JTextArea inputUpdate;
+
     public View()
     {
         vmStart();
+        vmMenu();
+        vmMaintain();
+        vmInput();
     }
 
     public void vmStart()
@@ -58,7 +70,8 @@ public class View
         startOutput.setBounds(110, 600, 579, 120);
         startOutput.setEditable(false);
 
-        title = new JLabel("Vendo Bot",SwingConstants.CENTER);
+        title = new JLabel("Vendo Bot");
+        title.setHorizontalAlignment(SwingConstants.CENTER);
         title.setBounds(200, 50, 400, 120);
         title.setFont(new Font("Arial",Font.BOLD,30));
         enterName = new JLabel("Enter the Name of Vend");
@@ -85,19 +98,135 @@ public class View
         vmStart.setVisible(true);
     }
 
+    public void vmMenu()
+    {
+        vmMenu = new JFrame("Vending Machine Menu");
+        vmMenu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        vmMenu.setBounds(0, 0, 800, 800);;
+        vmMenu.setResizable(false);
+        vmMenu.setLayout(null);
+
+        menuTest = new JButton("Test Vending Machine");
+        menuTest.setBounds(160, 183, 479, 75);
+        menuMaintain = new JButton("Maintain Vending Machine");
+        menuMaintain.setBounds(160, 312, 479, 75);
+        menuExit = new JButton("Go Back to Vending Machine Factory");
+        menuExit.setBounds(160, 441, 479, 75);
+
+        vendTitle = new JLabel();
+        vendTitle.setBounds(160, 54, 479, 75);
+        vendTitle.setFont(new Font("Arial",Font.BOLD,30));
+        vendTitle.setHorizontalAlignment(SwingConstants.CENTER);
+
+        menuOutput = new JTextArea();
+        menuOutput.setBounds(160, 570, 479, 156);
+        menuOutput.setEditable(false);
+
+        vmMenu.add(menuOutput);
+        vmMenu.add(vendTitle);
+        vmMenu.add(menuTest);
+        vmMenu.add(menuMaintain);
+        vmMenu.add(menuExit);
+    }
+
+    public void vmMaintain()
+    {
+        vmMaintain = new JFrame("Maintenance Mode");
+        vmMaintain.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        vmMaintain.setBounds(0, 0, 800, 800);;
+        vmMaintain.setResizable(false);
+        vmMaintain.setLayout(null);
+
+        restockItem = new JButton("Restock the Items");
+        restockItem.setBounds(221, 110, 358, 75);
+        setPrice = new JButton("Set the Price of an Item");
+        setPrice.setBounds(221, 236, 358, 75);
+        collectMoney = new JButton("Collect Money from Vend");
+        collectMoney.setBounds(221, 362, 358, 75);
+        restockMoney = new JButton("Restock Money");
+        restockMoney.setBounds(221, 488, 358, 75);
+        maintainExit = new JButton("Exit Maintenance");
+        maintainExit.setBounds(221, 614, 358, 75);
+
+        vmMaintain.add(restockItem);
+        vmMaintain.add(setPrice);
+        vmMaintain.add(collectMoney);
+        vmMaintain.add(restockMoney);
+        vmMaintain.add(maintainExit);
+
+    }
+
+    public void vmInput()
+    {
+        vmInput = new JFrame("Item Input Mode");
+        vmInput.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        vmInput.setBounds(0, 0, 800, 800);;
+        vmInput.setResizable(false);
+        vmInput.setLayout(null);
+
+        itemName = new JLabel("Enter the name of the Item");
+        itemName.setBounds(160, 54, 201, 75);
+        itemCalories = new JLabel("Enter the Calories");
+        itemCalories.setBounds(160, 183, 201, 75);
+        itemPrice = new JLabel("Enter the Price");
+        itemPrice.setBounds(160, 312, 201, 75);
+
+        inputName = new JTextField();
+        inputName.setBounds(438, 54, 201, 75);
+        inputCalories = new JTextField();
+        inputCalories.setBounds(438, 183, 201, 75);
+        inputPrice = new JTextField();
+        inputPrice.setBounds(438, 312, 201, 75);
+        inputUpdate = new JTextArea();
+        inputUpdate.setBounds(160, 570, 479, 156);
+        inputUpdate.setEditable(false);
+
+        inputNext = new JButton("Add Item");
+        inputNext.setBounds(438, 441, 201, 75);
+
+        vmInput.add(itemName);
+        vmInput.add(itemCalories);
+        vmInput.add(itemPrice);
+        vmInput.add(inputName);
+        vmInput.add(inputCalories);
+        vmInput.add(inputPrice);
+        vmInput.add(inputUpdate);
+        vmInput.add(inputNext);
+    }
+
     public void exitVMListener(ActionListener e)
     {
         exit.addActionListener(e);
     }
 
-    public void createRVMListener(ActionListener e)
+    public void RVMListener(ActionListener e)
     {
         createRVM.addActionListener(e);
     }
 
-    public void createSVMListener(ActionListener e)
+    public void SVMListener(ActionListener e)
     {
         createSVM.addActionListener(e);
+    }
+
+    public void TestListener(ActionListener e)
+    {
+        testVM.addActionListener(e);
+    }
+
+    public void menuExitListener(ActionListener e)
+    {
+        menuExit.addActionListener(e);
+    }
+
+    public void menuTestListener(ActionListener e)
+    {
+        menuTest.addActionListener(e);
+    }
+
+    public void menuMaintainListener(ActionListener e)
+    {
+        menuMaintain.addActionListener(e);
     }
 
     public String getvendName()
@@ -115,9 +244,24 @@ public class View
         return slotCap.getText();
     }
 
-    public JFrame getVMstart()
+    public JFrame getStart()
     {
         return vmStart;
+    }
+
+    public JFrame getMenu()
+    {
+        return vmMenu;
+    }
+
+    public JFrame getMaintain()
+    {
+        return vmMaintain;
+    }
+
+    public JFrame getInput()
+    {
+        return vmInput;
     }
 
     public void startDisplay(String text)
@@ -152,8 +296,28 @@ public class View
         return false;
     }
 
-    public void clearTA()
+    public void clearstartTA()
     {
         startOutput.setText("");
+    }
+
+    public void setvendTitle(String name)
+    {
+        vendTitle.setText(name);
+    }
+
+    public void menuDisplay(String text)
+    {
+        menuOutput.append(text+"\n");
+    }
+
+    public void clearMenuTA()
+    {
+        menuOutput.setText("");
+    }
+
+    public void setStatus(JFrame frame, boolean bool)
+    {
+        frame.setVisible(bool);
     }
 }

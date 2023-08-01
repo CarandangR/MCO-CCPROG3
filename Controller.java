@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 
+import javax.swing.Action;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -21,12 +23,12 @@ public class Controller
             }
         });
 
-        this.view.createRVMListener(new ActionListener() 
+        this.view.RVMListener(new ActionListener() 
         {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                view.clearTA();
+                view.clearstartTA();
                 if(!(view.isEmpty()))
                 {
                     if(model.generateRVM(view.getvendName(), view.getslotNum(), view.getslotCap()))
@@ -49,12 +51,12 @@ public class Controller
             }
         });
 
-        this.view.createSVMListener(new ActionListener() 
+        this.view.SVMListener(new ActionListener() 
         {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                view.clearTA();
+                view.clearstartTA();
                 if(!(view.isEmpty()))
                 {
                     if(model.generateSVM(view.getvendName(), view.getslotNum(), view.getslotCap()))
@@ -77,6 +79,60 @@ public class Controller
             }
         });
 
+        this.view.TestListener(new ActionListener() 
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                if(model.vmType() == null)
+                {
+                    view.startDisplay("VM not yet created");
+                }
+
+                else
+                {
+                    view.setStatus(view.getStart(), false);
+                    view.setvendTitle(model.getVM().vendName);
+                    view.setStatus(view.getMenu(), true);
+                }
+            }
+        });
+
+        this.view.menuExitListener(new ActionListener() 
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                view.setStatus(view.getMenu(), false);
+                view.setStatus(view.getStart(), true);
+            }
+        });
+
+        this.view.menuTestListener(new ActionListener() 
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                if(!(model.didMaintain()))
+                {
+                    view.clearMenuTA();
+                    view.menuDisplay("Do maintenance to the Machine First");
+                }   
+            }
+        });
+
+        this.view.menuMaintainListener(new ActionListener() 
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                if(model.isNew())
+                {
+                    view.setStatus(view.getMenu(), false);
+                    view.setStatus(view.getInput(), true);
+                }
+            }
+        });
     }
 
 }

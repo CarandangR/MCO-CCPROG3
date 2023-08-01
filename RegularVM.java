@@ -24,6 +24,7 @@ public class RegularVM
     protected int slotCapacity;
     protected int itemCapacity;
     protected boolean didMaintenance = false;
+    protected boolean isNew = true;
     protected ArrayList<Transaction> transacHistory = new ArrayList<Transaction>();
 
     /**
