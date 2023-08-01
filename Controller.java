@@ -105,6 +105,7 @@ public class Controller
             {
                 view.setStatus(view.getMenu(), false);
                 view.setStatus(view.getStart(), true);
+                model.reset();
             }
         });
 
@@ -151,15 +152,7 @@ public class Controller
                     model.getVM().setSlots(new Rice(view.getInputName(),view.getInputCal(),view.getInputPrice()), model.getItemCounter());
                     view.inputDisplay("Added(Rice): "+model.getVM().itemSlots[model.getItemCounter()].getItem().getItemName());
                     model.addItemCounter();
-                    model.addItemCounter();
-                    model.addItemCounter();
-                    model.addItemCounter();
-                    model.addItemCounter();
-                    model.addItemCounter();
-                    model.addItemCounter();
-                    model.addItemCounter();
-                    model.addItemCounter();
-                    model.addItemCounter();
+                    model.setFoodType("");
                 }
 
                 else if(model.getFoodType()=="meat")
@@ -167,6 +160,7 @@ public class Controller
                     model.getVM().setSlots(new Meat(view.getInputName(),view.getInputCal(),view.getInputPrice()), model.getItemCounter());
                     view.inputDisplay("Added(Meat): "+model.getVM().itemSlots[model.getItemCounter()].getItem().getItemName());
                     model.addItemCounter();
+                    model.setFoodType("");
                 }
 
                 else if(model.getFoodType()=="side")
@@ -174,6 +168,7 @@ public class Controller
                     model.getVM().setSlots(new Side(view.getInputName(),view.getInputCal(),view.getInputPrice()), model.getItemCounter());
                     view.inputDisplay("Added(Side): "+model.getVM().itemSlots[model.getItemCounter()].getItem().getItemName());
                     model.addItemCounter();
+                    model.setFoodType("");
                 }
 
                 else
@@ -228,7 +223,6 @@ public class Controller
             {
                 view.setStatus(view.getMaintain(), false);
                 view.setStatus(view.getMenu(), true);
-                model.reset();
             }
         });
 
@@ -239,6 +233,7 @@ public class Controller
             {
                 view.setStatus(view.getMaintain(), false);
                 view.setStatus(view.getVMRestockItem(), true);
+                view.restockDisplay(model.displayInventory());
             }
         });
 
@@ -247,12 +242,26 @@ public class Controller
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                if()
+                if(model.getVM().restockItem(view.getItemRestockChoice(),view.getItemRestockAmount()))
                 {
-                    
+                    model.resetItemString();
+                    view.clearRestockItemTA();
+                    view.restockDisplay("Restock Successful!");
+                    view.restockDisplay("Updated Items: ");
+                    view.restockDisplay(model.displayInventory());
+                    view.clearRestockItemTF();
                 }
             }
         });
-    }
 
+        this.view.restockItemExitListener(new ActionListener() 
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {   
+                view.setStatus(view.getVMRestockItem(), false);
+                view.setStatus(view.getMaintain(), true);
+            }
+        });
+    }
 }

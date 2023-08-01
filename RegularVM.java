@@ -89,7 +89,7 @@ public class RegularVM
                     }
                 }while(restockChoice < 0 || restockChoice > slotCapacity-1);
 
-                restockItem(restockChoice, sc);
+                restockItem(restockChoice, 0);
             }
 
             if(choice == 2)
@@ -458,29 +458,22 @@ public class RegularVM
      * @param sc
      * Scanner that will be used for inputs.
      */
-    private void restockItem(int slotNum, Scanner sc)
+    public boolean restockItem(int slotNum, int restockAmount)
     {
-        int restockAmount;
         if(itemSlots[slotNum].getStock()==itemCapacity)
         {
-            System.out.println("The Slot is Currently Full");
+            return false;
         }
-        else
+
+        else if((itemSlots[slotNum].getStock()+restockAmount) < 0 || (itemSlots[slotNum].getStock()+restockAmount) > itemCapacity)
         {
-            System.out.print("The Slot has "+itemSlots[slotNum].getStock()+" Items, How much Would like to add?: ");
-            do
-            {
-                restockAmount = sc.nextInt();
-                if((itemSlots[slotNum].getStock()+restockAmount) < 0 || (itemSlots[slotNum].getStock()+restockAmount) > itemCapacity)
-                {
-                    System.out.println("The Value Exceeds the limit or is invalid, please try again.");
-                }
-
-            }while((itemSlots[slotNum].getStock()+restockAmount) < 0 || (itemSlots[slotNum].getStock()+restockAmount) > itemCapacity);
-
-            itemSlots[slotNum].setStock(restockAmount+itemSlots[slotNum].getStock());
-            originalInventory[slotNum] = itemSlots[slotNum];
+            return false;
         }
+
+        itemSlots[slotNum].setStock(restockAmount+itemSlots[slotNum].getStock());
+        originalInventory[slotNum] = itemSlots[slotNum];
+
+        return true;
     }
 
     /**
@@ -488,9 +481,9 @@ public class RegularVM
      * @param slotNum
      * An intger that represents which slot to display.
      */
-    protected void displayItem(int slotNum)
+    public String displayItem(int slotNum)
     {
-        System.out.println("["+(slotNum+1)+"] "+itemSlots[slotNum].getItem().getItemName()+" | Calories: "+itemSlots[slotNum].getItem().getCalories()+" | Price: "+itemSlots[slotNum].getItem().getPrice());
+        return "["+(slotNum+1)+"] "+itemSlots[slotNum].getItem().getItemName()+" [ Calories: "+itemSlots[slotNum].getItem().getCalories()+" | Price: "+itemSlots[slotNum].getItem().getPrice()+" | Stock: "+itemSlots[slotNum].getStock()+" ]";
     }
 
     /**

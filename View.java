@@ -49,6 +49,8 @@ public class View
     private JFrame vmSetPrice;
     private JTextArea priceDisplay;
     private TextField priceChoice, priceAmount;
+    private JLabel priceChoicelabel, priceAmountlabel;
+    private JButton priceAdd, priceExit;
 
     private JFrame vmCollectMoney;
     private JTextArea displayTransac;
@@ -65,6 +67,7 @@ public class View
         vmMaintain();
         vmInput();
         vmRestockItem();
+        vmSetPrice();
     }
 
     public void vmStart()
@@ -74,6 +77,7 @@ public class View
         vmStart.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         vmStart.setSize(800, 800);;
         vmStart.setResizable(false);
+        vmStart.setLocationRelativeTo(null);
         vmStart.setLayout(null);
 
         createRVM = new JButton("Add RVM");
@@ -129,6 +133,7 @@ public class View
         vmMenu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         vmMenu.setSize(800, 800);;
         vmMenu.setResizable(false);
+        vmMenu.setLocationRelativeTo(null);
         vmMenu.setLayout(null);
 
         menuTest = new JButton("Test Vending Machine");
@@ -160,6 +165,7 @@ public class View
         vmMaintain.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         vmMaintain.setSize(800, 800);;
         vmMaintain.setResizable(false);
+        vmMaintain.setLocationRelativeTo(null);
         vmMaintain.setLayout(null);
 
         restockItem = new JButton("Restock the Items");
@@ -183,10 +189,11 @@ public class View
 
     public void vmInput()
     {
-        vmInput = new JFrame("Item Input Mode");
+        vmInput = new JFrame("[Input] Item Input Mode");
         vmInput.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         vmInput.setSize(800, 800);;
         vmInput.setResizable(false);
+        vmInput.setLocationRelativeTo(null);
         vmInput.setLayout(null);
 
         itemName = new JLabel("Enter the name of the Item");
@@ -240,6 +247,7 @@ public class View
         vmRestockItem.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         vmRestockItem.setSize(800, 800);
         vmRestockItem.setResizable(false);
+        vmRestockItem.setLocationRelativeTo(null);
         vmRestockItem.setLayout(null);
 
         restockItemDisplay = new JTextArea();
@@ -269,6 +277,7 @@ public class View
         vmRestockItem.add(restockItemAdd);
         vmRestockItem.add(restockItemExit);
     }
+
     public void exitVMListener(ActionListener e)
     {
         exit.addActionListener(e);
@@ -332,6 +341,11 @@ public class View
     public void restockItemAddListener(ActionListener e)
     {
         restockItemAdd.addActionListener(e);
+    }
+
+    public void restockItemExitListener(ActionListener e)
+    {
+        restockItemExit.addActionListener(e);
     }
 
     public int getItemRestockChoice()
@@ -486,5 +500,16 @@ public class View
     public JFrame getVMRestockItem()
     {
         return vmRestockItem;
+    }
+
+    public void clearRestockItemTF()
+    {
+        restockItemAmount.setText("");
+        restockItemChoice.setText("");
+    }
+
+    public void clearRestockItemTA()
+    {
+        restockItemDisplay.setText("");
     }
 }

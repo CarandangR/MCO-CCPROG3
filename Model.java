@@ -4,6 +4,7 @@ public class Model
     private SpecialVM SVM;
     private String foodType;
     private int itemCounter=0;
+    String items="";
     public Model()
     {
     }
@@ -114,5 +115,23 @@ public class Model
         RVM = null;
         SVM = null;
         this.itemCounter=0;
+    }
+
+    public String displayInventory()
+    {
+        int i;
+
+        for(i=0;i<getVM().slotCapacity;i++)
+        {
+            items += getVM().displayItem(i);
+            items += "\n";
+        }
+
+        return items;
+    }
+
+    public void resetItemString()
+    {
+        items="";
     }
 }
