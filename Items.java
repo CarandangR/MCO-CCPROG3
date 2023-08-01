@@ -11,7 +11,8 @@
  * and allows it to be used in main.
  */
 
-public class Items {
+public class Items 
+{
     protected String itemName;
     protected int calories;
     protected int price;

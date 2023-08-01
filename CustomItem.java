@@ -61,5 +61,45 @@ public class CustomItem extends Items
     public void addTopping(AddOn item)
     {
         Toppings.add(item);
-    }   
+    }
+
+    public Rice getRice()
+    {
+        return rice;
+    }
+
+    public void setRice(Rice rice) 
+    {
+        this.rice = rice;
+    }
+
+    public Side getSide() 
+    {
+        return side;
+    }
+
+    public void setSide(Side side) 
+    {
+        this.side = side;
+    }
+
+    public Meat getMeat() 
+    {
+        return meat;
+    }
+
+    public void setMeat(Meat meat) 
+    {
+        this.meat = meat;
+    }
+
+    public ArrayList<AddOn> getToppings() 
+    {
+        return Toppings;
+    }
+
+    public void setToppings(ArrayList<AddOn> toppings) 
+    {
+        Toppings = toppings;
+    }
 }
