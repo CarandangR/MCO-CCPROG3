@@ -51,54 +51,10 @@ public class RegularVM
      * @param sc
      * Scanner that will be used for inputs.
      */
-    public void setSlots(Scanner sc)
+    public void setSlots(Items item, int i)
     {
-        int i;
-        for(i=0;i<slotCapacity;i++)
-        {
-            this.itemSlots[i] = getSlotInput(sc);
-            this.originalInventory[i] = this.itemSlots[i];
-        }
-    }
-
-    /**
-     * A helper method for getting input for each slot and returns Slots object.
-     * @param sc
-     * Scanner that will be used for inputs.
-     * @return Slots
-     */
-    public Slots getSlotInput(Scanner sc)
-    {
-        return new Slots(getItemInput(sc),0);
-    }   
-
-    /**
-     * A helper method for getting input for each item for each slot and return Item object.
-     * @param sc
-     * Scanner that will be used for inputs.
-     * @return Items
-     */
-    protected Items getItemInput(Scanner sc)
-    {
-        String name;
-        int calories;
-        int price;
-        System.out.print("Please Input the Name of the Item: ");
-        name = sc.nextLine();
-        do
-        {
-            System.out.print("Please Input the Calories of the Item: ");
-            calories = sc.nextInt();
-        }while(calories < 1);
-
-        do
-        {
-            System.out.print("Please Input the Price of the Item: ");
-            price = sc.nextInt();
-        }while(price < 1);
-
-        sc.nextLine();
-        return new Items(name,calories,price);
+        this.itemSlots[i] = new Slots(item,0);
+        this.originalInventory[i] = this.itemSlots[i];
     }
 
     /**
@@ -690,4 +646,10 @@ public class RegularVM
         }
         return flag;
     }
+
+    public void setIsNew(boolean bool)
+    {
+        this.isNew = bool;
+    }
+
 }

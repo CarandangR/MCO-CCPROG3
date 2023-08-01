@@ -131,6 +131,12 @@ public class Controller
                     view.setStatus(view.getMenu(), false);
                     view.setStatus(view.getInput(), true);
                 }
+
+                else
+                {
+                    view.setStatus(view.getMenu(), false);
+                    view.setStatus(view.getMaintain(), true);
+                }
             }
         });
 
@@ -139,19 +145,35 @@ public class Controller
             @Override
             public void actionPerformed(ActionEvent e)
             {
+
                 if(model.getFoodType()=="rice")
                 {
-
+                    model.getVM().setSlots(new Rice(view.getInputName(),view.getInputCal(),view.getInputPrice()), model.getItemCounter());
+                    view.inputDisplay("Added(Rice): "+model.getVM().itemSlots[model.getItemCounter()].getItem().getItemName());
+                    model.addItemCounter();
+                    model.addItemCounter();
+                    model.addItemCounter();
+                    model.addItemCounter();
+                    model.addItemCounter();
+                    model.addItemCounter();
+                    model.addItemCounter();
+                    model.addItemCounter();
+                    model.addItemCounter();
+                    model.addItemCounter();
                 }
 
                 else if(model.getFoodType()=="meat")
                 {
-
+                    model.getVM().setSlots(new Meat(view.getInputName(),view.getInputCal(),view.getInputPrice()), model.getItemCounter());
+                    view.inputDisplay("Added(Meat): "+model.getVM().itemSlots[model.getItemCounter()].getItem().getItemName());
+                    model.addItemCounter();
                 }
 
-                else if(model.getFoodType()=="rice")
+                else if(model.getFoodType()=="side")
                 {
-
+                    model.getVM().setSlots(new Side(view.getInputName(),view.getInputCal(),view.getInputPrice()), model.getItemCounter());
+                    view.inputDisplay("Added(Side): "+model.getVM().itemSlots[model.getItemCounter()].getItem().getItemName());
+                    model.addItemCounter();
                 }
 
                 else
@@ -159,7 +181,16 @@ public class Controller
                     view.inputDisplay("You did not select the type of item");
                 }
 
+                if(model.getItemCounter() == model.getVM().slotCapacity)
+                {
+                    model.getVM().setIsNew(false);
+                    view.setStatus(view.getInput(), false);
+                    view.setStatus(view.getMaintain(), true);
+                }
+
                 view.clearButton();
+                view.clearInputTF();
+
             }
         });
 
@@ -187,6 +218,39 @@ public class Controller
             public void actionPerformed(ActionEvent e)
             {
                 model.setFoodType("side");
+            }
+        });
+
+        this.view.exitMaintainListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                view.setStatus(view.getMaintain(), false);
+                view.setStatus(view.getMenu(), true);
+                model.reset();
+            }
+        });
+
+        this.view.restockMaintainListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                view.setStatus(view.getMaintain(), false);
+                view.setStatus(view.getVMRestockItem(), true);
+            }
+        });
+
+        this.view.restockItemAddListener(new ActionListener() 
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                if()
+                {
+                    
+                }
             }
         });
     }

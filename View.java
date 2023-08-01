@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
 import java.awt.Font;
+import java.awt.TextField;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -39,12 +40,31 @@ public class View
     private JRadioButton rice, meat, side;
     ButtonGroup typeGroup;
 
+    private JFrame vmRestockItem;
+    private JTextArea restockItemDisplay;
+    private JTextField restockItemChoice, restockItemAmount;
+    private JLabel restockItemChoicelabel, restockItemAmountlabel;
+    private JButton restockItemAdd, restockItemExit;
+
+    private JFrame vmSetPrice;
+    private JTextArea priceDisplay;
+    private TextField priceChoice, priceAmount;
+
+    private JFrame vmCollectMoney;
+    private JTextArea displayTransac;
+    private JButton exitCollect;
+
+    private JFrame vmRestockMoney;
+    private JTextArea restockmoneyDisplay;
+    private TextField restockmoneyChoice, restockmoneyAmount;
+
     public View()
     {
         vmStart();
         vmMenu();
         vmMaintain();
         vmInput();
+        vmRestockItem();
     }
 
     public void vmStart()
@@ -52,7 +72,7 @@ public class View
         vmStart = new JFrame("Vending Machine Factory");
 
         vmStart.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        vmStart.setBounds(0, 0, 800, 800);;
+        vmStart.setSize(800, 800);;
         vmStart.setResizable(false);
         vmStart.setLayout(null);
 
@@ -107,7 +127,7 @@ public class View
     {
         vmMenu = new JFrame("Vending Machine Menu");
         vmMenu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        vmMenu.setBounds(0, 0, 800, 800);;
+        vmMenu.setSize(800, 800);;
         vmMenu.setResizable(false);
         vmMenu.setLayout(null);
 
@@ -138,7 +158,7 @@ public class View
     {
         vmMaintain = new JFrame("Maintenance Mode");
         vmMaintain.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        vmMaintain.setBounds(0, 0, 800, 800);;
+        vmMaintain.setSize(800, 800);;
         vmMaintain.setResizable(false);
         vmMaintain.setLayout(null);
 
@@ -165,7 +185,7 @@ public class View
     {
         vmInput = new JFrame("Item Input Mode");
         vmInput.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        vmInput.setBounds(0, 0, 800, 800);;
+        vmInput.setSize(800, 800);;
         vmInput.setResizable(false);
         vmInput.setLayout(null);
 
@@ -214,6 +234,41 @@ public class View
         vmInput.add(inputNext);
     }
 
+    public void vmRestockItem()
+    {
+        vmRestockItem = new JFrame("[Maintenance] Restock Mode");
+        vmRestockItem.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        vmRestockItem.setSize(800, 800);
+        vmRestockItem.setResizable(false);
+        vmRestockItem.setLayout(null);
+
+        restockItemDisplay = new JTextArea();
+        restockItemDisplay.setBounds(152, 10, 495, 309);
+        restockItemDisplay.setEditable(false);
+
+        restockItemChoice = new JTextField();
+        restockItemChoice.setBounds(477, 350, 170, 63);
+        restockItemAmount = new JTextField();
+        restockItemAmount.setBounds(477, 450, 170, 63);
+
+        restockItemChoicelabel = new JLabel("Enter the Index of the Item");
+        restockItemChoicelabel.setBounds(152, 350, 170, 63);
+        restockItemAmountlabel = new JLabel("Enter the Quantity");
+        restockItemAmountlabel.setBounds(152, 450, 170, 63);
+
+        restockItemAdd = new JButton("Add item to Stock");
+        restockItemAdd.setBounds(477, 600, 170, 63);
+        restockItemExit = new JButton("Exit Restock Mode");
+        restockItemExit.setBounds(152, 600, 170, 63);
+
+        vmRestockItem.add(restockItemDisplay);
+        vmRestockItem.add(restockItemChoice);
+        vmRestockItem.add(restockItemAmount);
+        vmRestockItem.add(restockItemChoicelabel);
+        vmRestockItem.add(restockItemAmountlabel);
+        vmRestockItem.add(restockItemAdd);
+        vmRestockItem.add(restockItemExit);
+    }
     public void exitVMListener(ActionListener e)
     {
         exit.addActionListener(e);
@@ -264,6 +319,36 @@ public class View
         side.addActionListener(e);
     }
 
+    public void exitMaintainListener(ActionListener e)
+    {
+        maintainExit.addActionListener(e);
+    }
+
+    public void restockMaintainListener(ActionListener e)
+    {
+        restockItem.addActionListener(e);
+    }
+
+    public void restockItemAddListener(ActionListener e)
+    {
+        restockItemAdd.addActionListener(e);
+    }
+
+    public int getItemRestockChoice()
+    {
+        return Integer.parseInt(restockItemChoice.getText());
+    }
+
+    public int getItemRestockAmount()
+    {
+        return Integer.parseInt(restockItemAmount.getText());
+    }
+
+    public void restockDisplay(String text)
+    {
+        restockItemDisplay.append(text+"\n");
+    }
+
     public void inputItem(ActionListener e)
     {
         inputNext.addActionListener(e);
@@ -274,14 +359,14 @@ public class View
         return inputName.getText();
     }
 
-    public String getInputCal()
+    public int getInputCal()
     {
-        return inputCalories.getText();
+        return Integer.parseInt(inputCalories.getText());
     }
 
-    public String getInputPrice()
+    public int getInputPrice()
     {
-        return inputPrice.getText();
+        return Integer.parseInt(inputPrice.getText());
     }
 
     public String getvendName()
@@ -390,11 +475,16 @@ public class View
 
     public void inputDisplay(String text)
     {
-        startOutput.append(text+"\n");
+        inputUpdate.append(text+"\n");
     }
 
     public void clearButton()
     {
         typeGroup.clearSelection();
+    }
+
+    public JFrame getVMRestockItem()
+    {
+        return vmRestockItem;
     }
 }

@@ -2,8 +2,8 @@ public class Model
 {
     private RegularVM RVM;
     private SpecialVM SVM;
-    String foodType;
-
+    private String foodType;
+    private int itemCounter=0;
     public Model()
     {
     }
@@ -97,5 +97,22 @@ public class Model
     public void setFoodType(String foodType)
     {
         this.foodType = foodType;
+    }
+
+    public int getItemCounter()
+    {
+        return itemCounter;
+    }
+
+    public void addItemCounter()
+    {
+        this.itemCounter++;
+    }
+
+    public void reset()
+    {
+        RVM = null;
+        SVM = null;
+        this.itemCounter=0;
     }
 }
