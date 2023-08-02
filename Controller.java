@@ -265,6 +265,8 @@ public class Controller
             @Override
             public void actionPerformed(ActionEvent e)
             {   
+                view.clearRestockItemTA();
+                view.clearRestockItemTF();
                 view.setStatus(view.getVMRestockItem(), false);
                 view.setStatus(view.getVMMaintain(), true);
             }
@@ -309,6 +311,8 @@ public class Controller
             @Override
             public void actionPerformed(ActionEvent e)
             {   
+                view.clearPriceTA();
+                view.clearPriceTF();
                 view.setStatus(view.getVMsetprice(), false);
                 view.setStatus(view.getVMMaintain(), true);
             }
@@ -324,12 +328,16 @@ public class Controller
 
                 if(model.getVM().checkTransac())
                 {
+                    view.clearcollectMoneyTA();
                     view.collectMoneyDisplay(model.displayHistory());
+                    model.getVM().vendBalance.setToZero();
                 }
 
                 else
                 {
-                    view.collectMoneyDisplay("[There are no transactions that have been made since last maintenance]");
+                    view.clearcollectMoneyTA();
+                    view.collectMoneyDisplay("[There are no transactions that have been made since last maintenance]\n [Money from the Machine Collected]");
+                    model.getVM().vendBalance.setToZero();
                 }
             }
         });
@@ -342,6 +350,167 @@ public class Controller
                 view.setStatus(view.getVMCollect(), false);
                 view.setStatus(view.getVMMaintain(), true);
             }
+        });
+
+        this.view.restockMoneyListener(new ActionListener() 
+        {
+                @Override
+                public void actionPerformed(ActionEvent e)
+                {
+                    view.setStatus(view.getVMMaintain(), false);
+                    view.setStatus(view.getVMRestockMoney(), true);
+                    view.setMoneyDisplay(model.displayMoney(model.getVM().vendBalance));
+                }
+        });
+
+        this.view.restockMon1Listener(new ActionListener() 
+        {
+                @Override
+                public void actionPerformed(ActionEvent e)
+                {
+                    if(model.amountisValid(view.getrestockmoneyAmount()))
+                    {
+                        model.getVM().vendBalance.setCoin1(model.getVM().vendBalance.getCoin1()+view.getrestockmoneyAmount());
+                        view.clearsetMoneyTA();
+                        view.clearsetMoneyTF();
+                        view.setMoneyDisplay(model.displayMoney(model.getVM().vendBalance));
+                    }
+
+                    else
+                    {
+                        view.clearsetMoneyTA();
+                        view.clearsetMoneyTF();
+                        view.setMoneyDisplay("Invalid Amount!");
+                        model.displayMoney(model.getVM().vendBalance);
+                    }
+                }
+        });
+
+        this.view.restockMon5Listener(new ActionListener() 
+        {
+                @Override
+                public void actionPerformed(ActionEvent e)
+                {
+                    if(model.amountisValid(view.getrestockmoneyAmount()))
+                    {
+                        model.getVM().vendBalance.setCoin5(model.getVM().vendBalance.getCoin5()+view.getrestockmoneyAmount());
+                        view.clearsetMoneyTA();
+                        view.clearsetMoneyTF();
+                        view.setMoneyDisplay(model.displayMoney(model.getVM().vendBalance));
+                    }
+
+                    else
+                    {
+                        view.clearsetMoneyTA();
+                        view.clearsetMoneyTF();
+                        view.setMoneyDisplay("Invalid Amount!");
+                        view.setMoneyDisplay(model.displayMoney(model.getVM().vendBalance));
+                    }
+                }
+        });
+
+        this.view.restockMon10Listener(new ActionListener() 
+        {
+                @Override
+                public void actionPerformed(ActionEvent e)
+                {
+                    if(model.amountisValid(view.getrestockmoneyAmount()))
+                    {
+                        model.getVM().vendBalance.setCoin10(model.getVM().vendBalance.getCoin10()+view.getrestockmoneyAmount());
+                        view.clearsetMoneyTA();
+                        view.clearsetMoneyTF();
+                        view.setMoneyDisplay(model.displayMoney(model.getVM().vendBalance));
+                    }
+
+                    else
+                    {
+                        view.clearsetMoneyTA();
+                        view.clearsetMoneyTF();
+                        view.setMoneyDisplay("Invalid Amount!");
+                        view.setMoneyDisplay(model.displayMoney(model.getVM().vendBalance));
+                    }
+                }
+        });
+
+        this.view.restockMon20Listener(new ActionListener() 
+        {
+                @Override
+                public void actionPerformed(ActionEvent e)
+                {
+                    if(model.amountisValid(view.getrestockmoneyAmount()))
+                    {
+                        model.getVM().vendBalance.setBill20(model.getVM().vendBalance.getBill20()+view.getrestockmoneyAmount());
+                        view.clearsetMoneyTA();
+                        view.clearsetMoneyTF();
+                        view.setMoneyDisplay(model.displayMoney(model.getVM().vendBalance));
+                    }
+
+                    else
+                    {
+                        view.clearsetMoneyTA();
+                        view.clearsetMoneyTF();
+                        view.setMoneyDisplay("Invalid Amount!");
+                        view.setMoneyDisplay(model.displayMoney(model.getVM().vendBalance));
+                    }
+                }
+        });
+
+        this.view.restockMon50Listener(new ActionListener() 
+        {
+                @Override
+                public void actionPerformed(ActionEvent e)
+                {
+                    if(model.amountisValid(view.getrestockmoneyAmount()))
+                    {
+                        model.getVM().vendBalance.setBill50(model.getVM().vendBalance.getBill50()+view.getrestockmoneyAmount());
+                        view.clearsetMoneyTA();
+                        view.clearsetMoneyTF();
+                        view.setMoneyDisplay(model.displayMoney(model.getVM().vendBalance));
+                    }
+
+                    else
+                    {
+                        view.clearsetMoneyTA();
+                        view.clearsetMoneyTF();
+                        view.setMoneyDisplay("Invalid Amount!");
+                        view.setMoneyDisplay(model.displayMoney(model.getVM().vendBalance));
+                    }
+                }
+        });
+
+        this.view.restockMon100Listener(new ActionListener() 
+        {
+                @Override
+                public void actionPerformed(ActionEvent e)
+                {
+                    if(model.amountisValid(view.getrestockmoneyAmount()))
+                    {
+                        model.getVM().vendBalance.setBill100(model.getVM().vendBalance.getBill100()+view.getrestockmoneyAmount());
+                        view.clearsetMoneyTA();
+                        view.clearsetMoneyTF();
+                        view.setMoneyDisplay(model.displayMoney(model.getVM().vendBalance));
+                    }
+
+                    else
+                    {
+                        view.clearsetMoneyTA();
+                        view.clearsetMoneyTF();
+                        view.setMoneyDisplay("Invalid Amount!");
+                        view.setMoneyDisplay(model.displayMoney(model.getVM().vendBalance));
+                    }
+                }
+        });
+
+        this.view.restockMoneyExitListener(new ActionListener() 
+        {
+                @Override
+                public void actionPerformed(ActionEvent e)
+                {
+                    view.clearsetMoneyTA();
+                    view.clearsetMoneyTF();
+                    view.setStatus(view.getVMRestockMoney(), false);
+                    view.setStatus(view.getVMMaintain(), true);
+                }
         });
     }
 }

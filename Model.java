@@ -6,6 +6,7 @@ public class Model
     private int itemCounter=0;
     String items="";
     String history="";
+    String money="";
     public Model()
     {
     }
@@ -148,5 +149,27 @@ public class Model
         getVM().vendBalance.setToZero();
         getVM().transacHistory.clear();
         return history;
+    }
+
+    public boolean amountisValid(int num)
+    {
+        if(num>0)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    public String displayMoney(Money balance)
+    {
+        money="";
+        money += "Php 1   qty: "+balance.getCoin1()+"\n";
+        money += "Php 5   qty: "+balance.getCoin5()+"\n";
+        money += "Php 10  qty: "+balance.getCoin10()+"\n";
+        money += "Php 20  qty: "+balance.getBill20()+"\n";
+        money += "Php 50  qty: "+balance.getBill50()+"\n";
+        money += "Php 100 qty: "+balance.getBill100()+"\n";
+        return money;
     }
 }

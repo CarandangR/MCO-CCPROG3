@@ -69,41 +69,12 @@ public class RegularVM
     }
 
     /**
-     * A method to run maintenance of the vending machine.
-     * @param sc
-     * Scanner that will be used for inputs.
-     */
-    public void maintenance(Scanner sc)
-    {
-        int control = 1, choice;
-
-        while(control == 1)
-        {
-            System.out.println("[4] Restock");
-            System.out.println("[5] Exit");
-            choice = sc.nextInt();
-
-            if(choice == 4)
-            {
-                restockMoney(sc);
-            }
-
-            if(choice == 5)
-            {
-                control = 0;
-            }
-        }
-    }
-
-    /**
      * A helper method that accepts user input for money.
      * @param sc
      * Scanner that will be used for inputs.
      */
     private void insertMoney(Scanner sc)
     {
-        int i = inputMoney(sc);
-        addMoney(i,userBalance,sc);
         add2Balances(userBalance,vendBalance);
     }
 
@@ -201,22 +172,6 @@ public class RegularVM
         }
     }
 
-    /**
-     * A helper method that restocks the vending machine's balance.
-     * @param sc
-     * Scanner that will be used for inputs.
-     */
-    private void restockMoney(Scanner sc)
-    {
-        int i = inputMoney(sc);
-        addMoney(i,vendBalance,sc);
-    }
-
-    /**
-     * A helper method that collects the vending machine's balance.
-     * @param sc
-     * Scanner that will be used for inputs.
-     */
     public Boolean checkTransac()
     {
         if(transacHistory.size() > 0)
@@ -225,170 +180,8 @@ public class RegularVM
         }
 
         return false;
-        /*
-        int i;
-        System.out.println("Here is the list of transactions Made: ");
-        for(i=0;i<transacHistory.size();i++)
-        {
-            System.out.println(transacHistory.get(i).getItem().getItemName()+"  "+transacHistory.get(i).getQty());
-            System.out.println("Total Amount: "+transacHistory.get(i).getVendTotal()+"  User Paid: "+transacHistory.get(i).getUserPay()+"  ");
-            System.out.println("Change: "+transacHistory.get(i).getChange());
-        }
-        System.out.println("Vending Machine Emptied, Total Amount collected is: "+vendBalance.getTotalMoney());
-        vendBalance.setToZero();
-        */
     }
 
-    /**
-     * A helper method that gets input from the user.
-     * @param sc
-     * Scanner that will be used for inputs.
-     * @return denomInput
-     */
-    private int inputMoney(Scanner sc)
-    {
-        int denomInput;
-        do {
-            System.out.println("Please Enter the Denomination");
-            System.out.println("[1] 1 Php Coin");
-            System.out.println("[2] 5 Php Coin");
-            System.out.println("[3] 10 Php Coin");
-            System.out.println("[4] 20 Php Bill");
-            System.out.println("[5] 50 Php Bill");
-            System.out.println("[6] 100 Php Bill");
-            System.out.println("[0] Continue");
-            denomInput = sc.nextInt();
-            if(denomInput < 0 || denomInput > 6){
-                System.out.println("Invalid Choice.");
-            }
-        } while(denomInput < 0 || denomInput > 6);
-        return denomInput;
-    }
-
-    /**
-     * A helper method that Adds money to the specified money object.
-     * @param choice
-     * An integer that acts as the decision of the user.
-     * @param balance
-     * The money object to be updated.
-     * @param sc
-     * Scanner that will be used for inputs.
-     */
-    private void addMoney(int choice, Money balance, Scanner sc)
-    {
-        int quantity, control = 1;
-
-        while(control == 1)
-        {
-            switch(choice)
-            {
-                case(1):
-                    do
-                    {
-                        System.out.print("Please Input the quantity you want to add: ");
-                        quantity = sc.nextInt();
-                        if(quantity < 0)
-                        {
-                            System.out.println("Invalid Input, please Try again.");
-                        }
-                    }while(quantity < 0);
-
-                    balance.setCoin1(balance.getCoin1()+quantity);
-                    control = 0;
-                    break;
-
-                case(2):
-                    do
-                    {
-                        System.out.print("Please Input the quantity you want to add: ");
-                        quantity = sc.nextInt();
-                        if(quantity < 0)
-                        {
-                            System.out.println("Invalid Input, please Try again.");
-                        }
-                    }while(quantity < 0);
-
-                    balance.setCoin5(balance.getCoin5()+quantity);
-                    control = 0;
-                    break;
-
-                case(3):
-                    do
-                    {
-                        System.out.print("Please Input the quantity you want to add: ");
-                        quantity = sc.nextInt();
-                        if(quantity < 0)
-                        {
-                            System.out.println("Invalid Input, please Try again.");
-                        }
-                    }while(quantity < 0);
-
-                    balance.setCoin10(balance.getCoin10()+quantity);
-                    control = 0;
-                    break;
-
-                case(4):
-                    do
-                    {
-                        System.out.print("Please Input the quantity you want to add: ");
-                        quantity = sc.nextInt();
-                        if(quantity < 0)
-                        {
-                            System.out.println("Invalid Input, please Try again.");
-                        }
-                    }while(quantity < 0);
-
-                    balance.setBill20(balance.getBill20()+quantity);
-                    control = 0;
-                    break;
-
-                case(5):
-                    do
-                    {
-                        System.out.print("Please Input the quantity you want to add: ");
-                        quantity = sc.nextInt();
-                        if(quantity < 0)
-                        {
-                            System.out.println("Invalid Input, please Try again.");
-                        }
-                    }while(quantity < 0);
-
-                    balance.setBill50(balance.getBill50()+quantity);
-                    control = 0;
-                    break;
-
-                case(6):
-                    do
-                    {
-                        System.out.print("Please Input the quantity you want to add: ");
-                        quantity = sc.nextInt();
-                        if(quantity < 0)
-                        {
-                            System.out.println("Invalid Input, please Try again.");
-                        }
-                    }while(quantity < 0);
-
-                    balance.setBill100(balance.getBill100()+quantity);
-                    control = 0;
-                    break;
-
-                case(0):
-                    control = 0;
-                    break;
-
-                default:
-                    System.out.println("Invalid Input!");
-            }
-        }
-    }
-
-    /**
-     * A helper method that sets the price of each item.
-     * @param slotNum
-     * An integer that represents which slot to edit.
-     * @param sc
-     * Scanner that will be used for inputs.
-     */
     public boolean setPrice(int slotNum, int repriceAmount)
     {
         if(repriceAmount < 0)
@@ -400,13 +193,6 @@ public class RegularVM
         return true;
     }
 
-    /**
-     * A helper method that restocks a specified item.
-     * @param slotNum
-     * An integer that represents which slot to edit.
-     * @param sc
-     * Scanner that will be used for inputs.
-     */
     public boolean restockItem(int slotNum, int restockAmount)
     {
         if(itemSlots[slotNum].getStock()==itemCapacity)
@@ -509,20 +295,6 @@ public class RegularVM
     }
 
     /**
-     * A helper method which displays the before and after stock of items.
-     */
-    private void displayStocks()
-    {
-        int i;
-
-        System.out.println("These are how the Items Were Updated Since Last Restock: ");
-        for(i=0;i < this.slotCapacity;i++)
-        {
-            System.out.println("["+(i+1)+"] "+this.itemSlots[i].getItem().getItemName()+": "+this.itemSlots[i].getStock()+" ---> "+this.originalInventory[i].getStock());
-        }
-    }
-
-    /**
      * A helper method to determine if the vending machine has underwent maintenance.
      * @return boolean
      */
@@ -593,5 +365,4 @@ public class RegularVM
     {
         this.isNew = bool;
     }
-
 }

@@ -58,7 +58,9 @@ public class View
 
     private JFrame vmRestockMoney;
     private JTextArea restockmoneyDisplay;
-    private TextField restockmoneyChoice, restockmoneyAmount;
+    private JLabel restockmoneyAmountLabel;
+    private JTextField restockmoneyAmount;
+    private JButton restockMon1, restockMon5, restockMon10, restockMon20, restockMon50, restockMon100, restockMoneyExit;
 
     public View()
     {
@@ -69,6 +71,7 @@ public class View
         vmRestockItem();
         vmSetPrice();
         vmCollectMoney();
+        vmSetMoney();
     }
 
     public void vmStart()
@@ -326,7 +329,7 @@ public class View
         vmCollectMoney.setLayout(null);
 
         collectDisplay = new JTextArea();
-	    collectDisplay.setBounds(110, 100, 579, 426);
+	    collectDisplay.setBounds(110, 50, 579, 550);
 	    collectDisplay.setEditable(false);
 
         collectExit = new JButton("Exit");
@@ -336,7 +339,50 @@ public class View
         vmCollectMoney.add(collectExit);
     }
 
+    public void vmSetMoney()
+    {
+        vmRestockMoney = new JFrame("[Maintenance] Restock Money Mode");
+        vmRestockMoney.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        vmRestockMoney.setSize(800, 800);;
+        vmRestockMoney.setResizable(false);
+        vmRestockMoney.setLocationRelativeTo(null);
+        vmRestockMoney.setLayout(null);
 
+        restockmoneyDisplay = new JTextArea();
+        restockmoneyDisplay.setBounds(152, 10, 495, 309);
+
+        restockmoneyAmountLabel = new JLabel("Enter the amount");
+        restockmoneyAmountLabel.setBounds(275, 496, 112, 31);
+
+        restockmoneyAmount = new JTextField();
+        restockmoneyAmount.setBounds(414, 496, 73, 31);
+
+        restockMon1 = new JButton("1 Php");
+	    restockMon1.setBounds(110, 560, 73, 55);
+        restockMon5 = new JButton("5 Php");
+	    restockMon5.setBounds(212, 560, 73, 55);
+        restockMon10 = new JButton("10 Php");
+	    restockMon10.setBounds(314, 560, 73, 55);
+        restockMon20 = new JButton("20 Php");
+	    restockMon20.setBounds(414, 560, 73, 55);
+        restockMon50 = new JButton("50 Php");
+	    restockMon50.setBounds(516, 560, 73, 55);
+        restockMon100 = new JButton("100 Php");
+	    restockMon100.setBounds(616, 560, 73, 55);
+        restockMoneyExit = new JButton("Exit");
+	    restockMoneyExit.setBounds(324, 652, 152, 55);
+
+        vmRestockMoney.add(restockmoneyDisplay);
+        vmRestockMoney.add(restockmoneyAmountLabel);
+        vmRestockMoney.add(restockmoneyAmount);
+        vmRestockMoney.add(restockMon1);
+        vmRestockMoney.add(restockMon5);
+        vmRestockMoney.add(restockMon10);
+        vmRestockMoney.add(restockMon20);
+        vmRestockMoney.add(restockMon50);
+        vmRestockMoney.add(restockMon100);
+        vmRestockMoney.add(restockMoneyExit);
+    }
 
     /* Buttons/Radio Buttons */
 
@@ -435,26 +481,94 @@ public class View
         collectExit.addActionListener(e);
     }
 
+    public void restockMoneyListener(ActionListener e)
+    {
+        restockMoney.addActionListener(e);
+    }
+
+    public void restockMon1Listener(ActionListener e)
+    {
+        restockMon1.addActionListener(e);
+    }
+
+    public void restockMon5Listener(ActionListener e)
+    {
+        restockMon5.addActionListener(e);
+    }
+
+    public void restockMon10Listener(ActionListener e)
+    {
+        restockMon10.addActionListener(e);
+    }
+
+    public void restockMon20Listener(ActionListener e)
+    {
+        restockMon20.addActionListener(e);
+    }
+
+    public void restockMon50Listener(ActionListener e)
+    {
+        restockMon50.addActionListener(e);
+    }
+
+    public void restockMon100Listener(ActionListener e)
+    {
+        restockMon100.addActionListener(e);
+    }
+
+    public void restockMoneyExitListener(ActionListener e)
+    {
+        restockMoneyExit.addActionListener(e);
+    }
+
     /* Text Fields*/
 
     public int getItemRestockChoice()
     {
-        return Integer.parseInt(restockItemChoice.getText());
+        try 
+        {
+            return Integer.parseInt(restockItemChoice.getText());
+        } 
+        catch (NumberFormatException e)
+        {
+            return 0;
+        }
     }
 
     public int getItemRestockAmount()
     {
-        return Integer.parseInt(restockItemAmount.getText());
+        try 
+        {
+            return Integer.parseInt(restockItemAmount.getText());
+        } 
+        catch (NumberFormatException e)
+        {
+            return 0;
+        }
     }
 
     public int getInputCal()
     {
-        return Integer.parseInt(inputCalories.getText());
+        try 
+        {
+            return Integer.parseInt(inputCalories.getText());
+        } 
+        catch (NumberFormatException e)
+        {
+            return 0;
+        }
     }
 
     public int getInputPrice()
     {
-        return Integer.parseInt(inputPrice.getText());
+        try 
+        {
+            return Integer.parseInt(inputPrice.getText());
+        } 
+        catch (NumberFormatException e)
+        {
+            return 0;
+        }
     }
 
     public String getInputName()
@@ -479,12 +593,38 @@ public class View
 
     public int getPriceChoice()
     {
-        return Integer.parseInt(priceChoice.getText());
+        try 
+        {
+            return Integer.parseInt(priceChoice.getText());
+        } 
+        catch (NumberFormatException e)
+        {
+            return 0;
+        }
     }
 
     public int getPriceAmount()
     {
-        return Integer.parseInt(priceAmount.getText());
+        try 
+        {
+            return Integer.parseInt(priceAmount.getText());
+        } 
+        catch (NumberFormatException e)
+        {
+            return 0;
+        }
+    }
+
+    public int getrestockmoneyAmount()
+    {
+        try 
+        {
+            return Integer.parseInt(restockmoneyAmount.getText());
+        } 
+        catch (NumberFormatException e)
+        {
+            return 0;
+        }
     }
 
     /* JFrame getter */
@@ -524,6 +664,11 @@ public class View
         return vmCollectMoney;
     }
 
+    public JFrame getVMRestockMoney()
+    {
+        return vmRestockMoney;
+    }
+
     /* Clear TA */
 
     public void clearstartTA()
@@ -549,6 +694,16 @@ public class View
     public void clearPriceTA()
     {
         priceDisplay.setText("");
+    }
+
+    public void clearsetMoneyTA()
+    {
+        restockmoneyDisplay.setText("");
+    }
+
+    public void clearcollectMoneyTA()
+    {
+        collectDisplay.setText("");
     }
 
     /* Clear TF */
@@ -577,6 +732,11 @@ public class View
     {
         priceChoice.setText("");
         priceAmount.setText("");
+    }
+
+    public void clearsetMoneyTF()
+    {
+        restockmoneyAmount.setText("");
     }
 
     /* Display Screens */
@@ -609,6 +769,11 @@ public class View
     public void collectMoneyDisplay(String text)
     {
         collectDisplay.append(text);
+    }
+
+    public void setMoneyDisplay(String text)
+    {
+        restockmoneyDisplay.append(text+"\n");
     }
 
     /* Helper Functions */
