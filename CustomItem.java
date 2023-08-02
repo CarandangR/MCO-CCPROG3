@@ -2,9 +2,9 @@ import java.util.ArrayList;
 
 public class CustomItem extends Items 
 {
-    Side side;
-    Rice rice;
-    Meat meat;
+    private Side side;
+    private Rice rice;
+    private Meat meat;
     ArrayList<AddOn> Toppings;
 
     public CustomItem(String name)

@@ -7,6 +7,7 @@ public class Model
     String items="";
     String history="";
     String money="";
+    Transaction temptransaction;
     public Model()
     {
     }
@@ -51,12 +52,12 @@ public class Model
     {
         if(checkVM())
         {
-            if(RVM != null)
+            if(RVM != null && SVM == null)
             {
                 return "regular";
             }
 
-            if(SVM != null)
+            if(SVM != null & RVM == null)
             {
                 return "special"; 
             }
@@ -79,7 +80,8 @@ public class Model
         {
             return RVM;
         }
-        return SVM;
+
+        return this.SVM;
     }
 
     public boolean didMaintain()
@@ -171,5 +173,35 @@ public class Model
         money += "Php 50  qty: "+balance.getBill50()+"\n";
         money += "Php 100 qty: "+balance.getBill100()+"\n";
         return money;
+    }
+
+    public boolean transacPossible(int slotNum, int Qty)
+    {
+        getVM().add2Balances(getVM().userBalance, getVM().vendBalance);
+
+        if(getVM().itemSlots[slotNum-1].getStock() < Qty)
+        {
+            System.out.println("stock issue");
+            return false;
+        }
+
+        else if((getVM().itemSlots[slotNum-1].getItem().price * Qty) > getVM().userBalance.getTotalMoney())
+        {
+            System.out.println("price issue");
+            return false;
+        }
+
+        else if(getVM().compareDenom(getVM().vendBalance, getVM().getDenom(getVM().userBalance.getTotalMoney()-(getVM().itemSlots[slotNum-1].getItem().price * Qty))))
+        {
+            System.out.println("comparedenom");
+            return false;
+        }
+
+        temptransaction = new Transaction(getVM().itemSlots[slotNum-1].getItem(), Qty, getVM().userBalance.getTotalMoney(), getVM().vendBalance.getTotalMoney());
+        getVM().transacHistory.add(temptransaction);
+        getVM().userBalance.setToZero();
+        getVM().itemSlots[slotNum-1].setStock(getVM().itemSlots[slotNum-1].getStock() - Qty);
+
+        return true;
     }
 }

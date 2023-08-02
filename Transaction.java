@@ -35,16 +35,7 @@ public class Transaction {
         this.item = item;
         this.userPay = userPay;
         this.vendTotal = vendTotal;
-    }
-
-    /**
-     * Computes and returns the change.
-     * @return change
-     */
-    public int computeChange()
-    {
         this.change = userPay - item.getPrice()*Qty;
-        return change;
     }
 
     /**

@@ -25,7 +25,7 @@ public class View
     private JLabel enterName, enterNum, enterCap, title;
 
     private JFrame vmMenu;
-    private JButton menuTest, menuMaintain, menuExit;
+    private JButton menuTest, menuTestS, menuMaintain, menuExit;
     private JLabel vendTitle;
     private JTextArea menuOutput;
 
@@ -62,6 +62,12 @@ public class View
     private JTextField restockmoneyAmount;
     private JButton restockMon1, restockMon5, restockMon10, restockMon20, restockMon50, restockMon100, restockMoneyExit;
 
+    private JFrame vmRegTest;
+    private JTextArea RegTestInventory, RegTestStatus, RegTestChange, RegTestTotal, RegTestInserted;
+    private JLabel RegTestAmountLabel, RegTestTotalLabel, RegTestInsertedLabel, RegTestChangeLabel, RegTestIndexLabel;
+    private JTextField RegTestAmount, RegTestIndex;
+    private JButton RegTestExit, RegTestMon1, RegTestMon5, RegTestMon10, RegTestMon20, RegTestMon50, RegTestMon100, RegTestBuy;
+
     public View()
     {
         vmStart();
@@ -72,6 +78,7 @@ public class View
         vmSetPrice();
         vmCollectMoney();
         vmSetMoney();
+        vmRegTest();
     }
 
     public void vmStart()
@@ -140,8 +147,10 @@ public class View
         vmMenu.setLocationRelativeTo(null);
         vmMenu.setLayout(null);
 
-        menuTest = new JButton("Test Vending Machine");
-        menuTest.setBounds(160, 183, 479, 75);
+        menuTest = new JButton("Test Regular");
+        menuTest.setBounds(160, 183, 203, 75);
+        menuTestS = new JButton("Test Special");
+        menuTestS.setBounds(436, 183, 203, 75);
         menuMaintain = new JButton("Maintain Vending Machine");
         menuMaintain.setBounds(160, 312, 479, 75);
         menuExit = new JButton("Go Back to Vending Machine Factory");
@@ -156,6 +165,7 @@ public class View
         menuOutput.setBounds(160, 570, 479, 156);
         menuOutput.setEditable(false);
 
+        vmMenu.add(menuTestS);
         vmMenu.add(menuOutput);
         vmMenu.add(vendTitle);
         vmMenu.add(menuTest);
@@ -350,6 +360,7 @@ public class View
 
         restockmoneyDisplay = new JTextArea();
         restockmoneyDisplay.setBounds(152, 10, 495, 309);
+        restockmoneyDisplay.setEditable(false);
 
         restockmoneyAmountLabel = new JLabel("Enter the amount");
         restockmoneyAmountLabel.setBounds(275, 496, 112, 31);
@@ -357,17 +368,17 @@ public class View
         restockmoneyAmount = new JTextField();
         restockmoneyAmount.setBounds(414, 496, 73, 31);
 
-        restockMon1 = new JButton("1 Php");
+        restockMon1 = new JButton("1");
 	    restockMon1.setBounds(110, 560, 73, 55);
-        restockMon5 = new JButton("5 Php");
+        restockMon5 = new JButton("5");
 	    restockMon5.setBounds(212, 560, 73, 55);
-        restockMon10 = new JButton("10 Php");
+        restockMon10 = new JButton("10");
 	    restockMon10.setBounds(314, 560, 73, 55);
-        restockMon20 = new JButton("20 Php");
+        restockMon20 = new JButton("20");
 	    restockMon20.setBounds(414, 560, 73, 55);
-        restockMon50 = new JButton("50 Php");
+        restockMon50 = new JButton("50");
 	    restockMon50.setBounds(516, 560, 73, 55);
-        restockMon100 = new JButton("100 Php");
+        restockMon100 = new JButton("100");
 	    restockMon100.setBounds(616, 560, 73, 55);
         restockMoneyExit = new JButton("Exit");
 	    restockMoneyExit.setBounds(324, 652, 152, 55);
@@ -382,6 +393,86 @@ public class View
         vmRestockMoney.add(restockMon50);
         vmRestockMoney.add(restockMon100);
         vmRestockMoney.add(restockMoneyExit);
+    }
+
+    public void vmRegTest()
+    {
+        vmRegTest = new JFrame("[Testing] Regular Vending Machine");
+        vmRegTest.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        vmRegTest.setSize(800, 800);;
+        vmRegTest.setResizable(false);
+        vmRegTest.setLocationRelativeTo(null);
+        vmRegTest.setLayout(null);
+
+        RegTestInventory = new JTextArea();
+        RegTestInventory.setBounds(31, 31, 377, 324);
+        RegTestInventory.setEditable(false);
+        RegTestStatus = new JTextArea();
+        RegTestStatus.setBounds(531, 31, 215, 437);
+        RegTestStatus.setEditable(false);
+        RegTestTotal = new JTextArea();
+        RegTestTotal.setBounds(531, 511, 215, 52);
+        RegTestTotal.setEditable(false);
+        RegTestInserted = new JTextArea();
+        RegTestInserted.setBounds(531, 600, 215, 52);
+        RegTestInserted.setEditable(false);
+        RegTestChange = new JTextArea();
+        RegTestChange.setBounds(531, 689, 215, 42);
+        RegTestChange.setEditable(false);
+
+        RegTestIndexLabel = new JLabel("Enter the Item Index:");
+        RegTestIndexLabel.setBounds(31, 373, 122, 42);
+        RegTestAmountLabel = new JLabel("Enter the Item Qty:");
+        RegTestAmountLabel.setBounds(31, 433, 122, 42);
+        RegTestTotalLabel = new JLabel("Total:");
+        RegTestTotalLabel.setBounds(412, 511, 96, 52);
+        RegTestInsertedLabel = new JLabel("Inserted:");
+        RegTestInsertedLabel.setBounds(412, 600, 96, 52);
+        RegTestChangeLabel = new JLabel("Change:");
+        RegTestChangeLabel.setBounds(412, 689, 96, 52);
+
+        RegTestIndex = new JTextField();
+        RegTestIndex.setBounds(193, 373, 215, 42);
+        RegTestAmount = new JTextField();
+        RegTestAmount.setBounds(193, 433, 215, 42);
+
+        RegTestMon1 = new JButton("1");
+	    RegTestMon1.setBounds(31, 503, 70, 68);
+        RegTestMon5 = new JButton("5");
+	    RegTestMon5.setBounds(123, 503, 70, 68);
+        RegTestMon10 = new JButton("10");
+	    RegTestMon10.setBounds(215, 503, 70, 68);
+        RegTestMon20 = new JButton("20");
+	    RegTestMon20.setBounds(307, 503, 70, 68);
+        RegTestMon50 = new JButton("50");
+	    RegTestMon50.setBounds(31, 592, 70, 68);
+        RegTestMon100 = new JButton("100");
+	    RegTestMon100.setBounds(123, 592, 70, 68);
+        RegTestBuy = new JButton("Buy");
+	    RegTestBuy.setBounds(215, 689, 162, 52);
+        RegTestExit = new JButton("Exit");
+	    RegTestExit.setBounds(31, 689, 162, 52);
+
+        vmRegTest.add(RegTestInventory);
+        vmRegTest.add(RegTestStatus);
+        vmRegTest.add(RegTestTotal);
+        vmRegTest.add(RegTestInserted);
+        vmRegTest.add(RegTestChange);
+        vmRegTest.add(RegTestAmount);
+        vmRegTest.add(RegTestAmountLabel);
+        vmRegTest.add(RegTestTotalLabel);
+        vmRegTest.add(RegTestInsertedLabel);
+        vmRegTest.add(RegTestChangeLabel);
+        vmRegTest.add(RegTestIndex);
+        vmRegTest.add(RegTestIndexLabel);
+        vmRegTest.add(RegTestMon1);
+        vmRegTest.add(RegTestMon5);
+        vmRegTest.add(RegTestMon10);
+        vmRegTest.add(RegTestMon20);
+        vmRegTest.add(RegTestMon50);
+        vmRegTest.add(RegTestMon100);
+        vmRegTest.add(RegTestBuy);
+        vmRegTest.add(RegTestExit);
     }
 
     /* Buttons/Radio Buttons */
@@ -415,6 +506,12 @@ public class View
     {
         menuTest.addActionListener(e);
     }
+
+    public void menuTestSListener(ActionListener e)
+    {
+        menuTestS.addActionListener(e);
+    }
+
 
     public void menuMaintainListener(ActionListener e)
     {
@@ -519,6 +616,46 @@ public class View
     public void restockMoneyExitListener(ActionListener e)
     {
         restockMoneyExit.addActionListener(e);
+    }
+
+    public void RegTestExitListener(ActionListener e)
+    {
+        RegTestExit.addActionListener(e);
+    }
+
+    public void RegTestMon1Listener(ActionListener e)
+    {
+        RegTestMon1.addActionListener(e);
+    }
+
+    public void RegTestMon5Listener(ActionListener e)
+    {
+        RegTestMon5.addActionListener(e);
+    }
+
+    public void RegTestMon10Listener(ActionListener e)
+    {
+        RegTestMon10.addActionListener(e);
+    }
+
+    public void RegTestMon20Listener(ActionListener e)
+    {
+        RegTestMon20.addActionListener(e);
+    }
+
+    public void RegTestMon50Listener(ActionListener e)
+    {
+        RegTestMon50.addActionListener(e);
+    }
+
+    public void RegTestMon100Listener(ActionListener e)
+    {
+        RegTestMon100.addActionListener(e);
+    }
+
+    public void RegTestBuyListener(ActionListener e)
+    {
+        RegTestBuy.addActionListener(e);
     }
 
     /* Text Fields*/
@@ -627,6 +764,30 @@ public class View
         }
     }
 
+    public int getRegTestAmount()
+    {
+        try 
+        {
+            return Integer.parseInt(RegTestAmount.getText());
+        } 
+        catch (NumberFormatException e)
+        {
+            return 0;
+        }
+    }
+
+    public int getRegTestIndex()
+    {
+        try 
+        {
+            return Integer.parseInt(RegTestIndex.getText());
+        } 
+        catch (NumberFormatException e)
+        {
+            return 0;
+        }
+    }
+
     /* JFrame getter */
 
     public JFrame getVMStart()
@@ -669,6 +830,11 @@ public class View
         return vmRestockMoney;
     }
 
+    public JFrame getVMRegTest()
+    {
+        return vmRegTest;
+    }
+
     /* Clear TA */
 
     public void clearstartTA()
@@ -706,6 +872,31 @@ public class View
         collectDisplay.setText("");
     }
 
+    public void clearRegTestInventoryTA()
+    {
+        RegTestInventory.setText("");
+    }
+
+    public void clearRegTestStatusTA()
+    {
+        RegTestStatus.setText("");
+    }
+
+    public void clearRegTestTotalTA()
+    {
+        RegTestTotal.setText("");
+    }
+
+    public void clearRegTestInsertedTA()
+    {
+        RegTestInserted.setText("");
+    }
+
+    public void clearRegTestChangeTA()
+    {
+        RegTestChange.setText("");
+    }
+
     /* Clear TF */
 
     public void clearTF()
@@ -737,6 +928,16 @@ public class View
     public void clearsetMoneyTF()
     {
         restockmoneyAmount.setText("");
+    }
+
+    public void clearRegTestIndexTF()
+    {
+        RegTestIndex.setText("");
+    }
+
+    public void clearRegTestAmountTF()
+    {
+        RegTestAmount.setText("");
     }
 
     /* Display Screens */
@@ -774,6 +975,31 @@ public class View
     public void setMoneyDisplay(String text)
     {
         restockmoneyDisplay.append(text+"\n");
+    }
+
+    public void RegTestInventoryDisplay(String text)
+    {
+        RegTestInventory.append(text+"\n");
+    }
+
+    public void RegTestStatusDisplay(String text)
+    {
+        RegTestStatus.append(text+"\n");
+    }
+
+    public void RegTestTotalDisplay(String text)
+    {
+        RegTestTotal.append(text+"\n");
+    }
+
+    public void RegTestInsertedDisplay(String text)
+    {
+        RegTestInserted.append(text+"\n");
+    }
+
+    public void RegTestChangeDisplay(String text)
+    {
+        RegTestChange.append(text+"\n");
     }
 
     /* Helper Functions */
@@ -816,5 +1042,10 @@ public class View
     public void clearButton()
     {
         typeGroup.clearSelection();
+    }
+
+    public void testSVMvisible(boolean bool)
+    {
+        menuTestS.setVisible(bool);
     }
 }

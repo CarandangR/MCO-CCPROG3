@@ -94,6 +94,14 @@ public class Controller
                     view.setStatus(view.getVMStart(), false);
                     view.setvendTitle(model.getVM().vendName);
                     view.setStatus(view.getVMMenu(), true);
+                    if(!(model.getVM() instanceof SpecialVM))
+                    {
+                        view.testSVMvisible(false);
+                    }
+                    else
+                    {
+                        view.testSVMvisible(true);
+                    }
                 }
             }
         });
@@ -354,163 +362,281 @@ public class Controller
 
         this.view.restockMoneyListener(new ActionListener() 
         {
-                @Override
-                public void actionPerformed(ActionEvent e)
-                {
-                    view.setStatus(view.getVMMaintain(), false);
-                    view.setStatus(view.getVMRestockMoney(), true);
-                    view.setMoneyDisplay(model.displayMoney(model.getVM().vendBalance));
-                }
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                view.setStatus(view.getVMMaintain(), false);
+                view.setStatus(view.getVMRestockMoney(), true);
+                view.setMoneyDisplay(model.displayMoney(model.getVM().vendBalance));
+            }
         });
 
         this.view.restockMon1Listener(new ActionListener() 
         {
-                @Override
-                public void actionPerformed(ActionEvent e)
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                if(model.amountisValid(view.getrestockmoneyAmount()))
                 {
-                    if(model.amountisValid(view.getrestockmoneyAmount()))
-                    {
-                        model.getVM().vendBalance.setCoin1(model.getVM().vendBalance.getCoin1()+view.getrestockmoneyAmount());
-                        view.clearsetMoneyTA();
-                        view.clearsetMoneyTF();
-                        view.setMoneyDisplay(model.displayMoney(model.getVM().vendBalance));
-                    }
-
-                    else
-                    {
-                        view.clearsetMoneyTA();
-                        view.clearsetMoneyTF();
-                        view.setMoneyDisplay("Invalid Amount!");
-                        model.displayMoney(model.getVM().vendBalance);
-                    }
+                    model.getVM().vendBalance.setCoin1(model.getVM().vendBalance.getCoin1()+view.getrestockmoneyAmount());
+                    view.clearsetMoneyTA();
+                    view.clearsetMoneyTF();
+                    view.setMoneyDisplay(model.displayMoney(model.getVM().vendBalance));
                 }
+
+                else
+                {
+                    view.clearsetMoneyTA();
+                    view.clearsetMoneyTF();
+                    view.setMoneyDisplay("Invalid Amount!");
+                    model.displayMoney(model.getVM().vendBalance);
+                }
+            }
         });
 
         this.view.restockMon5Listener(new ActionListener() 
         {
-                @Override
-                public void actionPerformed(ActionEvent e)
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                if(model.amountisValid(view.getrestockmoneyAmount()))
                 {
-                    if(model.amountisValid(view.getrestockmoneyAmount()))
-                    {
-                        model.getVM().vendBalance.setCoin5(model.getVM().vendBalance.getCoin5()+view.getrestockmoneyAmount());
-                        view.clearsetMoneyTA();
-                        view.clearsetMoneyTF();
-                        view.setMoneyDisplay(model.displayMoney(model.getVM().vendBalance));
-                    }
-
-                    else
-                    {
-                        view.clearsetMoneyTA();
-                        view.clearsetMoneyTF();
-                        view.setMoneyDisplay("Invalid Amount!");
-                        view.setMoneyDisplay(model.displayMoney(model.getVM().vendBalance));
-                    }
+                    model.getVM().vendBalance.setCoin5(model.getVM().vendBalance.getCoin5()+view.getrestockmoneyAmount());
+                    view.clearsetMoneyTA();
+                    view.clearsetMoneyTF();
+                    view.setMoneyDisplay(model.displayMoney(model.getVM().vendBalance));
                 }
+
+                else
+                {
+                    view.clearsetMoneyTA();
+                    view.clearsetMoneyTF();
+                    view.setMoneyDisplay("Invalid Amount!");
+                    view.setMoneyDisplay(model.displayMoney(model.getVM().vendBalance));
+                }
+            }
         });
 
         this.view.restockMon10Listener(new ActionListener() 
         {
-                @Override
-                public void actionPerformed(ActionEvent e)
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                if(model.amountisValid(view.getrestockmoneyAmount()))
                 {
-                    if(model.amountisValid(view.getrestockmoneyAmount()))
-                    {
-                        model.getVM().vendBalance.setCoin10(model.getVM().vendBalance.getCoin10()+view.getrestockmoneyAmount());
-                        view.clearsetMoneyTA();
-                        view.clearsetMoneyTF();
-                        view.setMoneyDisplay(model.displayMoney(model.getVM().vendBalance));
-                    }
-
-                    else
-                    {
-                        view.clearsetMoneyTA();
-                        view.clearsetMoneyTF();
-                        view.setMoneyDisplay("Invalid Amount!");
-                        view.setMoneyDisplay(model.displayMoney(model.getVM().vendBalance));
-                    }
+                    model.getVM().vendBalance.setCoin10(model.getVM().vendBalance.getCoin10()+view.getrestockmoneyAmount());
+                    view.clearsetMoneyTA();
+                    view.clearsetMoneyTF();
+                    view.setMoneyDisplay(model.displayMoney(model.getVM().vendBalance));
                 }
+
+                else
+                {
+                    view.clearsetMoneyTA();
+                    view.clearsetMoneyTF();
+                    view.setMoneyDisplay("Invalid Amount!");
+                    view.setMoneyDisplay(model.displayMoney(model.getVM().vendBalance));
+                }
+            }
         });
 
         this.view.restockMon20Listener(new ActionListener() 
         {
-                @Override
-                public void actionPerformed(ActionEvent e)
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                if(model.amountisValid(view.getrestockmoneyAmount()))
                 {
-                    if(model.amountisValid(view.getrestockmoneyAmount()))
-                    {
-                        model.getVM().vendBalance.setBill20(model.getVM().vendBalance.getBill20()+view.getrestockmoneyAmount());
-                        view.clearsetMoneyTA();
-                        view.clearsetMoneyTF();
-                        view.setMoneyDisplay(model.displayMoney(model.getVM().vendBalance));
-                    }
-
-                    else
-                    {
-                        view.clearsetMoneyTA();
-                        view.clearsetMoneyTF();
-                        view.setMoneyDisplay("Invalid Amount!");
-                        view.setMoneyDisplay(model.displayMoney(model.getVM().vendBalance));
-                    }
+                    model.getVM().vendBalance.setBill20(model.getVM().vendBalance.getBill20()+view.getrestockmoneyAmount());
+                    view.clearsetMoneyTA();
+                    view.clearsetMoneyTF();
+                    view.setMoneyDisplay(model.displayMoney(model.getVM().vendBalance));
                 }
+
+                else
+                {
+                    view.clearsetMoneyTA();
+                    view.clearsetMoneyTF();
+                    view.setMoneyDisplay("Invalid Amount!");
+                    view.setMoneyDisplay(model.displayMoney(model.getVM().vendBalance));
+                }
+            }
         });
 
         this.view.restockMon50Listener(new ActionListener() 
         {
-                @Override
-                public void actionPerformed(ActionEvent e)
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                if(model.amountisValid(view.getrestockmoneyAmount()))
                 {
-                    if(model.amountisValid(view.getrestockmoneyAmount()))
-                    {
-                        model.getVM().vendBalance.setBill50(model.getVM().vendBalance.getBill50()+view.getrestockmoneyAmount());
-                        view.clearsetMoneyTA();
-                        view.clearsetMoneyTF();
-                        view.setMoneyDisplay(model.displayMoney(model.getVM().vendBalance));
-                    }
-
-                    else
-                    {
-                        view.clearsetMoneyTA();
-                        view.clearsetMoneyTF();
-                        view.setMoneyDisplay("Invalid Amount!");
-                        view.setMoneyDisplay(model.displayMoney(model.getVM().vendBalance));
-                    }
+                    model.getVM().vendBalance.setBill50(model.getVM().vendBalance.getBill50()+view.getrestockmoneyAmount());
+                    view.clearsetMoneyTA();
+                    view.clearsetMoneyTF();
+                    view.setMoneyDisplay(model.displayMoney(model.getVM().vendBalance));
                 }
+
+                else
+                {
+                    view.clearsetMoneyTA();
+                    view.clearsetMoneyTF();
+                    view.setMoneyDisplay("Invalid Amount!");
+                    view.setMoneyDisplay(model.displayMoney(model.getVM().vendBalance));
+                }
+            }
         });
 
         this.view.restockMon100Listener(new ActionListener() 
         {
-                @Override
-                public void actionPerformed(ActionEvent e)
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                if(model.amountisValid(view.getrestockmoneyAmount()))
                 {
-                    if(model.amountisValid(view.getrestockmoneyAmount()))
-                    {
-                        model.getVM().vendBalance.setBill100(model.getVM().vendBalance.getBill100()+view.getrestockmoneyAmount());
-                        view.clearsetMoneyTA();
-                        view.clearsetMoneyTF();
-                        view.setMoneyDisplay(model.displayMoney(model.getVM().vendBalance));
-                    }
-
-                    else
-                    {
-                        view.clearsetMoneyTA();
-                        view.clearsetMoneyTF();
-                        view.setMoneyDisplay("Invalid Amount!");
-                        view.setMoneyDisplay(model.displayMoney(model.getVM().vendBalance));
-                    }
+                    model.getVM().vendBalance.setBill100(model.getVM().vendBalance.getBill100()+view.getrestockmoneyAmount());
+                    view.clearsetMoneyTA();
+                    view.clearsetMoneyTF();
+                    view.setMoneyDisplay(model.displayMoney(model.getVM().vendBalance));
                 }
+
+                else
+                {
+                    view.clearsetMoneyTA();
+                    view.clearsetMoneyTF();
+                    view.setMoneyDisplay("Invalid Amount!");
+                    view.setMoneyDisplay(model.displayMoney(model.getVM().vendBalance));
+                }
+            }
         });
 
         this.view.restockMoneyExitListener(new ActionListener() 
         {
-                @Override
-                public void actionPerformed(ActionEvent e)
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                view.clearsetMoneyTA();
+                view.clearsetMoneyTF();
+                view.setStatus(view.getVMRestockMoney(), false);
+                view.setStatus(view.getVMMaintain(), true);
+            }
+        });
+
+        this.view.menuTestListener(new ActionListener() 
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                view.setStatus(view.getVMMenu(), false);
+                view.setStatus(view.getVMRegTest(), true);
+                view.clearRegTestStatusTA();
+                view.RegTestInventoryDisplay(model.displayInventory());
+                view.RegTestInsertedDisplay(String.valueOf(model.getVM().userBalance.getTotalMoney()));
+            }
+        });
+
+        this.view.RegTestExitListener(new ActionListener() 
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                view.setStatus(view.getVMRegTest(), false);
+                view.setStatus(view.getVMMenu(), true);
+                view.clearRegTestChangeTA();
+                view.clearRegTestInsertedTA();
+                view.clearRegTestTotalTA();
+                view.clearRegTestStatusTA();
+                view.clearRegTestInventoryTA();
+            }
+        });
+
+        this.view.RegTestMon1Listener(new ActionListener() 
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                model.getVM().userBalance.setCoin1(model.getVM().userBalance.getCoin1()+1);
+                view.clearRegTestInsertedTA();
+                view.RegTestInsertedDisplay(String.valueOf(model.getVM().userBalance.getTotalMoney()));
+            }
+        });
+
+        this.view.RegTestMon5Listener(new ActionListener() 
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                model.getVM().userBalance.setCoin5(model.getVM().userBalance.getCoin5()+1);
+                view.clearRegTestInsertedTA();
+                view.RegTestInsertedDisplay(String.valueOf(model.getVM().userBalance.getTotalMoney()));
+            }
+        });
+
+        this.view.RegTestMon10Listener(new ActionListener() 
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                model.getVM().userBalance.setCoin10(model.getVM().userBalance.getCoin10()+1);
+                view.clearRegTestInsertedTA();
+                view.RegTestInsertedDisplay(String.valueOf(model.getVM().userBalance.getTotalMoney()));
+            }
+        });
+
+        this.view.RegTestMon20Listener(new ActionListener() 
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                model.getVM().userBalance.setBill20(model.getVM().userBalance.getBill20()+1);
+                view.clearRegTestInsertedTA();
+                view.RegTestInsertedDisplay(String.valueOf(model.getVM().userBalance.getTotalMoney()));
+            }
+        });
+
+        this.view.RegTestMon50Listener(new ActionListener() 
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                model.getVM().userBalance.setBill50(model.getVM().userBalance.getBill50()+1);
+                view.clearRegTestInsertedTA();
+                view.RegTestInsertedDisplay(String.valueOf(model.getVM().userBalance.getTotalMoney()));
+            }
+        });
+
+        this.view.RegTestMon100Listener(new ActionListener() 
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                model.getVM().userBalance.setBill100(model.getVM().userBalance.getBill100()+1);
+                view.clearRegTestInsertedTA();
+                view.RegTestInsertedDisplay(String.valueOf(model.getVM().userBalance.getTotalMoney()));
+            }
+        });
+
+        this.view.RegTestBuyListener(new ActionListener() 
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                if(model.transacPossible(view.getRegTestIndex(), view.getRegTestAmount()))
                 {
-                    view.clearsetMoneyTA();
-                    view.clearsetMoneyTF();
-                    view.setStatus(view.getVMRestockMoney(), false);
-                    view.setStatus(view.getVMMaintain(), true);
+                    System.out.println("This works");
+                    view.clearRegTestInventoryTA();
+                    view.RegTestInventoryDisplay(model.displayInventory());
+                    view.RegTestChangeDisplay(String.valueOf(model.temptransaction.getChange()));
+                    view.RegTestTotalDisplay(String.valueOf(model.temptransaction.getQty()*model.temptransaction.getItem().getPrice()));
                 }
+
+                else
+                {
+
+                }
+
+                view.clearRegTestAmountTF();
+                view.clearRegTestIndexTF();
+            }
         });
     }
 }

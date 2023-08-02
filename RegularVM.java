@@ -57,119 +57,10 @@ public class RegularVM
         setSlots(new Side("Nori", 5, 5), 9);
     }
 
-    /**
-     * Method that asks for user input for each Item Slots.
-     * @param sc
-     * Scanner that will be used for inputs.
-     */
     public void setSlots(Items item, int i)
     {
         this.itemSlots[i] = new Slots(item,0);
         this.originalInventory[i] = this.itemSlots[i];
-    }
-
-    /**
-     * A helper method that accepts user input for money.
-     * @param sc
-     * Scanner that will be used for inputs.
-     */
-    private void insertMoney(Scanner sc)
-    {
-        add2Balances(userBalance,vendBalance);
-    }
-
-    /**
-     * A Method the processes the transaction of the vending machine.
-     * @param sc
-     * Scanner that will be used for inputs.
-     */
-    public void vendTransaction(Scanner sc)
-    {
-        System.out.println("Testing Vending Machine: "+vendName);
-        int i, choice, itemQty,control=1;
-        while(control == 1)
-        {
-            int decision;
-            do
-            {
-                insertMoney(sc);
-                System.out.println("Would you like add more?");
-                System.out.println("[1] Yes");
-                System.out.println("[2] No");
-                decision = sc.nextInt();
-            }while(decision != 2);
-            System.out.println("What Item Would You Like to Buy:");
-            for(i=0; i < slotCapacity;i++)
-            {
-                displayItem(i);
-            }
-            choice = sc.nextInt()-1;
-
-            if(itemSlots[choice].getStock()>0)
-            {
-                if(choice > 0 || choice <= slotCapacity)
-                {
-                    shoppingCart = itemSlots[choice];
-                    do
-                    {
-                        System.out.print("Please Input the quantity, [0] to cancel item: ");
-                        itemQty = sc.nextInt();
-
-                        if(itemQty < 0 || choice > itemCapacity)
-                        {
-                            System.out.println("Invalid Input");
-                        }
-
-                        if(itemQty == 0)
-                        {
-                            control = 0;
-                        }
-
-                        if(itemQty*shoppingCart.getItem().getPrice() > userBalance.getTotalMoney())
-                        {
-                            System.out.println("Not enough inserted Money");
-                            itemQty = -1;
-                        }
-                    }while(itemQty < 0 || choice > itemCapacity);
-
-                    shoppingCart.setStock(itemQty);
-                    Transaction tempTransaction = new Transaction(shoppingCart.getItem(), shoppingCart.getStock(), userBalance.getTotalMoney(), vendBalance.getTotalMoney());
-                    tempTransaction.computeChange();
-                    transacHistory.add(tempTransaction);
-                    if(compareDenom(vendBalance, getDenom(tempTransaction.computeChange())))
-                    {
-                        System.out.println("Transaction cancelled, not enough change from the machine.");
-                        transacHistory.remove(transacHistory.size()-1);
-                    }
-                    else 
-                    {
-                        System.out.println("Dispensing item");
-                        itemSlots[choice].setStock(itemSlots[choice].getStock() - shoppingCart.getStock());
-                        System.out.println("Dispensing Money");
-                        compareDenom(vendBalance, getDenom(transacHistory.get(transacHistory.size() - 1).getChange()));
-                        tempTransaction.setVendTotal(vendBalance.getTotalMoney());
-                        userBalance.setToZero();
-                        int ab;
-                        for(ab = 0; ab < transacHistory.size(); ab++)
-                        {
-                            transacHistory.get(ab).printTransaction();
-                        }
-                    }
-                }
-            }
-
-            else if(choice == -1)
-            {
-                control = 0;
-            }
-            
-            else
-            {
-                System.out.println("Invalid Input/Item Out of Stock");
-            }
-
-            control = 0;
-        }
     }
 
     public Boolean checkTransac()
@@ -211,11 +102,6 @@ public class RegularVM
         return true;
     }
 
-    /**
-     * A helper method that displays a specific slot.
-     * @param slotNum
-     * An intger that represents which slot to display.
-     */
     public String displayItem(int slotNum)
     {
         return "["+(slotNum+1)+"] "+itemSlots[slotNum].getItem().getItemName()+" [ Calories: "+itemSlots[slotNum].getItem().getCalories()+" | Price: "+itemSlots[slotNum].getItem().getPrice()+" | Stock: "+itemSlots[slotNum].getStock()+" ]";
@@ -229,7 +115,7 @@ public class RegularVM
      * into denominations.
      * @return Money
      */
-    private Money getDenom(int change)
+    public Money getDenom(int change)
     {
         Money tempMoney = new Money();
         int[] notes = new int[]{1000,500,200,100,50,20,10,5,1};
@@ -284,7 +170,7 @@ public class RegularVM
      * @param vendBalance
      * A money object whcih represents the vending machine's balance.
      */
-    private void add2Balances(Money userBalance, Money vendBalance)
+    public void add2Balances(Money userBalance, Money vendBalance)
     {
         vendBalance.setCoin1(vendBalance.getCoin1()+userBalance.getCoin1());
         vendBalance.setCoin5(vendBalance.getCoin5()+userBalance.getCoin5());
@@ -320,9 +206,9 @@ public class RegularVM
      * Represents the money object of the vending machine.
      * @param changeMoney
      * Represents the money object of the change produced.
-     * @return
+     * @return flag
      */
-    private boolean compareDenom(Money vendMoney, Money changeMoney)
+    public boolean compareDenom(Money vendMoney, Money changeMoney)
     {
         boolean flag = false;
         if(vendMoney.getBill100() < changeMoney.getBill100())
