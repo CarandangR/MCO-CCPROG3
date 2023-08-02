@@ -5,6 +5,7 @@ public class Model
     private String foodType;
     private int itemCounter=0;
     String items="";
+    String history="";
     public Model()
     {
     }
@@ -120,6 +121,7 @@ public class Model
     public String displayInventory()
     {
         int i;
+        items="";
 
         for(i=0;i<getVM().slotCapacity;i++)
         {
@@ -130,8 +132,21 @@ public class Model
         return items;
     }
 
-    public void resetItemString()
+    public String displayHistory()
     {
-        items="";
+        int i;
+        history="";
+
+        for(i=0;i<getVM().transacHistory.size();i++)
+        {
+            history += getVM().transacHistory.get(i).getItem().getItemName()+" | "+getVM().transacHistory.get(i).getQty()+
+            " | Total Amount: "+getVM().transacHistory.get(i).getVendTotal()+" | User Paid: "+getVM().transacHistory.get(i).getUserPay()+
+            " | Change: "+getVM().transacHistory.get(i).getChange();
+            history += "\n";
+        }
+
+        getVM().vendBalance.setToZero();
+        getVM().transacHistory.clear();
+        return history;
     }
 }

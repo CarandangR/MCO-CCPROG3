@@ -91,9 +91,9 @@ public class Controller
 
                 else
                 {
-                    view.setStatus(view.getStart(), false);
+                    view.setStatus(view.getVMStart(), false);
                     view.setvendTitle(model.getVM().vendName);
-                    view.setStatus(view.getMenu(), true);
+                    view.setStatus(view.getVMMenu(), true);
                 }
             }
         });
@@ -103,8 +103,8 @@ public class Controller
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                view.setStatus(view.getMenu(), false);
-                view.setStatus(view.getStart(), true);
+                view.setStatus(view.getVMMenu(), false);
+                view.setStatus(view.getVMStart(), true);
                 model.reset();
             }
         });
@@ -129,14 +129,14 @@ public class Controller
             {
                 if(model.isNew())
                 {
-                    view.setStatus(view.getMenu(), false);
-                    view.setStatus(view.getInput(), true);
+                    view.setStatus(view.getVMMenu(), false);
+                    view.setStatus(view.getVMInput(), true);
                 }
 
                 else
                 {
-                    view.setStatus(view.getMenu(), false);
-                    view.setStatus(view.getMaintain(), true);
+                    view.setStatus(view.getVMMenu(), false);
+                    view.setStatus(view.getVMMaintain(), true);
                 }
             }
         });
@@ -179,8 +179,8 @@ public class Controller
                 if(model.getItemCounter() == model.getVM().slotCapacity)
                 {
                     model.getVM().setIsNew(false);
-                    view.setStatus(view.getInput(), false);
-                    view.setStatus(view.getMaintain(), true);
+                    view.setStatus(view.getVMInput(), false);
+                    view.setStatus(view.getVMMaintain(), true);
                 }
 
                 view.clearButton();
@@ -221,8 +221,8 @@ public class Controller
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                view.setStatus(view.getMaintain(), false);
-                view.setStatus(view.getMenu(), true);
+                view.setStatus(view.getVMMaintain(), false);
+                view.setStatus(view.getVMMenu(), true);
             }
         });
 
@@ -231,7 +231,7 @@ public class Controller
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                view.setStatus(view.getMaintain(), false);
+                view.setStatus(view.getVMMaintain(), false);
                 view.setStatus(view.getVMRestockItem(), true);
                 view.restockDisplay(model.displayInventory());
             }
@@ -242,9 +242,8 @@ public class Controller
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                if(model.getVM().restockItem(view.getItemRestockChoice(),view.getItemRestockAmount()))
+                if(model.getVM().restockItem(view.getItemRestockChoice()-1,view.getItemRestockAmount()))
                 {
-                    model.resetItemString();
                     view.clearRestockItemTA();
                     view.restockDisplay("Restock Successful!");
                     view.restockDisplay("Updated Items: ");
@@ -267,7 +266,7 @@ public class Controller
             public void actionPerformed(ActionEvent e)
             {   
                 view.setStatus(view.getVMRestockItem(), false);
-                view.setStatus(view.getMaintain(), true);
+                view.setStatus(view.getVMMaintain(), true);
             }
         });
 
@@ -276,8 +275,9 @@ public class Controller
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                view.setStatus(view.getMaintain(), false);
+                view.setStatus(view.getVMMaintain(), false);
                 view.setStatus(view.getVMsetprice(), true);
+                view.setPriceDisplay(model.displayInventory());
             }
         });
 
@@ -286,9 +286,8 @@ public class Controller
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                if(model.getVM().setPrice(view.getPriceChoice(), view.getPriceAmount()))
+                if(model.getVM().setPrice(view.getPriceChoice()-1, view.getPriceAmount()))
                 {
-                    model.resetItemString();
                     view.clearPriceTA();
                     view.setPriceDisplay("Reprice Successful!");
                     view.setPriceDisplay("Updated Items: ");
@@ -311,7 +310,37 @@ public class Controller
             public void actionPerformed(ActionEvent e)
             {   
                 view.setStatus(view.getVMsetprice(), false);
-                view.setStatus(view.getMaintain(), true);
+                view.setStatus(view.getVMMaintain(), true);
+            }
+        });
+
+        this.view.collectPriceListener(new ActionListener() 
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                view.setStatus(view.getVMMaintain(), false);
+                view.setStatus(view.getVMCollect(), true);
+
+                if(model.getVM().checkTransac())
+                {
+                    view.collectMoneyDisplay(model.displayHistory());
+                }
+
+                else
+                {
+                    view.collectMoneyDisplay("[There are no transactions that have been made since last maintenance]");
+                }
+            }
+        });
+
+        this.view.collectExitListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                view.setStatus(view.getVMCollect(), false);
+                view.setStatus(view.getVMMaintain(), true);
             }
         });
     }

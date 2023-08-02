@@ -38,7 +38,7 @@ public class View
     private JButton inputNext;
     private JTextArea inputUpdate;
     private JRadioButton rice, meat, side;
-    ButtonGroup typeGroup;
+    private ButtonGroup typeGroup;
 
     private JFrame vmRestockItem;
     private JTextArea restockItemDisplay;
@@ -53,8 +53,8 @@ public class View
     private JButton priceAdd, priceExit;
 
     private JFrame vmCollectMoney;
-    private JTextArea displayTransac;
-    private JButton exitCollect;
+    private JTextArea collectDisplay;
+    private JButton collectExit;
 
     private JFrame vmRestockMoney;
     private JTextArea restockmoneyDisplay;
@@ -68,6 +68,7 @@ public class View
         vmInput();
         vmRestockItem();
         vmSetPrice();
+        vmCollectMoney();
     }
 
     public void vmStart()
@@ -280,7 +281,7 @@ public class View
 
     public void vmSetPrice()
     {
-        vmSetPrice = new JFrame("Vending Machine Menu");
+        vmSetPrice = new JFrame("[Maintenance] Reprice Mode");
         vmSetPrice.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         vmSetPrice.setSize(800, 800);;
         vmSetPrice.setResizable(false);
@@ -305,7 +306,37 @@ public class View
         priceAdd.setBounds(477, 600, 170, 63);
         priceExit = new JButton("Exit Reprice Mode");
         priceExit.setBounds(152, 600, 170, 63);
+
+        vmSetPrice.add(priceDisplay);
+        vmSetPrice.add(priceChoice);
+        vmSetPrice.add(priceAmount);
+        vmSetPrice.add(priceChoicelabel);
+        vmSetPrice.add(priceAmountlabel);
+        vmSetPrice.add(priceAdd);
+        vmSetPrice.add(priceExit);
     }
+
+    public void vmCollectMoney()
+    {
+        vmCollectMoney = new JFrame("[Maintenance] Collect Money Mode");
+        vmCollectMoney.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        vmCollectMoney.setSize(800, 800);;
+        vmCollectMoney.setResizable(false);
+        vmCollectMoney.setLocationRelativeTo(null);
+        vmCollectMoney.setLayout(null);
+
+        collectDisplay = new JTextArea();
+	    collectDisplay.setBounds(110, 100, 579, 426);
+	    collectDisplay.setEditable(false);
+
+        collectExit = new JButton("Exit");
+	    collectExit.setBounds(323, 610, 153, 47);
+
+        vmCollectMoney.add(collectDisplay);
+        vmCollectMoney.add(collectExit);
+    }
+
+
 
     /* Buttons/Radio Buttons */
 
@@ -394,6 +425,16 @@ public class View
         setPrice.addActionListener(e);
     }
 
+    public void collectPriceListener(ActionListener e)
+    {
+        collectMoney.addActionListener(e);
+    }
+
+    public void collectExitListener(ActionListener e)
+    {
+        collectExit.addActionListener(e);
+    }
+
     /* Text Fields*/
 
     public int getItemRestockChoice()
@@ -448,22 +489,22 @@ public class View
 
     /* JFrame getter */
 
-    public JFrame getStart()
+    public JFrame getVMStart()
     {
         return vmStart;
     }
 
-    public JFrame getMenu()
+    public JFrame getVMMenu()
     {
         return vmMenu;
     }
 
-    public JFrame getMaintain()
+    public JFrame getVMMaintain()
     {
         return vmMaintain;
     }
 
-    public JFrame getInput()
+    public JFrame getVMInput()
     {
         return vmInput;
     }
@@ -476,6 +517,11 @@ public class View
     public JFrame getVMRestockItem()
     {
         return vmRestockItem;
+    }
+
+    public JFrame getVMCollect()
+    {
+        return vmCollectMoney;
     }
 
     /* Clear TA */
@@ -558,6 +604,11 @@ public class View
     public void setPriceDisplay(String text)
     {
         priceDisplay.append(text+"\n");
+    }
+
+    public void collectMoneyDisplay(String text)
+    {
+        collectDisplay.append(text);
     }
 
     /* Helper Functions */

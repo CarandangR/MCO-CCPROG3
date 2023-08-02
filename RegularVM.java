@@ -24,7 +24,7 @@ public class RegularVM
     protected int slotCapacity;
     protected int itemCapacity;
     protected boolean didMaintenance = false;
-    protected boolean isNew = true;
+    protected boolean isNew = false; //Edit for testing
     protected ArrayList<Transaction> transacHistory = new ArrayList<Transaction>();
 
     /**
@@ -44,6 +44,17 @@ public class RegularVM
         this.slotCapacity = slotCapacity;
         itemSlots = new Slots[slotCapacity];
         originalInventory = new Slots[slotCapacity];
+
+        setSlots(new Rice("White Rice", 155, 8), 0);
+        setSlots(new Rice("Brown Rice", 188, 160), 1);
+        setSlots(new Rice("Black Rice", 313, 320), 2);
+        setSlots(new Meat("Spam", 205, 30), 3);
+        setSlots(new Meat("Pork", 180, 200), 4);
+        setSlots(new Meat("Chicken", 130, 100), 5);
+        setSlots(new Meat("Beef", 250, 50), 6);
+        setSlots(new Side("Cabbage", 155, 8), 7);
+        setSlots(new Side("Egg", 150, 70), 8);
+        setSlots(new Side("Nori", 5, 5), 9);
     }
 
     /**
@@ -64,57 +75,13 @@ public class RegularVM
      */
     public void maintenance(Scanner sc)
     {
-        int control = 1, choice,i,restockChoice,priceChoice;
+        int control = 1, choice;
 
         while(control == 1)
         {
-            System.out.println("[Maintenance Mode:"+vendName+"]");
-            System.out.println("[1] Restock Item");
-            System.out.println("[2] Set Price");
-            System.out.println("[3] Collect Money and Transaction");
             System.out.println("[4] Restock");
             System.out.println("[5] Exit");
             choice = sc.nextInt();
-
-            if(choice == 1)
-            {
-                displayStocks();
-                do
-                {
-                    System.out.print("Please pick the item to restock: ");
-                    restockChoice = sc.nextInt()-1;
-                    if(restockChoice < 0 || restockChoice > slotCapacity-1)
-                    {
-                        System.out.println("Invalid Input");
-                    }
-                }while(restockChoice < 0 || restockChoice > slotCapacity-1);
-
-                restockItem(restockChoice, 0);
-            }
-
-            if(choice == 2)
-            {
-                for(i=0;i<slotCapacity;i++)
-                {
-                    displayItem(i);
-                }
-                do
-                {
-                    System.out.print("Please pick the item to set the price: ");
-                    priceChoice = sc.nextInt()-1;
-                    if(priceChoice < 0 || priceChoice > slotCapacity-1)
-                    {
-                        System.out.println("Invalid Input");
-                    }
-                }while(priceChoice < 0 || priceChoice > slotCapacity-1);
-
-                setPrice(priceChoice, 0);
-            }
-
-            if(choice == 3)
-            {
-                collectMoney(sc);
-            }
 
             if(choice == 4)
             {
@@ -250,38 +217,26 @@ public class RegularVM
      * @param sc
      * Scanner that will be used for inputs.
      */
-    private void collectMoney(Scanner sc)
+    public Boolean checkTransac()
     {
-        int choice,i;
-        do
+        if(transacHistory.size() > 0)
         {
-        System.out.println("Would you like to collect the money?");
-        System.out.println("[1] Yes");
-        System.out.println("[0] No");
-        choice = sc.nextInt();
-        if(choice > 1 || choice < 0)
-        {
-            System.out.println("invalid Input");
-        }
-        }while(choice > 1 || choice < 0);
-
-        if(choice == 1)
-        {
-            System.out.println("Here is the list of transactions Made: ");
-            for(i=0;i<transacHistory.size();i++)
-            {
-                System.out.println(transacHistory.get(i).getItem().getItemName()+"  "+transacHistory.get(i).getQty());
-                System.out.println("Total Amount: "+transacHistory.get(i).getVendTotal()+"  User Paid: "+transacHistory.get(i).getUserPay()+"  ");
-                System.out.println("Change: "+transacHistory.get(i).getChange());
-            }
-            System.out.println("Vending Machine Emptied, Total Amount collected is: "+vendBalance.getTotalMoney());
-            vendBalance.setToZero();
-        }
-        else
-        {
-            System.out.println("Returning to main menu");
+            return true;
         }
 
+        return false;
+        /*
+        int i;
+        System.out.println("Here is the list of transactions Made: ");
+        for(i=0;i<transacHistory.size();i++)
+        {
+            System.out.println(transacHistory.get(i).getItem().getItemName()+"  "+transacHistory.get(i).getQty());
+            System.out.println("Total Amount: "+transacHistory.get(i).getVendTotal()+"  User Paid: "+transacHistory.get(i).getUserPay()+"  ");
+            System.out.println("Change: "+transacHistory.get(i).getChange());
+        }
+        System.out.println("Vending Machine Emptied, Total Amount collected is: "+vendBalance.getTotalMoney());
+        vendBalance.setToZero();
+        */
     }
 
     /**
