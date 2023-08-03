@@ -60,7 +60,7 @@ public class RegularVM
     public void setSlots(Items item, int i)
     {
         this.itemSlots[i] = new Slots(item,0);
-        this.originalInventory[i] = this.itemSlots[i];
+        this.originalInventory[i] = new Slots(item,0);
     }
 
     public Boolean checkTransac()
@@ -80,24 +80,23 @@ public class RegularVM
             return false;
         }
 
-        itemSlots[slotNum].getItem().setPrice(repriceAmount);
+        itemSlots[slotNum-1].getItem().setPrice(repriceAmount);
         return true;
     }
 
     public boolean restockItem(int slotNum, int restockAmount)
     {
-        if(itemSlots[slotNum].getStock()==itemCapacity)
+        if(itemSlots[slotNum-1].getStock()==itemCapacity)
         {
             return false;
         }
 
-        else if((itemSlots[slotNum].getStock()+restockAmount) < 0 || (itemSlots[slotNum].getStock()+restockAmount) > itemCapacity)
+        else if((itemSlots[slotNum-1].getStock()+restockAmount) < 0 || (itemSlots[slotNum-1].getStock()+restockAmount) > itemCapacity)
         {
             return false;
         }
 
-        itemSlots[slotNum].setStock(restockAmount+itemSlots[slotNum].getStock());
-        originalInventory[slotNum] = itemSlots[slotNum];
+        itemSlots[slotNum-1].setStock(restockAmount+itemSlots[slotNum-1].getStock());
 
         return true;
     }
@@ -250,5 +249,19 @@ public class RegularVM
     public void setIsNew(boolean bool)
     {
         this.isNew = bool;
+    }
+
+    public void updateStartingInventory()
+    {
+        int i;
+        for(i=0;i<slotCapacity;i++)
+        {
+            this.originalInventory[i] = new Slots(itemSlots[i].getItem(),itemSlots[i].getStock());
+        }
+    }
+
+    public String inventoryChanges(int slotNum)
+    {
+        return "["+(slotNum+1)+"] "+originalInventory[slotNum].getItem().getItemName()+" "+originalInventory[slotNum].getStock()+" ---> "+itemSlots[slotNum].getStock()+"\n";
     }
 }

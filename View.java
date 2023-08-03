@@ -1,6 +1,7 @@
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.Action;
 import javax.swing.ButtonGroup;
@@ -8,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JTextArea;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 
 import java.awt.Font;
 import java.awt.TextField;
@@ -53,6 +55,7 @@ public class View
     private JButton priceAdd, priceExit;
 
     private JFrame vmCollectMoney;
+    private JScrollPane collectDisplayscroll;
     private JTextArea collectDisplay;
     private JButton collectExit;
 
@@ -65,6 +68,7 @@ public class View
     private JFrame vmRegTest;
     private JTextArea RegTestInventory, RegTestStatus, RegTestChange, RegTestTotal, RegTestInserted;
     private JLabel RegTestAmountLabel, RegTestTotalLabel, RegTestInsertedLabel, RegTestChangeLabel, RegTestIndexLabel;
+    private JScrollPane RegTestStatusScroll;
     private JTextField RegTestAmount, RegTestIndex;
     private JButton RegTestExit, RegTestMon1, RegTestMon5, RegTestMon10, RegTestMon20, RegTestMon50, RegTestMon100, RegTestBuy;
 
@@ -339,13 +343,15 @@ public class View
         vmCollectMoney.setLayout(null);
 
         collectDisplay = new JTextArea();
-	    collectDisplay.setBounds(110, 50, 579, 550);
-	    collectDisplay.setEditable(false);
+        collectDisplay.setEditable(false);
+        collectDisplayscroll = new JScrollPane(collectDisplay);
+        collectDisplayscroll.setBounds(110, 50, 579, 550);
+        collectDisplayscroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 
         collectExit = new JButton("Exit");
 	    collectExit.setBounds(323, 610, 153, 47);
 
-        vmCollectMoney.add(collectDisplay);
+        vmCollectMoney.add(collectDisplayscroll);
         vmCollectMoney.add(collectExit);
     }
 
@@ -408,7 +414,6 @@ public class View
         RegTestInventory.setBounds(31, 31, 377, 324);
         RegTestInventory.setEditable(false);
         RegTestStatus = new JTextArea();
-        RegTestStatus.setBounds(531, 31, 215, 437);
         RegTestStatus.setEditable(false);
         RegTestTotal = new JTextArea();
         RegTestTotal.setBounds(531, 511, 215, 52);
@@ -419,6 +424,11 @@ public class View
         RegTestChange = new JTextArea();
         RegTestChange.setBounds(531, 689, 215, 42);
         RegTestChange.setEditable(false);
+
+        RegTestStatusScroll = new JScrollPane(RegTestStatus);
+        RegTestStatusScroll.setBounds(531, 31, 215, 437);
+        RegTestStatusScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+        RegTestStatus.setCaretPosition(RegTestStatus.getDocument().getLength());
 
         RegTestIndexLabel = new JLabel("Enter the Item Index:");
         RegTestIndexLabel.setBounds(31, 373, 122, 42);
@@ -454,7 +464,7 @@ public class View
 	    RegTestExit.setBounds(31, 689, 162, 52);
 
         vmRegTest.add(RegTestInventory);
-        vmRegTest.add(RegTestStatus);
+        vmRegTest.add(RegTestStatusScroll);
         vmRegTest.add(RegTestTotal);
         vmRegTest.add(RegTestInserted);
         vmRegTest.add(RegTestChange);

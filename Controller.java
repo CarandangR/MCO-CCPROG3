@@ -157,26 +157,47 @@ public class Controller
 
                 if(model.getFoodType()=="rice")
                 {
-                    model.getVM().setSlots(new Rice(view.getInputName(),view.getInputCal(),view.getInputPrice()), model.getItemCounter());
-                    view.inputDisplay("Added(Rice): "+model.getVM().itemSlots[model.getItemCounter()].getItem().getItemName());
-                    model.addItemCounter();
-                    model.setFoodType("");
+                    if(view.getInputCal()>0 &&view.getInputPrice()>0)
+                    {
+                        model.getVM().setSlots(new Rice(view.getInputName(),view.getInputCal(),view.getInputPrice()), model.getItemCounter());
+                        view.inputDisplay("Added(Rice): "+model.getVM().itemSlots[model.getItemCounter()].getItem().getItemName());
+                        model.addItemCounter();
+                        model.setFoodType("");
+                    }
+                    else
+                    {
+                        view.inputDisplay("You did not select the type of item");
+                    }
                 }
 
                 else if(model.getFoodType()=="meat")
                 {
-                    model.getVM().setSlots(new Meat(view.getInputName(),view.getInputCal(),view.getInputPrice()), model.getItemCounter());
-                    view.inputDisplay("Added(Meat): "+model.getVM().itemSlots[model.getItemCounter()].getItem().getItemName());
-                    model.addItemCounter();
-                    model.setFoodType("");
+                    if(view.getInputCal()>0 &&view.getInputPrice()>0)
+                    {
+                        model.getVM().setSlots(new Meat(view.getInputName(),view.getInputCal(),view.getInputPrice()), model.getItemCounter());
+                        view.inputDisplay("Added(Meat): "+model.getVM().itemSlots[model.getItemCounter()].getItem().getItemName());
+                        model.addItemCounter();
+                        model.setFoodType("");
+                    }
+                    else
+                    {
+                        view.inputDisplay("You did not select the type of item");
+                    }
                 }
 
                 else if(model.getFoodType()=="side")
                 {
-                    model.getVM().setSlots(new Side(view.getInputName(),view.getInputCal(),view.getInputPrice()), model.getItemCounter());
-                    view.inputDisplay("Added(Side): "+model.getVM().itemSlots[model.getItemCounter()].getItem().getItemName());
-                    model.addItemCounter();
-                    model.setFoodType("");
+                    if(view.getInputCal()>0 &&view.getInputPrice()>0)
+                    {
+                        model.getVM().setSlots(new Side(view.getInputName(),view.getInputCal(),view.getInputPrice()), model.getItemCounter());
+                        view.inputDisplay("Added(Side): "+model.getVM().itemSlots[model.getItemCounter()].getItem().getItemName());
+                        model.addItemCounter();
+                        model.setFoodType("");
+                    }
+                    else
+                    {
+                        view.inputDisplay("You did not select the type of item");
+                    }
                 }
 
                 else
@@ -231,6 +252,7 @@ public class Controller
             {
                 view.setStatus(view.getVMMaintain(), false);
                 view.setStatus(view.getVMMenu(), true);
+                model.updateInventory();
             }
         });
 
@@ -241,7 +263,8 @@ public class Controller
             {
                 view.setStatus(view.getVMMaintain(), false);
                 view.setStatus(view.getVMRestockItem(), true);
-                view.restockDisplay(model.displayInventory());
+                view.restockDisplay("Status of Stock Since Last Restock");
+                view.restockDisplay(model.stockHistory());
             }
         });
 
@@ -250,13 +273,24 @@ public class Controller
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                if(model.getVM().restockItem(view.getItemRestockChoice()-1,view.getItemRestockAmount()))
+                if(view.getItemRestockChoice()>0 && view.getItemRestockChoice()<=model.getVM().slotCapacity)
                 {
-                    view.clearRestockItemTA();
-                    view.restockDisplay("Restock Successful!");
-                    view.restockDisplay("Updated Items: ");
-                    view.restockDisplay(model.displayInventory());
-                    view.clearRestockItemTF();
+                    if(model.getVM().restockItem(view.getItemRestockChoice(),view.getItemRestockAmount()))
+                    {
+                        view.clearRestockItemTA();
+                        view.restockDisplay("Restock Successful!");
+                        view.restockDisplay("Updated Items: ");
+                        view.restockDisplay(model.displayInventory());
+                        view.clearRestockItemTF();
+                    }
+
+                    else
+                    {
+                        view.clearRestockItemTA();
+                        view.clearRestockItemTF();
+                        view.restockDisplay("Invalid Inputs!");
+                        view.restockDisplay(model.displayInventory());
+                    }
                 }
 
                 else
@@ -264,6 +298,7 @@ public class Controller
                     view.clearRestockItemTA();
                     view.clearRestockItemTF();
                     view.restockDisplay("Invalid Inputs!");
+                    view.restockDisplay(model.displayInventory());
                 }
             }
         });
@@ -296,13 +331,23 @@ public class Controller
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                if(model.getVM().setPrice(view.getPriceChoice()-1, view.getPriceAmount()))
+                if(view.getPriceChoice()>0 && view.getPriceChoice()<=model.getVM().slotCapacity)
                 {
-                    view.clearPriceTA();
-                    view.setPriceDisplay("Reprice Successful!");
-                    view.setPriceDisplay("Updated Items: ");
-                    view.setPriceDisplay(model.displayInventory());
-                    view.clearPriceTF();
+                    if(model.getVM().setPrice(view.getPriceChoice(), view.getPriceAmount()))
+                    {
+                        view.clearPriceTA();
+                        view.setPriceDisplay("Reprice Successful!");
+                        view.setPriceDisplay("Updated Items: ");
+                        view.setPriceDisplay(model.displayInventory());
+                        view.clearPriceTF();
+                    }
+
+                    else
+                    {
+                        view.clearPriceTA();
+                        view.clearPriceTF();
+                        view.setPriceDisplay("Invalid Inputs!");
+                    }
                 }
 
                 else
@@ -310,6 +355,7 @@ public class Controller
                     view.clearPriceTA();
                     view.clearPriceTF();
                     view.setPriceDisplay("Invalid Inputs!");
+                    view.setPriceDisplay(model.displayInventory());
                 }
             }
         });
@@ -344,7 +390,7 @@ public class Controller
                 else
                 {
                     view.clearcollectMoneyTA();
-                    view.collectMoneyDisplay("[There are no transactions that have been made since last maintenance]\n [Money from the Machine Collected]");
+                    view.collectMoneyDisplay("[There are no transactions that have been made since last maintenance]\n[Money from the Machine Collected]");
                     model.getVM().vendBalance.setToZero();
                 }
             }
@@ -531,6 +577,8 @@ public class Controller
                 view.clearRegTestStatusTA();
                 view.RegTestInventoryDisplay(model.displayInventory());
                 view.RegTestInsertedDisplay(String.valueOf(model.getVM().userBalance.getTotalMoney()));
+                view.RegTestTotalDisplay("0");
+                view.RegTestChangeDisplay("0");
             }
         });
 
@@ -541,11 +589,14 @@ public class Controller
             {
                 view.setStatus(view.getVMRegTest(), false);
                 view.setStatus(view.getVMMenu(), true);
+                view.clearRegTestStatusTA();
                 view.clearRegTestChangeTA();
                 view.clearRegTestInsertedTA();
                 view.clearRegTestTotalTA();
                 view.clearRegTestStatusTA();
                 view.clearRegTestInventoryTA();
+                model.getVM().userBalance.setToZero();
+                view.clearRegTestStatusTA();
             }
         });
 
@@ -557,6 +608,7 @@ public class Controller
                 model.getVM().userBalance.setCoin1(model.getVM().userBalance.getCoin1()+1);
                 view.clearRegTestInsertedTA();
                 view.RegTestInsertedDisplay(String.valueOf(model.getVM().userBalance.getTotalMoney()));
+                view.RegTestStatusDisplay("[Added] 1 Php");
             }
         });
 
@@ -568,6 +620,7 @@ public class Controller
                 model.getVM().userBalance.setCoin5(model.getVM().userBalance.getCoin5()+1);
                 view.clearRegTestInsertedTA();
                 view.RegTestInsertedDisplay(String.valueOf(model.getVM().userBalance.getTotalMoney()));
+                view.RegTestStatusDisplay("[Added] 5 Php");
             }
         });
 
@@ -579,6 +632,7 @@ public class Controller
                 model.getVM().userBalance.setCoin10(model.getVM().userBalance.getCoin10()+1);
                 view.clearRegTestInsertedTA();
                 view.RegTestInsertedDisplay(String.valueOf(model.getVM().userBalance.getTotalMoney()));
+                view.RegTestStatusDisplay("[Added] 10 Php");
             }
         });
 
@@ -590,6 +644,7 @@ public class Controller
                 model.getVM().userBalance.setBill20(model.getVM().userBalance.getBill20()+1);
                 view.clearRegTestInsertedTA();
                 view.RegTestInsertedDisplay(String.valueOf(model.getVM().userBalance.getTotalMoney()));
+                view.RegTestStatusDisplay("[Added] 20 Php");
             }
         });
 
@@ -601,6 +656,7 @@ public class Controller
                 model.getVM().userBalance.setBill50(model.getVM().userBalance.getBill50()+1);
                 view.clearRegTestInsertedTA();
                 view.RegTestInsertedDisplay(String.valueOf(model.getVM().userBalance.getTotalMoney()));
+                view.RegTestStatusDisplay("[Added] 50 Php");
             }
         });
 
@@ -612,6 +668,7 @@ public class Controller
                 model.getVM().userBalance.setBill100(model.getVM().userBalance.getBill100()+1);
                 view.clearRegTestInsertedTA();
                 view.RegTestInsertedDisplay(String.valueOf(model.getVM().userBalance.getTotalMoney()));
+                view.RegTestStatusDisplay("[Added] 100 Php");
             }
         });
 
@@ -620,22 +677,32 @@ public class Controller
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                if(model.transacPossible(view.getRegTestIndex(), view.getRegTestAmount()))
+                if(view.getRegTestIndex()>0 && view.getRegTestIndex()<=model.getVM().slotCapacity)
                 {
-                    System.out.println("This works");
-                    view.clearRegTestInventoryTA();
-                    view.RegTestInventoryDisplay(model.displayInventory());
-                    view.RegTestChangeDisplay(String.valueOf(model.temptransaction.getChange()));
-                    view.RegTestTotalDisplay(String.valueOf(model.temptransaction.getQty()*model.temptransaction.getItem().getPrice()));
-                }
+                    if(view.getRegTestAmount()>0)
+                    {
+                        if(model.transacPossible(view.getRegTestIndex(), view.getRegTestAmount()))
+                        {
+                            view.RegTestStatusDisplay("[Buy] "+model.temptransaction.getItem().itemName+"\nQty: "+model.temptransaction.getQty()+"\n");
+                            view.clearRegTestInventoryTA();
+                            view.RegTestInventoryDisplay(model.displayInventory());
+                            view.RegTestChangeDisplay(String.valueOf(model.temptransaction.getChange()));
+                            view.RegTestTotalDisplay(String.valueOf(model.temptransaction.getQty()*model.temptransaction.getItem().getPrice()));
+                        }
 
+                        else
+                        {
+                            view.RegTestStatusDisplay("[Error] Machine/User Money Not Enough");
+                        }
+
+                        view.clearRegTestAmountTF();
+                        view.clearRegTestIndexTF();
+                    }
+                }
                 else
                 {
-
+                    view.RegTestStatusDisplay("[Invlid] User Input is Invalid");
                 }
-
-                view.clearRegTestAmountTF();
-                view.clearRegTestIndexTF();
             }
         });
     }

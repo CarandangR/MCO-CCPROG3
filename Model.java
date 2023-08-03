@@ -8,6 +8,8 @@ public class Model
     String history="";
     String money="";
     Transaction temptransaction;
+    String stockHistory="";
+
     public Model()
     {
     }
@@ -142,8 +144,8 @@ public class Model
 
         for(i=0;i<getVM().transacHistory.size();i++)
         {
-            history += getVM().transacHistory.get(i).getItem().getItemName()+" | "+getVM().transacHistory.get(i).getQty()+
-            " | Total Amount: "+getVM().transacHistory.get(i).getVendTotal()+" | User Paid: "+getVM().transacHistory.get(i).getUserPay()+
+            history += getVM().transacHistory.get(i).getItem().getItemName()+" | Qty: "+getVM().transacHistory.get(i).getQty()+
+            "\nTotal Amount in Vend: "+getVM().transacHistory.get(i).getVendTotal()+"\n User Paid: "+getVM().transacHistory.get(i).getUserPay()+
             " | Change: "+getVM().transacHistory.get(i).getChange();
             history += "\n";
         }
@@ -181,19 +183,16 @@ public class Model
 
         if(getVM().itemSlots[slotNum-1].getStock() < Qty)
         {
-            System.out.println("stock issue");
             return false;
         }
 
         else if((getVM().itemSlots[slotNum-1].getItem().price * Qty) > getVM().userBalance.getTotalMoney())
         {
-            System.out.println("price issue");
             return false;
         }
 
         else if(getVM().compareDenom(getVM().vendBalance, getVM().getDenom(getVM().userBalance.getTotalMoney()-(getVM().itemSlots[slotNum-1].getItem().price * Qty))))
         {
-            System.out.println("comparedenom");
             return false;
         }
 
@@ -203,5 +202,23 @@ public class Model
         getVM().itemSlots[slotNum-1].setStock(getVM().itemSlots[slotNum-1].getStock() - Qty);
 
         return true;
+    }
+
+    public void updateInventory()
+    {
+        getVM().updateStartingInventory();
+    }
+
+    public String stockHistory()
+    {
+        int i;
+        stockHistory="";
+
+        for(i=0;i<getVM().slotCapacity;i++)
+        {
+            stockHistory += getVM().inventoryChanges(i);
+        }
+
+        return stockHistory;
     }
 }
