@@ -23,7 +23,7 @@ public class RegularVM
     protected int slotCapacity;
     protected int itemCapacity;
     protected boolean didMaintenance = false;
-    protected boolean isNew = true; //Edit for testing, true to skip input
+    protected boolean isNew = true; //Edit for testing, flase to skip input
     protected ArrayList<Transaction> transacHistory = new ArrayList<Transaction>();
 
     /**
