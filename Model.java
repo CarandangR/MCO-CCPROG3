@@ -19,7 +19,7 @@ public class Model
     {
     }
     /**
-     * Constructor for generating Regular vending machine, includes validation for Slot number and sizes.
+     * Generates Regular vending machine, includes validation for Slot number and sizes.
      *@param vendName
      *String of the name for the vending machine.
      * @param slotNum
@@ -46,7 +46,7 @@ public class Model
         return true;
     }
     /**
-     * Constructor for generating Special vending machine, includes validation for Slot number and sizes.
+     * Generates Special vending machine, includes validation for Slot number and sizes.
      * @param vendName
      * String of the name for the vending machine.
      * @param slotNum
