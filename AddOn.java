@@ -6,6 +6,7 @@
  * @version 2.0
  * Section: X22A
  */
+
 public class AddOn extends Items
 {
     public AddOn(String itemName, int calories, int price)
