@@ -11,7 +11,6 @@
  * and allows it to be used in main.
  */
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class RegularVM
 {

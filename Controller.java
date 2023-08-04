@@ -117,19 +117,6 @@ public class Controller
             }
         });
 
-        this.view.menuTestListener(new ActionListener() 
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                if(!(model.didMaintain()))
-                {
-                    view.clearMenuTA();
-                    view.menuDisplay("Do maintenance to the Machine First");
-                }   
-            }
-        });
-
         this.view.menuMaintainListener(new ActionListener() 
         {
             @Override
@@ -253,6 +240,7 @@ public class Controller
                 view.setStatus(view.getVMMaintain(), false);
                 view.setStatus(view.getVMMenu(), true);
                 model.updateInventory();
+                model.getVM().setMaintain(true);
             }
         });
 
@@ -572,13 +560,22 @@ public class Controller
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                view.setStatus(view.getVMMenu(), false);
-                view.setStatus(view.getVMRegTest(), true);
-                view.clearRegTestStatusTA();
-                view.RegTestInventoryDisplay(model.displayInventory());
-                view.RegTestInsertedDisplay(String.valueOf(model.getVM().userBalance.getTotalMoney()));
-                view.RegTestTotalDisplay("0");
-                view.RegTestChangeDisplay("0");
+                if(!(model.didMaintain()))
+                {
+                    view.clearMenuTA();
+                    view.menuDisplay("Do maintenance to the Machine First");
+                }   
+
+                else
+                {
+                    view.setStatus(view.getVMMenu(), false);
+                    view.setStatus(view.getVMRegTest(), true);
+                    view.clearRegTestStatusTA();
+                    view.RegTestInventoryDisplay(model.displayInventory());
+                    view.RegTestInsertedDisplay(String.valueOf(model.getVM().userBalance.getTotalMoney()));
+                    view.RegTestTotalDisplay("0");
+                    view.RegTestChangeDisplay("0");
+                }
             }
         });
 
@@ -599,6 +596,7 @@ public class Controller
                 view.clearRegTestStatusTA();
             }
         });
+        
 
         this.view.RegTestMon1Listener(new ActionListener() 
         {
@@ -683,17 +681,23 @@ public class Controller
                     {
                         if(model.transacPossible(view.getRegTestIndex(), view.getRegTestAmount()))
                         {
-                            view.RegTestStatusDisplay("[Buy] "+model.temptransaction.getItem().itemName+"\nQty: "+model.temptransaction.getQty()+"\n");
+                            view.clearRegTestChangeTA();
+                            view.clearRegTestInsertedTA();
+                            view.RegTestInsertedDisplay("0");
+                            view.clearRegTestTotalTA();
+                            view.RegTestStatusDisplay("[Buy] "+model.getTempTransac().getItem().itemName+"\nQty: "+model.getTempTransac().getQty()+"\n");
                             view.clearRegTestInventoryTA();
                             view.RegTestInventoryDisplay(model.displayInventory());
-                            view.RegTestChangeDisplay(String.valueOf(model.temptransaction.getChange()));
-                            view.RegTestTotalDisplay(String.valueOf(model.temptransaction.getQty()*model.temptransaction.getItem().getPrice()));
+                            view.RegTestChangeDisplay(String.valueOf(model.getTempTransac().getChange()));
+                            view.RegTestTotalDisplay(String.valueOf(model.getTempTransac().getQty()*model.getTempTransac().getItem().getPrice()));
+
                         }
 
                         else
                         {
                             view.RegTestStatusDisplay("[Error] Machine/User Money Not Enough");
                         }
+
 
                         view.clearRegTestAmountTF();
                         view.clearRegTestIndexTF();
@@ -702,6 +706,173 @@ public class Controller
                 else
                 {
                     view.RegTestStatusDisplay("[Invlid] User Input is Invalid");
+                }
+            }
+        });
+
+        this.view.menuTestSListener(new ActionListener() 
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                view.setStatus(view.getVMMenu(), false);
+                view.setStatus(view.getVMSpecTest(), true);
+                view.clearSpecTestStatusTA();
+                view.SpecTestInventoryDisplay(model.displayInventory());
+                view.SpecTestInsertedDisplay(String.valueOf(model.getVM().userBalance.getTotalMoney()));
+                view.SpecTestTotalDisplay("0");
+                view.SpecTestChangeDisplay("0");
+            }
+        });
+
+        this.view.SpecTestExitListener(new ActionListener() 
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                view.setStatus(view.getVMSpecTest(), false);
+                view.setStatus(view.getVMMenu(), true);
+                view.clearSpecTestStatusTA();
+                view.clearSpecTestChangeTA();
+                view.clearSpecTestInsertedTA();
+                view.clearSpecTestTotalTA();
+                view.clearSpecTestStatusTA();
+                view.clearSpecTestInventoryTA();
+                model.getVM().userBalance.setToZero();
+                view.clearSpecTestStatusTA();
+            }
+        });
+
+        this.view.SpecTestMon1Listener(new ActionListener() 
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                model.getVM().userBalance.setCoin1(model.getVM().userBalance.getCoin1()+1);
+                view.clearSpecTestInsertedTA();
+                view.SpecTestInsertedDisplay(String.valueOf(model.getVM().userBalance.getTotalMoney()));
+                view.SpecTestStatusDisplay("[Added] 1 Php");
+            }
+        });
+
+        this.view.SpecTestMon5Listener(new ActionListener() 
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                model.getVM().userBalance.setCoin5(model.getVM().userBalance.getCoin5()+1);
+                view.clearSpecTestInsertedTA();
+                view.SpecTestInsertedDisplay(String.valueOf(model.getVM().userBalance.getTotalMoney()));
+                view.SpecTestStatusDisplay("[Added] 5 Php");
+            }
+        });
+
+        this.view.SpecTestMon10Listener(new ActionListener() 
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                model.getVM().userBalance.setCoin10(model.getVM().userBalance.getCoin10()+1);
+                view.clearSpecTestInsertedTA();
+                view.SpecTestInsertedDisplay(String.valueOf(model.getVM().userBalance.getTotalMoney()));
+                view.SpecTestStatusDisplay("[Added] 10 Php");
+            }
+        });
+
+        this.view.SpecTestMon20Listener(new ActionListener() 
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                model.getVM().userBalance.setBill20(model.getVM().userBalance.getBill20()+1);
+                view.clearSpecTestInsertedTA();
+                view.SpecTestInsertedDisplay(String.valueOf(model.getVM().userBalance.getTotalMoney()));
+                view.SpecTestStatusDisplay("[Added] 20 Php");
+            }
+        });
+
+        this.view.SpecTestMon50Listener(new ActionListener() 
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                model.getVM().userBalance.setBill50(model.getVM().userBalance.getBill50()+1);
+                view.clearSpecTestInsertedTA();
+                view.SpecTestInsertedDisplay(String.valueOf(model.getVM().userBalance.getTotalMoney()));
+                view.SpecTestStatusDisplay("[Added] 50 Php");
+            }
+        });
+
+        this.view.SpecTestMon100Listener(new ActionListener() 
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                model.getVM().userBalance.setBill100(model.getVM().userBalance.getBill100()+1);
+                view.clearSpecTestInsertedTA();
+                view.SpecTestInsertedDisplay(String.valueOf(model.getVM().userBalance.getTotalMoney()));
+                view.SpecTestStatusDisplay("[Added] 100 Php");
+            }
+        });
+
+        this.view.SpecTestBuyListener(new ActionListener() 
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                if(model.getSVM().isComplete())
+                {
+                    if(model.specialTransacPossible())
+                    {
+                        view.SpecTestStatusDisplay("[Buy] "+model.getCustomItem().itemName+"\nQty: 1\n");
+                        view.clearSpecTestInventoryTA();
+                        /* 
+                        view.SpecTestInventoryDisplay(model.displayInventory());
+                        view.SpecTestChangeDisplay(String.valueOf(model.getTempTransac().getChange()));
+                        view.SpecTestTotalDisplay(String.valueOf(model.getTempTransac().getQty()*model.getTempTransac().getItem().getPrice()));*/
+                    }
+                }
+
+                else
+                {
+                    view.SpecTestStatusDisplay("[Error] Not Enough Ingredients");
+                }
+
+                view.clearSpecTestAmountTF();
+                view.clearSpecTestIndexTF();
+            }
+        });
+
+        this.view.SpecTestAddBagListener(new ActionListener() 
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                if(view.getSpecTestIndex()>0 && view.getSpecTestIndex()<=model.getVM().slotCapacity)
+                {
+                    if(view.getSpecTestAmount()>0)
+                    {
+                        if(!(model.getVM().itemSlots[view.getSpecTestIndex()-1].getStock() < view.getSpecTestAmount()))
+                        {
+                            model.addtoBag(view.getSpecTestIndex(), view.getSpecTestAmount());
+                            view.SpecTestStatusDisplay("[Bag] Added to Item Bag");
+                            view.clearSpecTestAmountTF();
+                            view.clearSpecTestIndexTF();
+                        }
+                        else
+                        {
+                            view.SpecTestStatusDisplay("[Invlid] User Input is Invalid");
+                        }
+                        
+                    }
+                    else
+                    {
+                        view.SpecTestStatusDisplay("[Invlid] User Input is Invalid");
+                    }
+                }
+                else
+                {
+                    view.SpecTestStatusDisplay("[Invlid] User Input is Invalid");
                 }
             }
         });

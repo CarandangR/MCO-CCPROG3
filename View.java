@@ -72,6 +72,13 @@ public class View
     private JTextField RegTestAmount, RegTestIndex;
     private JButton RegTestExit, RegTestMon1, RegTestMon5, RegTestMon10, RegTestMon20, RegTestMon50, RegTestMon100, RegTestBuy;
 
+    private JFrame vmSpecTest;
+    private JTextArea SpecTestInventory, SpecTestStatus, SpecTestChange, SpecTestTotal, SpecTestInserted;
+    private JLabel SpecTestAmountLabel, SpecTestTotalLabel, SpecTestInsertedLabel, SpecTestChangeLabel, SpecTestIndexLabel;
+    private JScrollPane SpecTestStatusScroll;
+    private JTextField SpecTestAmount, SpecTestIndex;
+    private JButton SpecTestExit,SpecTestAddBag, SpecTestMon1, SpecTestMon5, SpecTestMon10, SpecTestMon20, SpecTestMon50, SpecTestMon100, SpecTestBuy;
+
     public View()
     {
         vmStart();
@@ -83,6 +90,7 @@ public class View
         vmCollectMoney();
         vmSetMoney();
         vmRegTest();
+        vmSpecTest();
     }
 
     public void vmStart()
@@ -485,6 +493,93 @@ public class View
         vmRegTest.add(RegTestExit);
     }
 
+    public void vmSpecTest()
+    {
+        vmSpecTest = new JFrame("[Testing] Special Vending Machine");
+        vmSpecTest.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        vmSpecTest.setSize(800, 800);;
+        vmSpecTest.setResizable(false);
+        vmSpecTest.setLocationRelativeTo(null);
+        vmSpecTest.setLayout(null);
+
+        SpecTestInventory = new JTextArea();
+        SpecTestInventory.setBounds(31, 31, 377, 324);
+        SpecTestInventory.setEditable(false);
+        SpecTestStatus = new JTextArea();
+        SpecTestStatus.setEditable(false);
+        SpecTestTotal = new JTextArea();
+        SpecTestTotal.setBounds(531, 511, 215, 52);
+        SpecTestTotal.setEditable(false);
+        SpecTestInserted = new JTextArea();
+        SpecTestInserted.setBounds(531, 600, 215, 52);
+        SpecTestInserted.setEditable(false);
+        SpecTestChange = new JTextArea();
+        SpecTestChange.setBounds(531, 689, 215, 42);
+        SpecTestChange.setEditable(false);
+
+        SpecTestStatusScroll = new JScrollPane(SpecTestStatus);
+        SpecTestStatusScroll.setBounds(531, 31, 215, 437);
+        SpecTestStatusScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+        SpecTestStatus.setCaretPosition(SpecTestStatus.getDocument().getLength());
+
+        SpecTestIndexLabel = new JLabel("Enter the Item Index:");
+        SpecTestIndexLabel.setBounds(31, 373, 122, 42);
+        SpecTestAmountLabel = new JLabel("Enter the Item Qty:");
+        SpecTestAmountLabel.setBounds(31, 433, 122, 42);
+        SpecTestTotalLabel = new JLabel("Total:");
+        SpecTestTotalLabel.setBounds(412, 511, 96, 52);
+        SpecTestInsertedLabel = new JLabel("Inserted:");
+        SpecTestInsertedLabel.setBounds(412, 600, 96, 52);
+        SpecTestChangeLabel = new JLabel("Change:");
+        SpecTestChangeLabel.setBounds(412, 689, 96, 52);
+
+        SpecTestIndex = new JTextField();
+        SpecTestIndex.setBounds(193, 373, 215, 42);
+        SpecTestAmount = new JTextField();
+        SpecTestAmount.setBounds(193, 433, 215, 42);
+
+        SpecTestMon1 = new JButton("1");
+	    SpecTestMon1.setBounds(31, 503, 70, 68);
+        SpecTestMon5 = new JButton("5");
+	    SpecTestMon5.setBounds(123, 503, 70, 68);
+        SpecTestMon10 = new JButton("10");
+	    SpecTestMon10.setBounds(215, 503, 70, 68);
+        SpecTestMon20 = new JButton("20");
+	    SpecTestMon20.setBounds(307, 503, 70, 68);
+        SpecTestMon50 = new JButton("50");
+	    SpecTestMon50.setBounds(31, 592, 70, 68);
+        SpecTestMon100 = new JButton("100");
+	    SpecTestMon100.setBounds(123, 592, 70, 68);
+        SpecTestBuy = new JButton("Buy Custom Item");
+	    SpecTestBuy.setBounds(215, 689, 162, 52);
+        SpecTestExit = new JButton("Exit");
+	    SpecTestExit.setBounds(31, 689, 162, 52);
+        SpecTestAddBag = new JButton("Add to Bag");
+	    SpecTestAddBag.setBounds(215, 600, 162, 52);
+
+        vmSpecTest.add(SpecTestAddBag);
+        vmSpecTest.add(SpecTestInventory);
+        vmSpecTest.add(SpecTestStatusScroll);
+        vmSpecTest.add(SpecTestTotal);
+        vmSpecTest.add(SpecTestInserted);
+        vmSpecTest.add(SpecTestChange);
+        vmSpecTest.add(SpecTestAmount);
+        vmSpecTest.add(SpecTestAmountLabel);
+        vmSpecTest.add(SpecTestTotalLabel);
+        vmSpecTest.add(SpecTestInsertedLabel);
+        vmSpecTest.add(SpecTestChangeLabel);
+        vmSpecTest.add(SpecTestIndex);
+        vmSpecTest.add(SpecTestIndexLabel);
+        vmSpecTest.add(SpecTestMon1);
+        vmSpecTest.add(SpecTestMon5);
+        vmSpecTest.add(SpecTestMon10);
+        vmSpecTest.add(SpecTestMon20);
+        vmSpecTest.add(SpecTestMon50);
+        vmSpecTest.add(SpecTestMon100);
+        vmSpecTest.add(SpecTestBuy);
+        vmSpecTest.add(SpecTestExit);
+    }
+
     /* Buttons/Radio Buttons */
 
     public void exitVMListener(ActionListener e)
@@ -668,6 +763,51 @@ public class View
         RegTestBuy.addActionListener(e);
     }
 
+    public void SpecTestExitListener(ActionListener e)
+    {
+        SpecTestExit.addActionListener(e);
+    }
+
+    public void SpecTestMon1Listener(ActionListener e)
+    {
+        SpecTestMon1.addActionListener(e);
+    }
+
+    public void SpecTestMon5Listener(ActionListener e)
+    {
+        SpecTestMon5.addActionListener(e);
+    }
+
+    public void SpecTestMon10Listener(ActionListener e)
+    {
+        SpecTestMon10.addActionListener(e);
+    }
+
+    public void SpecTestMon20Listener(ActionListener e)
+    {
+        SpecTestMon20.addActionListener(e);
+    }
+
+    public void SpecTestMon50Listener(ActionListener e)
+    {
+        SpecTestMon50.addActionListener(e);
+    }
+
+    public void SpecTestMon100Listener(ActionListener e)
+    {
+        SpecTestMon100.addActionListener(e);
+    }
+
+    public void SpecTestBuyListener(ActionListener e)
+    {
+        SpecTestBuy.addActionListener(e);
+    }
+
+    public void SpecTestAddBagListener(ActionListener e)
+    {
+        SpecTestAddBag.addActionListener(e);
+    }
+
     /* Text Fields*/
 
     public int getItemRestockChoice()
@@ -798,6 +938,30 @@ public class View
         }
     }
 
+    public int getSpecTestAmount()
+    {
+        try 
+        {
+            return Integer.parseInt(SpecTestAmount.getText());
+        } 
+        catch (NumberFormatException e)
+        {
+            return 0;
+        }
+    }
+
+    public int getSpecTestIndex()
+    {
+        try 
+        {
+            return Integer.parseInt(SpecTestIndex.getText());
+        } 
+        catch (NumberFormatException e)
+        {
+            return 0;
+        }
+    }
+
     /* JFrame getter */
 
     public JFrame getVMStart()
@@ -843,6 +1007,11 @@ public class View
     public JFrame getVMRegTest()
     {
         return vmRegTest;
+    }
+
+    public JFrame getVMSpecTest()
+    {
+        return vmSpecTest;
     }
 
     /* Clear TA */
@@ -907,6 +1076,31 @@ public class View
         RegTestChange.setText("");
     }
 
+    public void clearSpecTestInventoryTA()
+    {
+        SpecTestInventory.setText("");
+    }
+
+    public void clearSpecTestStatusTA()
+    {
+        SpecTestStatus.setText("");
+    }
+
+    public void clearSpecTestTotalTA()
+    {
+        SpecTestTotal.setText("");
+    }
+
+    public void clearSpecTestInsertedTA()
+    {
+        SpecTestInserted.setText("");
+    }
+
+    public void clearSpecTestChangeTA()
+    {
+        SpecTestChange.setText("");
+    }
+
     /* Clear TF */
 
     public void clearTF()
@@ -948,6 +1142,16 @@ public class View
     public void clearRegTestAmountTF()
     {
         RegTestAmount.setText("");
+    }
+
+    public void clearSpecTestIndexTF()
+    {
+        SpecTestIndex.setText("");
+    }
+
+    public void clearSpecTestAmountTF()
+    {
+        SpecTestAmount.setText("");
     }
 
     /* Display Screens */
@@ -1012,6 +1216,31 @@ public class View
         RegTestChange.append(text+"\n");
     }
 
+    public void SpecTestInventoryDisplay(String text)
+    {
+        SpecTestInventory.append(text+"\n");
+    }
+
+    public void SpecTestStatusDisplay(String text)
+    {
+        SpecTestStatus.append(text+"\n");
+    }
+
+    public void SpecTestTotalDisplay(String text)
+    {
+        SpecTestTotal.append(text+"\n");
+    }
+
+    public void SpecTestInsertedDisplay(String text)
+    {
+        SpecTestInserted.append(text+"\n");
+    }
+
+    public void SpecTestChangeDisplay(String text)
+    {
+        SpecTestChange.append(text+"\n");
+    }
+
     /* Helper Functions */
 
     public void inputItem(ActionListener e)
@@ -1058,4 +1287,5 @@ public class View
     {
         menuTestS.setVisible(bool);
     }
+
 }

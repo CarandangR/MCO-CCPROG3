@@ -4,11 +4,12 @@ public class Model
     private SpecialVM SVM;
     private String foodType;
     private int itemCounter=0;
-    String items="";
-    String history="";
-    String money="";
-    Transaction temptransaction;
-    String stockHistory="";
+    private String items="";
+    private String history="";
+    private String money="";
+    private Transaction temptransaction;
+    private String stockHistory="";
+    private Items tempItem;
 
     public Model()
     {
@@ -220,5 +221,76 @@ public class Model
         }
 
         return stockHistory;
+    }
+
+    public void addtoBag(int slotNum, int Qty)
+    {
+        SVM.getItembag().add(new Slots(SVM.itemSlots[slotNum-1].getItem(), Qty));
+        getVM().itemSlots[slotNum-1].setStock(getVM().itemSlots[slotNum-1].getStock()-Qty);
+    }
+
+    public Transaction getTempTransac()
+    {
+        return temptransaction;
+    }
+
+    public SpecialVM getSVM()
+    {
+        return this.SVM;
+    }
+
+    public boolean specialTransacPossible()
+    {
+        getVM().add2Balances(getVM().userBalance, getVM().vendBalance);
+
+        if(multipleItemsTotal() > getVM().userBalance.getTotalMoney())
+        {
+            System.out.println("here1");
+            return false;
+        }
+
+        else if(getVM().compareDenom(getVM().vendBalance, getVM().getDenom(getVM().userBalance.getTotalMoney()-multipleItemsTotal())))
+        {
+            System.out.println("here2");
+            return false;
+        }
+
+        System.out.println(multipleItemsTotal());
+        tempItem = new Items("Rice Bowl",multipleItemsTotalCalories(),multipleItemsTotal());
+        temptransaction = new Transaction(tempItem, 1, getVM().userBalance.getTotalMoney(), getVM().vendBalance.getTotalMoney());
+        getVM().userBalance.setToZero();
+  
+        return true;
+    }
+
+    private int multipleItemsTotal()
+    {
+        int total = 0;
+        int i;
+
+        for(i=0;i<SVM.getItembag().size();i++)
+        {
+            total += (SVM.getItembag().get(i).getItem().getPrice()*SVM.getItembag().get(i).getStock());
+        }
+
+        return total;
+    }
+
+    private int multipleItemsTotalCalories()
+    {
+        int total = 0;
+        int i;
+
+        for(i=0;i<SVM.getItembag().size();i++)
+        {
+            total += (SVM.getItembag().get(i).getItem().getCalories()*SVM.getItembag().get(i).getStock());
+        }
+
+        return total;
+    }
+
+    public Items getCustomItem()
+    {
+        return tempItem;
     }
 }
