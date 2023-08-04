@@ -8,9 +8,9 @@ public class SpecialVM extends RegularVM
      * Constructor for special vending machine.
      *@param vendName
      *String of the name for the vending machine.
-     *@param slotNum
+     *@param slotCapacity
      *Int for the amount of slots of the vending machine.
-     *@param slotCap
+     *@param itemCapacity
      *Int for the limit of each slot.
      */
     public SpecialVM(String vendName, int slotCapacity, int itemCapacity)
