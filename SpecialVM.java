@@ -4,7 +4,15 @@ public class SpecialVM extends RegularVM
 {
     private AddOn toppings;
     private ArrayList<Slots> Itembag = new ArrayList<>();
-
+    /**
+     * Constructor for special vending machine.
+     *@param vendName
+     *String of the name for the vending machine.
+     *@param slotNum
+     *Int for the amount of slots of the vending machine.
+     *@param slotCap
+     *Int for the limit of each slot.
+     */
     public SpecialVM(String vendName, int slotCapacity, int itemCapacity)
     {
         super(vendName,slotCapacity,itemCapacity);
@@ -14,27 +22,38 @@ public class SpecialVM extends RegularVM
     {
         return Itembag;
     }
-
+    /**
+     * Adds a new topping.
+     */
     public void addTopping(String name, int calories, int price)
     {
         toppings = new AddOn(name, calories, price);
     }
-
+    /**
+     * Gets toppings.
+     */
     public AddOn getTopping()
     {
         return toppings;
     }
-
+    /**
+     * Resets the item bag to empty.
+     */
     public void resetItemBag()
     {
         this.Itembag = new ArrayList<>();
     }
-
+    /**
+     * Resets toppings.
+     */
     public void resetTopping()
     {
         this.toppings = null;
     }
-
+    /**
+     * Checks if complete with Rice, Meat, and Side.
+     * @return boolean
+     */
     public boolean isComplete()
     {
         if(checkRice())
@@ -54,7 +73,10 @@ public class SpecialVM extends RegularVM
 
         return true;
     }
-
+    /**
+     * Checks if there is Rice object
+     * @return boolean
+     */
     private boolean checkRice()
     {
         int i;
@@ -68,7 +90,10 @@ public class SpecialVM extends RegularVM
         }
         return true;
     }
-
+    /**
+     * Checks if there is Meat object
+     * @return boolean
+     */
     private boolean checkMeat()
     {
         int i;
@@ -82,7 +107,10 @@ public class SpecialVM extends RegularVM
         }
         return true;
     }
-
+    /**
+     * Checks if there is Side object
+     * @return boolean
+     */
     private boolean checkSide()
     {
         int i;
