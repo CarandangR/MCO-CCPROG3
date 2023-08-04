@@ -24,6 +24,12 @@ public class SpecialVM extends RegularVM
     }
     /**
      * Adds a new topping.
+     * @param name
+     * String of the name of the topping.
+     * @param calories
+     * Int value of the calories of the topping.
+     * @param price
+     * Int value of the price of the topping.
      */
     public void addTopping(String name, int calories, int price)
     {
