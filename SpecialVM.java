@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class SpecialVM extends RegularVM
 {
-    private ArrayList<AddOn> toppingsbag;
+    private AddOn toppings;
     private ArrayList<Slots> Itembag = new ArrayList<>();
 
     public SpecialVM(String vendName, int slotCapacity, int itemCapacity)
@@ -15,9 +15,24 @@ public class SpecialVM extends RegularVM
         return Itembag;
     }
 
-    public void addTopping(Items item)
+    public void addTopping(String name, int calories, int price)
     {
-        toppingsbag.add(new AddOn(item.getItemName(), item.getCalories(), item.getPrice()));
+        toppings = new AddOn(name, calories, price);
+    }
+
+    public AddOn getTopping()
+    {
+        return toppings;
+    }
+
+    public void resetItemBag()
+    {
+        this.Itembag = new ArrayList<>();
+    }
+
+    public void resetTopping()
+    {
+        this.toppings = null;
     }
 
     public boolean isComplete()

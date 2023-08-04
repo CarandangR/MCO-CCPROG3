@@ -715,13 +715,23 @@ public class Controller
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                view.setStatus(view.getVMMenu(), false);
-                view.setStatus(view.getVMSpecTest(), true);
-                view.clearSpecTestStatusTA();
-                view.SpecTestInventoryDisplay(model.displayInventory());
-                view.SpecTestInsertedDisplay(String.valueOf(model.getVM().userBalance.getTotalMoney()));
-                view.SpecTestTotalDisplay("0");
-                view.SpecTestChangeDisplay("0");
+
+                if(!(model.didMaintain()))
+                {
+                    view.clearMenuTA();
+                    view.menuDisplay("Do maintenance to the Machine First");
+                }
+
+                else
+                {
+                    view.setStatus(view.getVMMenu(), false);
+                    view.setStatus(view.getVMSpecTest(), true);
+                    view.clearSpecTestStatusTA();
+                    view.SpecTestInventoryDisplay(model.displayInventory());
+                    view.SpecTestInsertedDisplay(String.valueOf(model.getVM().userBalance.getTotalMoney()));
+                    view.SpecTestTotalDisplay("0");
+                    view.SpecTestChangeDisplay("0");
+                }
             }
         });
 
@@ -825,11 +835,12 @@ public class Controller
                     if(model.specialTransacPossible())
                     {
                         view.SpecTestStatusDisplay("[Buy] "+model.getCustomItem().itemName+"\nQty: 1\n");
+                        view.clearRegTestChangeTA();
+                        view.clearRegTestInsertedTA();
                         view.clearSpecTestInventoryTA();
-                        /* 
                         view.SpecTestInventoryDisplay(model.displayInventory());
                         view.SpecTestChangeDisplay(String.valueOf(model.getTempTransac().getChange()));
-                        view.SpecTestTotalDisplay(String.valueOf(model.getTempTransac().getQty()*model.getTempTransac().getItem().getPrice()));*/
+                        view.SpecTestTotalDisplay(String.valueOf(model.getTempTransac().getQty()*model.getTempTransac().getItem().getPrice()));
                     }
                 }
 
@@ -840,6 +851,16 @@ public class Controller
 
                 view.clearSpecTestAmountTF();
                 view.clearSpecTestIndexTF();
+            }
+        });
+
+        this.view.SpecTestAddOnListener(new ActionListener() 
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                view.setStatus(view.getVMSpecTest(), false);
+                view.setStatus(view.getvmAddOn(), true);
             }
         });
 
@@ -861,19 +882,65 @@ public class Controller
                         }
                         else
                         {
-                            view.SpecTestStatusDisplay("[Invlid] User Input is Invalid");
+                            view.SpecTestStatusDisplay("[Invalid] User Input is Invalid");
                         }
                         
                     }
                     else
                     {
-                        view.SpecTestStatusDisplay("[Invlid] User Input is Invalid");
+                        view.SpecTestStatusDisplay("[Invalid] User Input is Invalid");
                     }
                 }
                 else
                 {
-                    view.SpecTestStatusDisplay("[Invlid] User Input is Invalid");
+                    view.SpecTestStatusDisplay("[Invalid] User Input is Invalid");
                 }
+            }
+        });
+
+        this.view.Addon1Listener(new ActionListener() 
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                model.addTopping("Garlic Oil", 50, 25);
+                view.SpecTestStatusDisplay("[Buy] "+model.getSVM().getTopping().getItemName()+"\nQty: 1\n");
+                view.setStatus(view.getvmAddOn(), false);
+                view.setStatus(view.getVMSpecTest(), true);
+            }
+        });
+
+        this.view.Addon2Listener(new ActionListener() 
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                model.addTopping("Soy Sauce", 25, 20);
+                view.SpecTestStatusDisplay("[Buy] "+model.getSVM().getTopping().getItemName()+"\nQty: 1\n");
+                view.setStatus(view.getvmAddOn(), false);
+                view.setStatus(view.getVMSpecTest(), true);
+            }
+        });
+
+        this.view.Addon3Listener(new ActionListener() 
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                model.addTopping("Wasabi", 20, 30);
+                view.SpecTestStatusDisplay("[Buy] "+model.getSVM().getTopping().getItemName()+"\nQty: 1\n");
+                view.setStatus(view.getvmAddOn(), false);
+                view.setStatus(view.getVMSpecTest(), true);
+            }
+        });
+
+        this.view.AddonExitListener(new ActionListener() 
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                view.setStatus(view.getvmAddOn(), false);
+                view.setStatus(view.getVMSpecTest(), true);
             }
         });
     }

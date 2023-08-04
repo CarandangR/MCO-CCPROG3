@@ -10,6 +10,8 @@ public class Model
     private Transaction temptransaction;
     private String stockHistory="";
     private Items tempItem;
+    private int toppingPrice = 0;
+    private int toppingCalories = 0;
 
     public Model()
     {
@@ -241,25 +243,31 @@ public class Model
 
     public boolean specialTransacPossible()
     {
+        toppingPrice = 0;
+        toppingCalories = 0;
         getVM().add2Balances(getVM().userBalance, getVM().vendBalance);
 
         if(multipleItemsTotal() > getVM().userBalance.getTotalMoney())
         {
-            System.out.println("here1");
             return false;
         }
 
         else if(getVM().compareDenom(getVM().vendBalance, getVM().getDenom(getVM().userBalance.getTotalMoney()-multipleItemsTotal())))
         {
-            System.out.println("here2");
             return false;
         }
 
-        System.out.println(multipleItemsTotal());
-        tempItem = new Items("Rice Bowl",multipleItemsTotalCalories(),multipleItemsTotal());
+        else if(SVM.getTopping() != null)
+        {
+            toppingPrice = SVM.getTopping().getPrice();
+            toppingCalories = SVM.getTopping().getCalories();
+        }
+        tempItem = new Items("Rice Bowl",multipleItemsTotalCalories()+toppingCalories,multipleItemsTotal()+toppingPrice);
         temptransaction = new Transaction(tempItem, 1, getVM().userBalance.getTotalMoney(), getVM().vendBalance.getTotalMoney());
         getVM().userBalance.setToZero();
-  
+        getVM().transacHistory.add(temptransaction);
+        SVM.resetItemBag();
+        SVM.resetTopping();
         return true;
     }
 
@@ -292,5 +300,10 @@ public class Model
     public Items getCustomItem()
     {
         return tempItem;
+    }
+
+    public void addTopping(String name, int calories, int price)
+    {
+        SVM.addTopping(name, calories, price);
     }
 }

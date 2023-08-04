@@ -17,6 +17,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.OutputStream;
+import java.util.ArrayList;
 
 public class View 
 {
@@ -77,7 +78,11 @@ public class View
     private JLabel SpecTestAmountLabel, SpecTestTotalLabel, SpecTestInsertedLabel, SpecTestChangeLabel, SpecTestIndexLabel;
     private JScrollPane SpecTestStatusScroll;
     private JTextField SpecTestAmount, SpecTestIndex;
-    private JButton SpecTestExit,SpecTestAddBag, SpecTestMon1, SpecTestMon5, SpecTestMon10, SpecTestMon20, SpecTestMon50, SpecTestMon100, SpecTestBuy;
+    private JButton SpecTestExit,SpecTestAddBag, SpecTestMon1, SpecTestMon5, SpecTestMon10, SpecTestMon20, SpecTestMon50, SpecTestMon100, SpecTestBuy, SpecTestAddOn;
+
+    private JFrame vmAddOn;
+    private JLabel AddonLabel;
+    private JButton Addon1, Addon2, Addon3, AddonExit;
 
     public View()
     {
@@ -91,6 +96,7 @@ public class View
         vmSetMoney();
         vmRegTest();
         vmSpecTest();
+        vmAddOn();
     }
 
     public void vmStart()
@@ -518,7 +524,7 @@ public class View
         SpecTestChange.setEditable(false);
 
         SpecTestStatusScroll = new JScrollPane(SpecTestStatus);
-        SpecTestStatusScroll.setBounds(531, 31, 215, 437);
+        SpecTestStatusScroll.setBounds(531, 31, 215, 444);
         SpecTestStatusScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         SpecTestStatus.setCaretPosition(SpecTestStatus.getDocument().getLength());
 
@@ -556,8 +562,11 @@ public class View
 	    SpecTestExit.setBounds(31, 689, 162, 52);
         SpecTestAddBag = new JButton("Add to Bag");
 	    SpecTestAddBag.setBounds(215, 600, 162, 52);
+        SpecTestAddOn = new JButton("Addons");
+	    SpecTestAddOn.setBounds(422, 373, 96, 102);
 
         vmSpecTest.add(SpecTestAddBag);
+        vmSpecTest.add(SpecTestAddOn);
         vmSpecTest.add(SpecTestInventory);
         vmSpecTest.add(SpecTestStatusScroll);
         vmSpecTest.add(SpecTestTotal);
@@ -578,6 +587,33 @@ public class View
         vmSpecTest.add(SpecTestMon100);
         vmSpecTest.add(SpecTestBuy);
         vmSpecTest.add(SpecTestExit);
+    }
+
+    public void vmAddOn()
+    {
+        vmAddOn = new JFrame("[Testing] Add On Window");
+        vmAddOn.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        vmAddOn.setSize(800, 800);;
+        vmAddOn.setResizable(false);
+        vmAddOn.setLocationRelativeTo(null);
+        vmAddOn.setLayout(null);
+
+        AddonLabel = new JLabel("What Add On do you like to add?");
+        AddonLabel.setBounds(110, 39, 579, 70);
+        Addon1 = new JButton("Garlic Oil");
+	    Addon1.setBounds(110, 150, 579, 120);
+        Addon2 = new JButton("Soy Sauce");
+	    Addon2.setBounds(110, 300, 579, 120);
+        Addon3 = new JButton("Wasabi");
+	    Addon3.setBounds(110, 450, 579, 120);
+        AddonExit = new JButton("Exit");
+	    AddonExit.setBounds(110, 600, 579, 120);
+
+        vmAddOn.add(AddonLabel);
+        vmAddOn.add(Addon1);
+        vmAddOn.add(Addon2);
+        vmAddOn.add(Addon3);
+        vmAddOn.add(AddonExit);
     }
 
     /* Buttons/Radio Buttons */
@@ -808,6 +844,31 @@ public class View
         SpecTestAddBag.addActionListener(e);
     }
 
+    public void SpecTestAddOnListener(ActionListener e)
+    {
+        SpecTestAddOn.addActionListener(e);
+    }
+
+    public void Addon1Listener(ActionListener e)
+    {
+        Addon1.addActionListener(e);
+    }
+
+    public void Addon2Listener(ActionListener e)
+    {
+        Addon2.addActionListener(e);
+    }
+
+    public void Addon3Listener(ActionListener e)
+    {
+        Addon3.addActionListener(e);
+    }
+
+    public void AddonExitListener(ActionListener e)
+    {
+        AddonExit.addActionListener(e);
+    }
+
     /* Text Fields*/
 
     public int getItemRestockChoice()
@@ -1012,6 +1073,11 @@ public class View
     public JFrame getVMSpecTest()
     {
         return vmSpecTest;
+    }
+
+    public JFrame getvmAddOn()
+    {
+        return vmAddOn;
     }
 
     /* Clear TA */

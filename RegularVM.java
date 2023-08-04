@@ -23,7 +23,7 @@ public class RegularVM
     protected int slotCapacity;
     protected int itemCapacity;
     protected boolean didMaintenance = false;
-    protected boolean isNew = false; //Edit for testing
+    protected boolean isNew = true; //Edit for testing, true to skip input
     protected ArrayList<Transaction> transacHistory = new ArrayList<Transaction>();
 
     /**
@@ -44,6 +44,7 @@ public class RegularVM
         itemSlots = new Slots[slotCapacity];
         originalInventory = new Slots[slotCapacity];
 
+        /* 
         setSlots(new Rice("White Rice", 155, 8), 0);
         setSlots(new Rice("Brown Rice", 188, 160), 1);
         setSlots(new Rice("Black Rice", 313, 320), 2);
@@ -53,7 +54,7 @@ public class RegularVM
         setSlots(new Meat("Beef", 250, 50), 6);
         setSlots(new Side("Cabbage", 155, 8), 7);
         setSlots(new Side("Egg", 150, 70), 8);
-        setSlots(new Side("Nori", 5, 5), 9);
+        setSlots(new Side("Nori", 5, 5), 9); */
     }
 
     public void setSlots(Items item, int i)
