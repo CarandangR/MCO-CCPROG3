@@ -139,7 +139,10 @@ public class Model
 
         return items;
     }
-
+    /**
+     * Displays the transaction history.
+     * @return String
+     */
     public String displayHistory()
     {
         int i;
@@ -157,7 +160,10 @@ public class Model
         getVM().transacHistory.clear();
         return history;
     }
-
+    /**
+     * Checks if input is valid
+     * @return boolean
+     */
     public boolean amountisValid(int num)
     {
         if(num>0)
@@ -167,7 +173,10 @@ public class Model
 
         return false;
     }
-
+    /**
+     * Gets and returns the item of the transaction.
+     * @return item
+     */
     public String displayMoney(Money balance)
     {
         money="";
