@@ -56,13 +56,18 @@ public class RegularVM
         setSlots(new Side("Egg", 150, 70), 8);
         setSlots(new Side("Nori", 5, 5), 9); */
     }
-
+    /**
+     * Sets an item to a slot.
+     */
     public void setSlots(Items item, int i)
     {
         this.itemSlots[i] = new Slots(item,0);
         this.originalInventory[i] = new Slots(item,0);
     }
-
+    /**
+     * Checks if transaction history has content.
+     * @return boolean
+     */
     public Boolean checkTransac()
     {
         if(transacHistory.size() > 0)
@@ -72,7 +77,14 @@ public class RegularVM
 
         return false;
     }
-
+    /**
+     * Sets the price of an item.
+     * @param slotNum
+     * Integer value of the item slot number.
+     * @param repriceAmount
+     * Integer value of the price to set to the item.
+     * @return boolean
+     */
     public boolean setPrice(int slotNum, int repriceAmount)
     {
         if(repriceAmount < 0)
@@ -83,7 +95,14 @@ public class RegularVM
         itemSlots[slotNum-1].getItem().setPrice(repriceAmount);
         return true;
     }
-
+    /**
+     * Function to restock the item, includes input validation and vend stock validation.
+     * @param slotNum
+     * Integer of the item slot number.
+     * @param restockAmount
+     * Integer of the amount of items to restock the vending machine with.
+     * @return boolean.
+     */
     public boolean restockItem(int slotNum, int restockAmount)
     {
         if(itemSlots[slotNum-1].getStock()==itemCapacity)
@@ -100,7 +119,12 @@ public class RegularVM
 
         return true;
     }
-
+    /**
+     * Returns a string print format for displaying the item.
+     * @param slotNum
+     * Integer of the item slot number.
+     * @return String
+     */
     public String displayItem(int slotNum)
     {
         return "["+(slotNum+1)+"] "+itemSlots[slotNum].getItem().getItemName()+" [ Calories: "+itemSlots[slotNum].getItem().getCalories()+" | Price: "+itemSlots[slotNum].getItem().getPrice()+" | Stock: "+itemSlots[slotNum].getStock()+" ]";
@@ -250,7 +274,9 @@ public class RegularVM
     {
         this.isNew = bool;
     }
-
+    /**
+     * Updates the starting inventory.
+     */
     public void updateStartingInventory()
     {
         int i;
@@ -259,7 +285,12 @@ public class RegularVM
             this.originalInventory[i] = new Slots(itemSlots[i].getItem(),itemSlots[i].getStock());
         }
     }
-
+    /**
+     * Returns a string print format for inventoryChanges.
+     * @param slotNum
+     * Int value of the item slot number.
+     * @return String.
+     */
     public String inventoryChanges(int slotNum)
     {
         return "["+(slotNum+1)+"] "+originalInventory[slotNum].getItem().getItemName()+" "+originalInventory[slotNum].getStock()+" ---> "+itemSlots[slotNum].getStock()+"\n";
