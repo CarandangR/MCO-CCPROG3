@@ -6,9 +6,6 @@
  * @author Peter Benjamin A. Tan
  * @version 2.0
  * Section: X22A
- * 
- * The package objects contains all objects used to run the RegularVM object
- * and allows it to be used in main.
  */
 public class Money
 {

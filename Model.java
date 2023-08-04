@@ -1,3 +1,10 @@
+/**
+ * Java file for the Implementation of Model in the MVC.
+ * @author Matthew Ryan C. Carandang
+ * @author Peter Benjamin A. Tan
+ * @version 2.0
+ * Section: X22A
+ */
 public class Model 
 {
     private RegularVM RVM;
@@ -183,8 +190,24 @@ public class Model
 
         for(i=0;i<getVM().slotCapacity;i++)
         {
-            items += getVM().displayItem(i);
-            items += "\n";
+            if(getVM().itemSlots[i].getItem() instanceof Rice)
+            {
+                items += "(Rice) "+getVM().displayItem(i);
+                items += "\n";
+            }
+
+            else if(getVM().itemSlots[i].getItem() instanceof Meat)
+            {
+                items += "(Meat) "+getVM().displayItem(i);
+                items += "\n";
+            }
+
+            else if(getVM().itemSlots[i].getItem() instanceof Side)
+            {
+                items += "(Side) "+getVM().displayItem(i);
+                items += "\n";
+            }
+
         }
 
         return items;
@@ -336,11 +359,13 @@ public class Model
 
         if(multipleItemsTotal() > getVM().userBalance.getTotalMoney())
         {
+            System.out.println("here1");
             return false;
         }
 
         else if(getVM().compareDenom(getVM().vendBalance, getVM().getDenom(getVM().userBalance.getTotalMoney()-multipleItemsTotal())))
         {
+            System.out.println("here2");
             return false;
         }
 

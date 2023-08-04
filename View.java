@@ -1,3 +1,10 @@
+/**
+ * Java File for the implementation of View in the MVC
+ * @author Matthew Ryan C. Carandang
+ * @author Peter Benjamin A. Tan
+ * @version 2.0
+ * Section: X22A
+ */
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;

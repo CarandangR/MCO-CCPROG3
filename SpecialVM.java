@@ -1,3 +1,11 @@
+/**
+ * The Java file for the Object "SpecialVM" Which Extends RegularVM and
+ * adds more functions for specific tasks.
+ * @author Matthew Ryan C. Carandang
+ * @author Peter Benjamin A. Tan
+ * @version 2.0
+ * Section: X22A
+ */
 import java.util.ArrayList;
 
 public class SpecialVM extends RegularVM
@@ -18,6 +26,10 @@ public class SpecialVM extends RegularVM
         super(vendName,slotCapacity,itemCapacity);
     }
 
+    /**
+     * Getter for Item bag element in SpecialVM
+     * @return Itembag
+     */
     public ArrayList<Slots> getItembag()
     {
         return Itembag;

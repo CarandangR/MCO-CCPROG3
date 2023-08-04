@@ -1,4 +1,12 @@
+/**
+ * Java File for the implementation of Controller in the MVC
+ * @author Matthew Ryan C. Carandang
+ * @author Peter Benjamin A. Tan
+ * @version 2.0
+ * Section: X22A
+ */
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.Action;
 
@@ -834,13 +842,24 @@ public class Controller
                 {
                     if(model.specialTransacPossible())
                     {
+                        view.SpecTestStatusDisplay("[Cook] Searing Meat");
+                        view.SpecTestStatusDisplay("[Cook] Cooking Rice");
+                        view.SpecTestStatusDisplay("[Cook] Adding Side");
+                        view.SpecTestStatusDisplay("[Cook] Finalizing dish");
                         view.SpecTestStatusDisplay("[Buy] "+model.getCustomItem().itemName+"\nQty: 1\n");
-                        view.clearRegTestChangeTA();
-                        view.clearRegTestInsertedTA();
+                        view.clearSpecTestChangeTA();
+                        view.clearSpecTestTotalTA();
+                        view.clearSpecTestInsertedTA();
                         view.clearSpecTestInventoryTA();
                         view.SpecTestInventoryDisplay(model.displayInventory());
                         view.SpecTestChangeDisplay(String.valueOf(model.getTempTransac().getChange()));
                         view.SpecTestTotalDisplay(String.valueOf(model.getTempTransac().getQty()*model.getTempTransac().getItem().getPrice()));
+                        view.RegTestStatusDisplay("[Cook] Searing Meat");
+                    }
+
+                    else
+                    {
+                        view.SpecTestStatusDisplay("[Error] Not Enough Money \nInserted/In the machine");
                     }
                 }
 
